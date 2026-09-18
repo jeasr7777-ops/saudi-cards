@@ -1,241 +1,441 @@
-
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-<title>Flight Simulator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Penalty Challenge</title>
 
 <style>
 * {
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background: #071b12;
+    color: white;
     touch-action: none;
 }
 
 body {
-    margin: 0;
-    overflow: hidden;
-    background: #6bb7e8;
-    font-family: Arial, sans-serif;
-    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-#game {
-    position: fixed;
-    inset: 0;
+.game {
+    width: 100%;
+    max-width: 1100px;
+    height: 100vh;
+    position: relative;
     overflow: hidden;
     background:
-        linear-gradient(#63b4e6 0%, #a9dcf5 55%, #79b85b 56%, #477c35 100%);
+        radial-gradient(circle at 50% 30%, #168449 0%, #086331 35%, #04351d 100%);
 }
 
-/* Clouds */
-.cloud {
+/* العنوان */
+.topbar {
     position: absolute;
-    width: 180px;
-    height: 60px;
-    background: white;
-    border-radius: 50px;
-    opacity: .75;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 25px;
+    z-index: 20;
+    background: linear-gradient(to bottom, rgba(0,0,0,.45), transparent);
 }
 
-.cloud:before,
-.cloud:after {
+.logo {
+    font-size: 24px;
+    font-weight: 900;
+}
+
+.score {
+    background: rgba(0,0,0,.35);
+    padding: 10px 18px;
+    border-radius: 15px;
+    font-weight: bold;
+}
+
+/* الملعب */
+.pitch {
+    position: absolute;
+    top: 75px;
+    bottom: 120px;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+}
+
+/* خطوط الملعب */
+.pitch::before {
     content: "";
     position: absolute;
-    background: white;
-    border-radius: 50%;
+    left: 5%;
+    right: 5%;
+    bottom: 0;
+    height: 55%;
+    border: 3px solid rgba(255,255,255,.45);
+    border-bottom: none;
+    border-radius: 10px 10px 0 0;
 }
 
-.cloud:before {
-    width: 75px;
-    height: 75px;
-    left: 30px;
-    top: -35px;
-}
-
-.cloud:after {
-    width: 90px;
-    height: 90px;
-    right: 25px;
-    top: -45px;
-}
-
-/* HUD */
-#hud {
+.goal {
     position: absolute;
-    top: 15px;
-    left: 15px;
-    z-index: 10;
-    background: rgba(0,0,0,.55);
-    padding: 12px 16px;
-    border-radius: 14px;
-    min-width: 170px;
-    line-height: 1.7;
-    font-size: 15px;
-}
-
-#hud b {
-    color: #ffd84d;
-}
-
-/* Plane */
-#plane {
-    position: absolute;
+    width: min(82%, 820px);
+    height: min(46vw, 410px);
+    max-height: 410px;
+    min-height: 260px;
+    top: 5%;
     left: 50%;
-    top: 48%;
-    width: 100px;
-    height: 35px;
-    transform: translate(-50%, -50%);
-    transition: transform .05s linear;
-    z-index: 5;
+    transform: translateX(-50%);
+    perspective: 800px;
 }
 
-.fuselage {
+/* شبكة المرمى */
+.net {
     position: absolute;
-    width: 100px;
-    height: 18px;
-    top: 9px;
-    left: 0;
-    background: #eee;
-    border-radius: 50% 65% 65% 50%;
+    inset: 0;
+    background:
+        linear-gradient(rgba(255,255,255,.22) 2px, transparent 2px),
+        linear-gradient(90deg, rgba(255,255,255,.22) 2px, transparent 2px);
+    background-size: 35px 35px;
+    border: 8px solid white;
+    border-bottom-width: 12px;
+    box-shadow:
+        0 0 0 4px rgba(0,0,0,.25),
+        0 15px 40px rgba(0,0,0,.4);
+    overflow: hidden;
 }
 
-.nose {
+/* القائم */
+.post {
     position: absolute;
+    background: white;
+    box-shadow: 0 3px 8px rgba(0,0,0,.3);
+    z-index: 8;
+}
+
+.post.left {
+    width: 10px;
+    height: 100%;
+    left: -5px;
+}
+
+.post.right {
+    width: 10px;
+    height: 100%;
     right: -5px;
-    top: 8px;
-    width: 25px;
-    height: 20px;
-    background: #ddd;
-    border-radius: 0 100% 100% 0;
 }
 
-.wing {
+.post.top {
+    height: 10px;
+    width: 100%;
+    top: -5px;
+}
+
+/* منطقة التصويب */
+.target-zone {
     position: absolute;
-    width: 80px;
-    height: 12px;
-    left: 10px;
-    top: 12px;
-    background: #ccc;
-    transform: rotate(-8deg);
-    border-radius: 5px;
+    inset: 0;
+    z-index: 5;
+    cursor: crosshair;
 }
 
-.tail {
+/* الحارس */
+.keeper {
+    position: absolute;
+    width: 115px;
+    height: 190px;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    transition: left .55s cubic-bezier(.2,.8,.2,1),
+                transform .55s cubic-bezier(.2,.8,.2,1);
+    z-index: 12;
+    pointer-events: none;
+}
+
+.head {
+    position: absolute;
+    width: 46px;
+    height: 46px;
+    background: #c98255;
+    border-radius: 50%;
+    left: 50%;
+    top: 5px;
+    transform: translateX(-50%);
+    border: 3px solid #552d1c;
+}
+
+.body {
+    position: absolute;
+    width: 75px;
+    height: 100px;
+    background: #111827;
+    left: 50%;
+    top: 48px;
+    transform: translateX(-50%);
+    border-radius: 25px 25px 12px 12px;
+    border: 3px solid #f1c40f;
+}
+
+.arm {
+    position: absolute;
+    width: 22px;
+    height: 105px;
+    background: #111827;
+    top: 52px;
+    border-radius: 15px;
+    border: 3px solid #f1c40f;
+}
+
+.arm.left {
+    left: 5px;
+    transform: rotate(22deg);
+}
+
+.arm.right {
+    right: 5px;
+    transform: rotate(-22deg);
+}
+
+.leg {
     position: absolute;
     width: 28px;
-    height: 25px;
-    left: 8px;
-    top: -3px;
-    background: #bbb;
-    clip-path: polygon(0 100%, 100% 100%, 60% 0);
-}
-
-/* Joystick */
-#joystick {
-    position: absolute;
-    bottom: 35px;
-    left: 35px;
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    background: rgba(0,0,0,.25);
-    border: 2px solid rgba(255,255,255,.5);
-    z-index: 20;
-}
-
-#stick {
-    position: absolute;
-    width: 65px;
     height: 65px;
-    border-radius: 50%;
-    background: rgba(255,255,255,.8);
-    left: 42px;
-    top: 42px;
-    box-shadow: 0 5px 15px rgba(0,0,0,.3);
-}
-
-/* Throttle */
-#throttleBox {
-    position: absolute;
-    right: 25px;
-    bottom: 35px;
-    width: 70px;
-    height: 180px;
-    background: rgba(0,0,0,.3);
-    border-radius: 15px;
-    border: 2px solid rgba(255,255,255,.5);
-    z-index: 20;
-}
-
-#throttle {
-    position: absolute;
-    width: 50px;
-    height: 35px;
-    left: 8px;
-    bottom: 20px;
-    background: #ffd84d;
+    background: #111827;
+    top: 135px;
     border-radius: 10px;
 }
 
-#throttleLabel {
-    position: absolute;
-    top: 8px;
-    width: 100%;
-    text-align: center;
-    font-size: 12px;
+.leg.left {
+    left: 25px;
 }
 
-/* Buttons */
-.buttons {
+.leg.right {
+    right: 25px;
+}
+
+.glove {
     position: absolute;
-    right: 110px;
-    bottom: 30px;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    width: 230px;
+    width: 48px;
+    height: 48px;
+    background: #e9f2ff;
+    border: 4px solid #2563eb;
+    border-radius: 50%;
     z-index: 20;
+    transition: left .15s ease, top .15s ease;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 10px rgba(0,0,0,.4);
+}
+
+/* الكرة */
+.ball {
+    position: absolute;
+    width: 38px;
+    height: 38px;
+    background: white;
+    border-radius: 50%;
+    border: 3px solid #111;
+    left: 50%;
+    bottom: 8%;
+    transform: translateX(-50%);
+    z-index: 15;
+    transition:
+        left .7s cubic-bezier(.2,.8,.2,1),
+        top .7s cubic-bezier(.2,.8,.2,1),
+        transform .7s ease;
+}
+
+.ball::before {
+    content: "⚽";
+    position: absolute;
+    font-size: 34px;
+    left: -1px;
+    top: -4px;
+}
+
+/* نقطة التصويب */
+.aim {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    border: 3px solid #ffdf00;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 25;
+    display: none;
+    box-shadow: 0 0 15px rgba(255,223,0,.8);
+}
+
+.aim::after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #ffdf00;
+    border-radius: 50%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* لوحة التحكم */
+.controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: rgba(0,0,0,.45);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    z-index: 30;
+    padding: 15px;
 }
 
 button {
-    border: 0;
-    background: rgba(0,0,0,.6);
+    border: none;
+    border-radius: 14px;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
     color: white;
-    padding: 12px;
-    border-radius: 12px;
-    font-size: 13px;
-    min-width: 70px;
+    cursor: pointer;
 }
 
-button:active {
-    background: #d99f00;
+.shoot {
+    background: #eab308;
+    color: #111;
+    min-width: 170px;
 }
 
-/* Mobile */
-@media(max-width:700px) {
-    #hud {
-        font-size: 12px;
-        min-width: 145px;
+.save {
+    background: #2563eb;
+    min-width: 170px;
+}
+
+.reset {
+    background: #444;
+}
+
+/* الرسالة */
+.message {
+    position: absolute;
+    left: 50%;
+    top: 48%;
+    transform: translate(-50%, -50%);
+    z-index: 50;
+    font-size: clamp(35px, 7vw, 80px);
+    font-weight: 900;
+    text-shadow: 0 5px 15px rgba(0,0,0,.7);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.message.show {
+    animation: message .9s ease forwards;
+}
+
+@keyframes message {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -40%) scale(.6);
+    }
+    30% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.15);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -60%) scale(1);
+    }
+}
+
+/* تعليمات */
+.help {
+    position: absolute;
+    top: 82px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    background: rgba(0,0,0,.45);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+/* للجوال والآيباد */
+@media (max-width: 700px) {
+    .topbar {
+        height: 60px;
+        padding: 0 12px;
     }
 
-    #joystick {
-        width: 125px;
-        height: 125px;
+    .logo {
+        font-size: 18px;
     }
 
-    #stick {
+    .score {
+        font-size: 13px;
+        padding: 8px 12px;
+    }
+
+    .pitch {
+        top: 60px;
+        bottom: 105px;
+    }
+
+    .goal {
+        width: 92%;
+        height: 48%;
+        min-height: 230px;
+        top: 8%;
+    }
+
+    .keeper {
+        transform: translateX(-50%) scale(.8);
+        transform-origin: bottom center;
+    }
+
+    .controls {
+        height: 105px;
+        gap: 8px;
+    }
+
+    button {
+        padding: 13px 12px;
+        font-size: 15px;
+    }
+
+    .shoot,
+    .save {
+        min-width: 0;
+        flex: 1;
+    }
+
+    .reset {
         width: 55px;
-        height: 55px;
-        left: 33px;
-        top: 33px;
+        padding: 10px;
     }
 
-    .buttons {
-        right: 90px;
-        width: 190px;
+    .help {
+        top: 67px;
+        font-size: 12px;
     }
 }
 </style>
@@ -243,314 +443,370 @@ button:active {
 
 <body>
 
-<div id="game">
+<div class="game">
 
-    <div class="cloud" style="left:10%;top:20%;"></div>
-    <div class="cloud" style="left:65%;top:15%;transform:scale(.7);"></div>
-    <div class="cloud" style="left:45%;top:30%;transform:scale(.5);"></div>
-
-    <div id="hud">
-        SPEED: <b id="speed">120</b> km/h<br>
-        ALT: <b id="alt">1200</b> ft<br>
-        HEADING: <b id="heading">090</b>°<br>
-        THROTTLE: <b id="power">50</b>%<br>
-        FLAPS: <b id="flaps">0</b>°
+    <div class="topbar">
+        <div class="logo">⚽ PENALTY</div>
+        <div class="score">
+            الأهداف: <span id="goals">0</span>
+            &nbsp;|&nbsp;
+            التصديات: <span id="saves">0</span>
+            &nbsp;|&nbsp;
+            <span id="round">1</span>/5
+        </div>
     </div>
 
-    <div id="plane">
-        <div class="fuselage"></div>
-        <div class="nose"></div>
-        <div class="wing"></div>
-        <div class="tail"></div>
+    <div class="help">
+        🎯 اضغط داخل المرمى لتحديد مكان التسديدة
     </div>
 
-    <!-- Joystick -->
-    <div id="joystick">
-        <div id="stick"></div>
+    <div class="pitch">
+
+        <div class="goal">
+
+            <div class="net">
+                <div class="post left"></div>
+                <div class="post right"></div>
+                <div class="post top"></div>
+            </div>
+
+            <div class="target-zone" id="targetZone"></div>
+
+            <div class="aim" id="aim"></div>
+
+            <div class="keeper" id="keeper">
+                <div class="head"></div>
+                <div class="body"></div>
+                <div class="arm left"></div>
+                <div class="arm right"></div>
+                <div class="leg left"></div>
+                <div class="leg right"></div>
+            </div>
+
+            <div class="glove" id="glove">🧤</div>
+
+            <div class="ball" id="ball"></div>
+
+        </div>
+
     </div>
 
-    <!-- Throttle -->
-    <div id="throttleBox">
-        <div id="throttleLabel">THROTTLE</div>
-        <div id="throttle"></div>
-    </div>
+    <div class="message" id="message"></div>
 
-    <div class="buttons">
-        <button id="flapsBtn">FLAPS</button>
-        <button id="gearBtn">GEAR</button>
-        <button id="brakeBtn">BRAKE</button>
-        <button id="trimUp">TRIM +</button>
-        <button id="trimDown">TRIM -</button>
+    <div class="controls">
+        <button class="save" id="saveBtn">🧤 اختر مكان الحارس</button>
+        <button class="shoot" id="shootBtn">⚽ سدد</button>
+        <button class="reset" id="resetBtn">↻</button>
     </div>
 
 </div>
 
 <script>
 
-const plane = document.getElementById("plane");
-const joystick = document.getElementById("joystick");
-const stick = document.getElementById("stick");
+const goal = document.querySelector(".goal");
+const targetZone = document.getElementById("targetZone");
+const aim = document.getElementById("aim");
+const glove = document.getElementById("glove");
+const ball = document.getElementById("ball");
+const keeper = document.getElementById("keeper");
 
-let pitch = 0;
-let roll = 0;
-let heading = 90;
+const shootBtn = document.getElementById("shootBtn");
+const saveBtn = document.getElementById("saveBtn");
+const resetBtn = document.getElementById("resetBtn");
 
-let speed = 120;
-let altitude = 1200;
-let throttle = 50;
+const message = document.getElementById("message");
 
-let flaps = 0;
-let gear = true;
-let brake = false;
-let trim = 0;
+const goalsText = document.getElementById("goals");
+const savesText = document.getElementById("saves");
+const roundText = document.getElementById("round");
 
-let joyActive = false;
+let shotX = null;
+let shotY = null;
 
-function updateHUD() {
+let keeperX = 50;
+let keeperY = 55;
 
-    document.getElementById("speed").textContent =
-        Math.round(speed);
+let goals = 0;
+let saves = 0;
+let round = 1;
 
-    document.getElementById("alt").textContent =
-        Math.round(altitude);
+let selectingKeeper = false;
+let shooting = false;
 
-    document.getElementById("heading").textContent =
-        String(Math.round(heading + 360) % 360).padStart(3,"0");
 
-    document.getElementById("power").textContent =
-        Math.round(throttle);
+/* تحويل الضغط إلى نسبة داخل المرمى */
+function getPosition(e) {
 
-    document.getElementById("flaps").textContent =
-        flaps;
-}
+    const rect = goal.getBoundingClientRect();
 
-function moveJoystick(x,y) {
+    let clientX;
+    let clientY;
 
-    const rect = joystick.getBoundingClientRect();
-
-    let cx = rect.left + rect.width / 2;
-    let cy = rect.top + rect.height / 2;
-
-    let dx = x - cx;
-    let dy = y - cy;
-
-    const max = rect.width / 2 - 32;
-
-    const distance = Math.sqrt(dx*dx + dy*dy);
-
-    if(distance > max) {
-        dx = dx / distance * max;
-        dy = dy / distance * max;
+    if (e.touches && e.touches.length > 0) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+    } else {
+        clientX = e.clientX;
+        clientY = e.clientY;
     }
 
-    stick.style.left =
-        (rect.width/2 - 32 + dx) + "px";
+    let x = ((clientX - rect.left) / rect.width) * 100;
+    let y = ((clientY - rect.top) / rect.height) * 100;
 
-    stick.style.top =
-        (rect.height/2 - 32 + dy) + "px";
+    x = Math.max(7, Math.min(93, x));
+    y = Math.max(7, Math.min(90, y));
 
-    roll = dx / max;
-    pitch = -dy / max;
+    return {x, y};
 }
 
-function resetJoystick() {
 
-    stick.style.left = "42px";
-    stick.style.top = "42px";
+/* اختيار مكان التسديدة */
+function chooseShot(e) {
 
-    if(window.innerWidth < 700) {
-        stick.style.left = "33px";
-        stick.style.top = "33px";
+    if (shooting || selectingKeeper) return;
+
+    const pos = getPosition(e);
+
+    shotX = pos.x;
+    shotY = pos.y;
+
+    aim.style.left = shotX + "%";
+    aim.style.top = shotY + "%";
+    aim.style.display = "block";
+}
+
+
+/* اختيار مكان القفاز */
+function chooseKeeper(e) {
+
+    if (shooting) return;
+
+    const pos = getPosition(e);
+
+    keeperX = pos.x;
+    keeperY = pos.y;
+
+    glove.style.left = keeperX + "%";
+    glove.style.top = keeperY + "%";
+
+    /* تحريك الحارس */
+    keeper.style.left = keeperX + "%";
+
+    /* حركة بسيطة حسب مكان القفاز */
+    if (keeperX < 35) {
+        keeper.style.transform =
+            "translateX(-50%) rotate(-12deg)";
+    } else if (keeperX > 65) {
+        keeper.style.transform =
+            "translateX(-50%) rotate(12deg)";
+    } else {
+        keeper.style.transform =
+            "translateX(-50%)";
+    }
+}
+
+
+/* الضغط داخل المرمى */
+targetZone.addEventListener("pointerdown", function(e) {
+
+    if (shooting) return;
+
+    if (selectingKeeper) {
+        chooseKeeper(e);
+    } else {
+        chooseShot(e);
+    }
+});
+
+
+/* زر اختيار الحارس */
+saveBtn.addEventListener("click", function() {
+
+    if (shooting) return;
+
+    selectingKeeper = !selectingKeeper;
+
+    if (selectingKeeper) {
+
+        saveBtn.textContent = "🧤 اضغط مكان القفاز";
+
+        saveBtn.style.background = "#16a34a";
+
+    } else {
+
+        saveBtn.textContent = "🧤 اختر مكان الحارس";
+
+        saveBtn.style.background = "#2563eb";
+    }
+});
+
+
+/* إظهار النتيجة */
+function showMessage(text) {
+
+    message.textContent = text;
+
+    message.classList.remove("show");
+
+    void message.offsetWidth;
+
+    message.classList.add("show");
+}
+
+
+/* تنفيذ التسديدة */
+shootBtn.addEventListener("click", function() {
+
+    if (shooting) return;
+
+    if (shotX === null) {
+        showMessage("🎯 اختر مكان التسديدة");
+        return;
     }
 
-    pitch = 0;
-    roll = 0;
+    shooting = true;
+
+    selectingKeeper = false;
+
+    saveBtn.textContent = "🧤 اختر مكان الحارس";
+    saveBtn.style.background = "#2563eb";
+
+    /* حركة الحارس نحو المكان المختار */
+    keeper.style.left = keeperX + "%";
+
+    /* الكرة تطير */
+    ball.style.left = shotX + "%";
+    ball.style.top = shotY + "%";
+    ball.style.bottom = "auto";
+
+    ball.style.transform =
+        "translate(-50%, -50%) scale(.65)";
+
+    setTimeout(function() {
+
+        /*
+        حساب المسافة بين القفاز ومكان الكرة
+        */
+        const dx = shotX - keeperX;
+        const dy = shotY - keeperY;
+
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        /*
+        إذا القفاز قريب من مكان التسديدة
+        */
+        if (distance < 13) {
+
+            saves++;
+
+            showMessage("🧤 تصدي!");
+
+            /* حركة القفاز */
+            glove.style.transform =
+                "translate(-50%, -50%) scale(1.3) rotate(-20deg)";
+
+        } else {
+
+            goals++;
+
+            showMessage("⚽ GOAL!");
+
+            glove.style.transform =
+                "translate(-50%, -50%) scale(1)";
+
+        }
+
+        goalsText.textContent = goals;
+        savesText.textContent = saves;
+
+    }, 650);
+
+
+    /* إعادة الجولة */
+    setTimeout(function() {
+
+        round++;
+
+        if (round > 5) {
+
+            showMessage(
+                "🏆 انتهت المباراة! " +
+                goals + " أهداف"
+            );
+
+            round = 1;
+
+            setTimeout(resetGame, 1800);
+
+        } else {
+
+            roundText.textContent = round;
+
+            resetShot();
+
+        }
+
+    }, 1700);
+
+});
+
+
+/* إعادة الكرة */
+function resetShot() {
+
+    shooting = false;
+
+    shotX = null;
+    shotY = null;
+
+    aim.style.display = "none";
+
+    ball.style.left = "50%";
+    ball.style.top = "auto";
+    ball.style.bottom = "8%";
+
+    ball.style.transform =
+        "translateX(-50%)";
+
+    /* يرجع الحارس للوسط */
+    keeperX = 50;
+    keeperY = 55;
+
+    keeper.style.left = "50%";
+    keeper.style.transform =
+        "translateX(-50%)";
+
+    glove.style.left = "50%";
+    glove.style.top = "55%";
+
+    glove.style.transform =
+        "translate(-50%, -50%)";
 }
 
-joystick.addEventListener("pointerdown", e => {
 
-    joyActive = true;
+/* إعادة اللعبة */
+function resetGame() {
 
-    joystick.setPointerCapture(e.pointerId);
+    goals = 0;
+    saves = 0;
+    round = 1;
 
-    moveJoystick(e.clientX,e.clientY);
-});
+    goalsText.textContent = "0";
+    savesText.textContent = "0";
+    roundText.textContent = "1";
 
-joystick.addEventListener("pointermove", e => {
-
-    if(joyActive)
-        moveJoystick(e.clientX,e.clientY);
-});
-
-joystick.addEventListener("pointerup", e => {
-
-    joyActive = false;
-
-    resetJoystick();
-});
-
-/* Throttle */
-
-const throttleBox =
-    document.getElementById("throttleBox");
-
-const throttleHandle =
-    document.getElementById("throttle");
-
-let throttleActive = false;
-
-throttleBox.addEventListener("pointerdown", e => {
-
-    throttleActive = true;
-
-    throttleBox.setPointerCapture(e.pointerId);
-
-    updateThrottle(e.clientY);
-});
-
-throttleBox.addEventListener("pointermove", e => {
-
-    if(throttleActive)
-        updateThrottle(e.clientY);
-});
-
-throttleBox.addEventListener("pointerup", () => {
-
-    throttleActive = false;
-});
-
-function updateThrottle(y) {
-
-    const rect =
-        throttleBox.getBoundingClientRect();
-
-    let percent =
-        1 - ((y - rect.top) / rect.height);
-
-    percent =
-        Math.max(0,Math.min(1,percent));
-
-    throttle = percent * 100;
-
-    throttleHandle.style.bottom =
-        (percent * (rect.height-60) + 10) + "px";
+    resetShot();
 }
 
-/* Buttons */
 
-document.getElementById("flapsBtn")
-.addEventListener("click", () => {
+/* زر إعادة */
+resetBtn.addEventListener("click", resetGame);
 
-    flaps += 10;
 
-    if(flaps > 30)
-        flaps = 0;
+/* منع تكبير الآيباد باللمس المتكرر */
+document.addEventListener("gesturestart", function(e) {
+    e.preventDefault();
 });
-
-document.getElementById("gearBtn")
-.addEventListener("click", () => {
-
-    gear = !gear;
-
-    document.getElementById("gearBtn").textContent =
-        gear ? "GEAR DOWN" : "GEAR UP";
-});
-
-document.getElementById("brakeBtn")
-.addEventListener("pointerdown", () => {
-
-    brake = true;
-});
-
-document.getElementById("brakeBtn")
-.addEventListener("pointerup", () => {
-
-    brake = false;
-});
-
-document.getElementById("trimUp")
-.addEventListener("click", () => {
-
-    trim += 1;
-});
-
-document.getElementById("trimDown")
-.addEventListener("click", () => {
-
-    trim -= 1;
-});
-
-/* Flight Physics */
-
-function flightLoop() {
-
-    /*
-       Engine power
-    */
-
-    let acceleration =
-        (throttle - 50) * 0.015;
-
-    if(brake)
-        acceleration -= 1.5;
-
-    speed += acceleration;
-
-    speed = Math.max(0,Math.min(900,speed));
-
-    /*
-       Pitch
-    */
-
-    altitude +=
-        pitch * speed * 0.006;
-
-    altitude +=
-        trim * 0.01;
-
-    altitude =
-        Math.max(0,altitude);
-
-    /*
-       Roll / Heading
-    */
-
-    heading +=
-        roll * speed * 0.025;
-
-    /*
-       Plane rotation
-    */
-
-    let visualRoll =
-        roll * 35;
-
-    let visualPitch =
-        pitch * 15;
-
-    plane.style.transform =
-        `translate(-50%,-50%)
-         rotateZ(${visualRoll}deg)
-         rotateX(${visualPitch}deg)`;
-
-    /*
-       Camera / horizon movement
-    */
-
-    let horizon =
-        (altitude - 1200) * 0.02;
-
-    document.getElementById("game").style
-        .backgroundPosition =
-        `0px ${horizon}px`;
-
-    updateHUD();
-
-    requestAnimationFrame(flightLoop);
-}
-
-updateHUD();
-flightLoop();
 
 </script>
 
