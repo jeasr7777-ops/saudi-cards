@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>بطاقات الدوري السعودي</title>
+<link rel="manifest" href="manifest.json">
+<style>
+*{box-sizing:border-box} body{margin:0;background:#07100d;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"SF Arabic","Segoe UI",sans-serif}
+.app{min-height:100vh;background:radial-gradient(circle at 50% -10%,#234d38 0,#0a1712 38%,#050907 100%);padding:18px 14px 90px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.logo{font-size:22px;font-weight:900}.coins{background:#111d18;border:1px solid #b99b4a;border-radius:20px;padding:8px 12px;color:#f1d37b}
+.screen{display:none}.screen.active{display:block}
+h1{font-size:28px;margin:10px 0 20px}.subtitle{color:#aebbb4;margin-top:-12px;margin-bottom:20px}
+.menu{display:grid;gap:13px}.menu button,.back{border:1px solid #536c60;background:linear-gradient(135deg,#17271f,#0d1713);color:#fff;border-radius:18px;padding:20px;font-size:20px;font-weight:800;text-align:right;box-shadow:0 8px 25px #0005}
+.menu button:first-child{background:linear-gradient(135deg,#1e7a4e,#0d3927);border-color:#5fd39a}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.card{position:relative;overflow:hidden;border-radius:18px;padding:12px;min-height:220px;background:linear-gradient(160deg,#e8c66c,#66501f 42%,#14130d);color:#fff;border:2px solid #d9b85c;box-shadow:0 10px 25px #0008}.card.silver{background:linear-gradient(160deg,#e7edf0,#596267 48%,#171a1c);border-color:#cbd5d9}.card .ov{font-size:28px;font-weight:900}.card .pos{font-size:12px}.player{font-size:52px;text-align:center;margin:8px 0}.name{font-size:16px;font-weight:900}.club{font-size:12px;color:#e9e4cf}.stats{display:flex;justify-content:space-between;font-size:11px;margin-top:10px}.pill{display:inline-block;background:#0006;border-radius:10px;padding:4px 7px}
+.pack{border:1px solid #c5a54d;border-radius:22px;padding:28px;text-align:center;background:radial-gradient(circle,#6e5724,#18150c 60%,#0a0b09);margin-bottom:15px}.pack-icon{font-size:70px}.gold{color:#f3d477}
+.actions{display:flex;gap:10px;margin-top:18px}.primary{flex:1;border:0;border-radius:15px;padding:14px;background:#18804e;color:#fff;font-weight:900;font-size:17px}.secondary{flex:1;border:1px solid #64736c;border-radius:15px;padding:14px;background:#15201b;color:#fff;font-weight:800}
+.settings label{display:flex;justify-content:space-between;align-items:center;padding:18px;border-bottom:1px solid #26352e}.settings input{width:22px;height:22px}.formation{background:#12613d;border:2px solid #4dca8a;border-radius:24px;padding:18px;min-height:480px;display:grid;grid-template-rows:repeat(4,1fr);align-items:center;text-align:center;background-image:radial-gradient(circle,#ffffff14 1px,transparent 1px);background-size:22px 22px}.slot{margin:auto;background:#0b1511dd;border:1px solid #d7bc61;border-radius:14px;padding:9px;width:100px}.slot b{display:block}.owned{margin-top:18px}.toast{position:fixed;bottom:25px;left:20px;right:20px;background:#14251d;border:1px solid #4dca8a;padding:14px;border-radius:14px;text-align:center;display:none;z-index:5}
+nav{position:fixed;bottom:0;left:0;right:0;background:#07100df0;border-top:1px solid #293b33;display:flex;justify-content:space-around;padding:9px 5px calc(9px + env(safe-area-inset-bottom));z-index:4}nav button{background:none;border:0;color:#b8c4be;font-size:11px}nav .ico{font-size:21px;display:block}
+@media(min-width:700px){.app{max-width:900px;margin:auto}.grid{grid-template-columns:repeat(4,1fr)}.menu{grid-template-columns:repeat(2,1fr)}nav{max-width:900px;margin:auto}}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="top"><div class="logo">⚽ بطاقات الدوري السعودي</div><div class="coins">🪙 <span id="coins">5000</span></div></div>
+
+<section id="home" class="screen active"><h1>مرحباً بك 👋</h1><div class="subtitle">اجمع البطاقات وطوّر تشكيلتك</div>
+<div class="menu">
+<button onclick="show('start')">▶️ ابدأ</button>
+<button onclick="show('formation')">👥 التشكيلة</button>
+<button onclick="show('packs')">🎁 البكجات</button>
+<button onclick="show('market')">💰 بيع البطاقات</button>
+<button onclick="show('settings')">⚙️ الإعدادات</button>
+</div></section>
+
+<section id="start" class="screen"><button class="back" onclick="show('home')">رجوع</button><h1>ابدأ</h1><p class="subtitle">اختر تشكيلتك ثم جهّز فريقك للمباراة.</p><div class="formation"><div class="slot">🧤<b>حارس</b><span>اختيار</span></div><div><span class="slot">🛡️ مدافع</span> <span class="slot">🛡️ مدافع</span></div><div><span class="slot">⚽ وسط</span> <span class="slot">⚽ وسط</span></div><div class="slot">🔥 مهاجم</div></div></section>
+
+<section id="formation" class="screen"><button class="back" onclick="show('home')">رجوع</button><h1>التشكيلة</h1><p class="subtitle">البطاقات التي تملكها</p><div id="collection" class="grid"></div></section>
+
+<section id="packs" class="screen"><button class="back" onclick="show('home')">رجوع</button><h1>البكجات</h1><div class="pack"><div class="pack-icon">🎁</div><h2>البكج الذهبي</h2><p>بطاقة لاعب عشوائية</p><div class="gold">السعر: 1000 🪙</div><button class="primary" onclick="openPack()">فتح البكج</button></div><div id="packResult"></div></section>
+
+<section id="market" class="screen"><button class="back" onclick="show('home')">رجوع</button><h1>بيع البطاقات</h1><p class="subtitle">بيع البطاقات التي تملكها مقابل عملات.</p><div id="marketGrid" class="grid"></div></section>
+
+<section id="settings" class="screen"><button class="back" onclick="show('home')">رجوع</button><h1>الإعدادات</h1><div class="settings"><label>اللغة <select id="lang"><option>العربية</option><option>English</option></select></label><label>🎵 موسيقى اللعبة <input id="music" type="checkbox" checked></label><label>🔊 المؤثرات الصوتية <input id="sound" type="checkbox" checked></label></div></section>
+</div>
+<nav><button onclick="show('home')"><span class="ico">🏠</span>الرئيسية</button><button onclick="show('formation')"><span class="ico">👥</span>التشكيلة</button><button onclick="show('packs')"><span class="ico">🎁</span>البكجات</button><button onclick="show('market')"><span class="ico">💰</span>البيع</button></nav>
+<div id="toast" class="toast"></div>
+<script>
+const players=[
+{name:"كريستيانو رونالدو",pos:"ST",ov:96,spd:92,sho:98,rar:"gold"},
+{name:"ساديو ماني",pos:"LW",ov:90,spd:93,sho:88,rar:"gold"},
+{name:"رياض محرز",pos:"RW",ov:89,spd:86,sho:91,rar:"gold"},
+{name:"سالم الدوسري",pos:"LW",ov:88,spd:90,sho:86,rar:"gold"},
+{name:"حسن كادش",pos:"LB",ov:79,spd:76,sho:55,rar:"silver"},
+{name:"حسان تمبكتي",pos:"CB",ov:80,spd:72,sho:45,rar:"silver"}
+];
+let owned=[players[0],players[3],players[4],players[5]];
+let coins=5000;
+function show(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');render()}
+function card(p){return `<div class="card ${p.rar==='silver'?'silver':''}"><div class="ov">${p.ov}</div><div class="pos">${p.pos}</div><div class="player">⚽</div><div class="name">${p.name}</div><div class="club">الدوري السعودي</div><div class="stats"><span>⚡ ${p.spd}</span><span>🎯 ${p.sho}</span><span class="pill">LVL 1</span></div></div>`}
+function render(){document.getElementById('coins').textContent=coins;document.getElementById('collection').innerHTML=owned.map(card).join('');document.getElementById('marketGrid').innerHTML=owned.map((p,i)=>card(p)+`<button class="secondary" style="grid-column:auto" onclick="sell(${i})">بيع بـ ${Math.max(300,p.ov*10)} 🪙</button>`).join('')}
+function toast(t){let e=document.getElementById('toast');e.textContent=t;e.style.display='block';setTimeout(()=>e.style.display='none',1800)}
+function openPack(){if(coins<1000){toast('لا تملك عملات كافية');return}coins-=1000;let p=players[Math.floor(Math.random()*players.length)];owned.push(p);document.getElementById('packResult').innerHTML='<h2>🎉 حصلت على</h2>'+card(p);toast('تم فتح البكج!');render()}
+function sell(i){let p=owned[i];let price=Math.max(300,p.ov*10);coins+=price;owned.splice(i,1);toast('تم بيع البطاقة بـ '+price+' 🪙');render()}
+render();
+</script>
+</body></html>
