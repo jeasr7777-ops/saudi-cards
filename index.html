@@ -3,439 +3,758 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Penalty Challenge</title>
+
+<title>Penalty Realistic</title>
 
 <style>
-* {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
 }
 
-html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    font-family: Arial, sans-serif;
-    background: #071b12;
-    color: white;
-    touch-action: none;
+html,body{
+    margin:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#050807;
+    font-family:Arial,sans-serif;
+    touch-action:none;
 }
 
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+body{
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
-.game {
-    width: 100%;
-    max-width: 1100px;
-    height: 100vh;
-    position: relative;
-    overflow: hidden;
+.game{
+    position:relative;
+    width:100%;
+    max-width:1200px;
+    height:100vh;
+    overflow:hidden;
+    background:#08120d;
+}
+
+/* =========================
+   CAMERA
+========================= */
+
+.camera{
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+    transition:transform .15s;
+}
+
+.camera.shake{
+    animation:shake .28s;
+}
+
+@keyframes shake{
+    0%{transform:translate(0,0)}
+    25%{transform:translate(-5px,3px)}
+    50%{transform:translate(5px,-3px)}
+    75%{transform:translate(-3px,2px)}
+    100%{transform:translate(0,0)}
+}
+
+/* =========================
+   STADIUM
+========================= */
+
+.stadium{
+    position:absolute;
+    inset:0;
     background:
-        radial-gradient(circle at 50% 30%, #168449 0%, #086331 35%, #04351d 100%);
+        radial-gradient(
+            ellipse at 50% 25%,
+            rgba(255,255,255,.12),
+            transparent 35%
+        ),
+        linear-gradient(
+            to bottom,
+            #202b2b 0%,
+            #111817 25%,
+            #0b3b20 55%,
+            #06321b 100%
+        );
 }
 
-/* العنوان */
-.topbar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 75px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 25px;
-    z-index: 20;
-    background: linear-gradient(to bottom, rgba(0,0,0,.45), transparent);
-}
-
-.logo {
-    font-size: 24px;
-    font-weight: 900;
-}
-
-.score {
-    background: rgba(0,0,0,.35);
-    padding: 10px 18px;
-    border-radius: 15px;
-    font-weight: bold;
-}
-
-/* الملعب */
-.pitch {
-    position: absolute;
-    top: 75px;
-    bottom: 120px;
-    left: 0;
-    right: 0;
-    overflow: hidden;
-}
-
-/* خطوط الملعب */
-.pitch::before {
-    content: "";
-    position: absolute;
-    left: 5%;
-    right: 5%;
-    bottom: 0;
-    height: 55%;
-    border: 3px solid rgba(255,255,255,.45);
-    border-bottom: none;
-    border-radius: 10px 10px 0 0;
-}
-
-.goal {
-    position: absolute;
-    width: min(82%, 820px);
-    height: min(46vw, 410px);
-    max-height: 410px;
-    min-height: 260px;
-    top: 5%;
-    left: 50%;
-    transform: translateX(-50%);
-    perspective: 800px;
-}
-
-/* شبكة المرمى */
-.net {
-    position: absolute;
-    inset: 0;
+.lights{
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    height:130px;
     background:
-        linear-gradient(rgba(255,255,255,.22) 2px, transparent 2px),
-        linear-gradient(90deg, rgba(255,255,255,.22) 2px, transparent 2px);
-    background-size: 35px 35px;
-    border: 8px solid white;
-    border-bottom-width: 12px;
+        radial-gradient(circle at 15% 20%,rgba(255,255,255,.8),transparent 3%),
+        radial-gradient(circle at 30% 10%,rgba(255,255,255,.8),transparent 3%),
+        radial-gradient(circle at 50% 5%,rgba(255,255,255,.8),transparent 3%),
+        radial-gradient(circle at 70% 10%,rgba(255,255,255,.8),transparent 3%),
+        radial-gradient(circle at 85% 20%,rgba(255,255,255,.8),transparent 3%);
+    opacity:.8;
+}
+
+.crowd{
+    position:absolute;
+    top:60px;
+    left:0;
+    right:0;
+    height:190px;
+    opacity:.65;
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #101616 0 12px,
+            #252b2a 12px 22px,
+            #151b1a 22px 35px
+        );
+    filter:blur(2px);
+}
+
+.field{
+    position:absolute;
+    left:-15%;
+    right:-15%;
+    bottom:-30%;
+    height:75%;
+    transform:perspective(600px) rotateX(55deg);
+    transform-origin:bottom;
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #075524 0 80px,
+            #08602a 80px 160px
+        );
+}
+
+.field::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(
+            to bottom,
+            transparent,
+            rgba(0,0,0,.25)
+        );
+}
+
+/* =========================
+   GOAL
+========================= */
+
+.goal{
+    position:absolute;
+    width:min(88vw,950px);
+    height:min(55vw,500px);
+    max-height:500px;
+    left:50%;
+    top:13%;
+    transform:translateX(-50%);
+    perspective:900px;
+}
+
+.goal-depth{
+    position:absolute;
+    inset:0;
+    transform:perspective(900px) rotateX(2deg);
+}
+
+.net{
+    position:absolute;
+    inset:0;
+
+    background:
+        linear-gradient(
+            rgba(255,255,255,.22) 2px,
+            transparent 2px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.22) 2px,
+            transparent 2px
+        );
+
+    background-size:32px 32px;
+
+    border:8px solid #eeeeee;
+
     box-shadow:
-        0 0 0 4px rgba(0,0,0,.25),
-        0 15px 40px rgba(0,0,0,.4);
-    overflow: hidden;
+        0 0 10px rgba(0,0,0,.7),
+        inset 0 0 60px rgba(0,0,0,.35);
 }
 
-/* القائم */
-.post {
-    position: absolute;
-    background: white;
-    box-shadow: 0 3px 8px rgba(0,0,0,.3);
-    z-index: 8;
+/* قوائم المرمى */
+
+.post{
+    position:absolute;
+    background:linear-gradient(
+        90deg,
+        #aaa,
+        #fff,
+        #bbb
+    );
+    box-shadow:0 4px 10px #000;
+    z-index:10;
 }
 
-.post.left {
-    width: 10px;
-    height: 100%;
-    left: -5px;
+.post.left{
+    left:-10px;
+    top:-5px;
+    width:14px;
+    height:105%;
 }
 
-.post.right {
-    width: 10px;
-    height: 100%;
-    right: -5px;
+.post.right{
+    right:-10px;
+    top:-5px;
+    width:14px;
+    height:105%;
 }
 
-.post.top {
-    height: 10px;
-    width: 100%;
-    top: -5px;
+.post.top{
+    top:-10px;
+    left:-5px;
+    width:101%;
+    height:15px;
 }
 
-/* منطقة التصويب */
-.target-zone {
-    position: absolute;
-    inset: 0;
-    z-index: 5;
-    cursor: crosshair;
+/* =========================
+   TARGET
+========================= */
+
+.target{
+    position:absolute;
+    inset:0;
+    z-index:20;
 }
 
-/* الحارس */
-.keeper {
-    position: absolute;
-    width: 115px;
-    height: 190px;
-    left: 50%;
-    bottom: 0;
-    transform: translateX(-50%);
-    transition: left .55s cubic-bezier(.2,.8,.2,1),
-                transform .55s cubic-bezier(.2,.8,.2,1);
-    z-index: 12;
-    pointer-events: none;
+.crosshair{
+    position:absolute;
+    width:50px;
+    height:50px;
+    border:2px solid #ffcc00;
+    border-radius:50%;
+    transform:translate(-50%,-50%);
+    display:none;
+    pointer-events:none;
+    box-shadow:
+        0 0 20px rgba(255,204,0,.8);
 }
 
-.head {
-    position: absolute;
-    width: 46px;
-    height: 46px;
-    background: #c98255;
-    border-radius: 50%;
-    left: 50%;
-    top: 5px;
-    transform: translateX(-50%);
-    border: 3px solid #552d1c;
+.crosshair::before,
+.crosshair::after{
+    content:"";
+    position:absolute;
+    background:#ffcc00;
 }
 
-.body {
-    position: absolute;
-    width: 75px;
-    height: 100px;
-    background: #111827;
-    left: 50%;
-    top: 48px;
-    transform: translateX(-50%);
-    border-radius: 25px 25px 12px 12px;
-    border: 3px solid #f1c40f;
+.crosshair::before{
+    width:70px;
+    height:2px;
+    left:-12px;
+    top:23px;
 }
 
-.arm {
-    position: absolute;
-    width: 22px;
-    height: 105px;
-    background: #111827;
-    top: 52px;
-    border-radius: 15px;
-    border: 3px solid #f1c40f;
+.crosshair::after{
+    height:70px;
+    width:2px;
+    top:-12px;
+    left:23px;
 }
 
-.arm.left {
-    left: 5px;
-    transform: rotate(22deg);
-}
+/* =========================
+   KEEPER
+========================= */
 
-.arm.right {
-    right: 5px;
-    transform: rotate(-22deg);
-}
+.keeper{
+    position:absolute;
+    width:145px;
+    height:260px;
+    left:50%;
+    bottom:-12px;
+    transform:translateX(-50%);
+    z-index:35;
 
-.leg {
-    position: absolute;
-    width: 28px;
-    height: 65px;
-    background: #111827;
-    top: 135px;
-    border-radius: 10px;
-}
-
-.leg.left {
-    left: 25px;
-}
-
-.leg.right {
-    right: 25px;
-}
-
-.glove {
-    position: absolute;
-    width: 48px;
-    height: 48px;
-    background: #e9f2ff;
-    border: 4px solid #2563eb;
-    border-radius: 50%;
-    z-index: 20;
-    transition: left .15s ease, top .15s ease;
-    transform: translate(-50%, -50%);
-    box-shadow: 0 4px 10px rgba(0,0,0,.4);
-}
-
-/* الكرة */
-.ball {
-    position: absolute;
-    width: 38px;
-    height: 38px;
-    background: white;
-    border-radius: 50%;
-    border: 3px solid #111;
-    left: 50%;
-    bottom: 8%;
-    transform: translateX(-50%);
-    z-index: 15;
     transition:
-        left .7s cubic-bezier(.2,.8,.2,1),
-        top .7s cubic-bezier(.2,.8,.2,1),
-        transform .7s ease;
+        left .35s cubic-bezier(.2,.8,.2,1),
+        transform .35s cubic-bezier(.2,.8,.2,1);
 }
 
-.ball::before {
-    content: "⚽";
-    position: absolute;
-    font-size: 34px;
-    left: -1px;
-    top: -4px;
+.keeper-head{
+    position:absolute;
+    width:48px;
+    height:48px;
+    left:50%;
+    top:5px;
+    transform:translateX(-50%);
+    border-radius:50%;
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #e8a878,
+            #9a5635
+        );
+    border:2px solid #542d1d;
 }
 
-/* نقطة التصويب */
-.aim {
-    position: absolute;
-    width: 35px;
-    height: 35px;
-    border: 3px solid #ffdf00;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 25;
-    display: none;
-    box-shadow: 0 0 15px rgba(255,223,0,.8);
+.keeper-body{
+    position:absolute;
+    width:80px;
+    height:120px;
+    top:48px;
+    left:50%;
+    transform:translateX(-50%);
+    border-radius:28px 28px 15px 15px;
+    background:
+        linear-gradient(
+            90deg,
+            #08101b,
+            #243a55,
+            #08101b
+        );
+    border:3px solid #d8a900;
 }
 
-.aim::after {
-    content: "";
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: #ffdf00;
-    border-radius: 50%;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+.keeper-body::after{
+    content:"GK";
+    position:absolute;
+    left:50%;
+    top:45px;
+    transform:translateX(-50%);
+    font-size:22px;
+    font-weight:900;
+    color:white;
 }
 
-/* لوحة التحكم */
-.controls {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 120px;
-    background: rgba(0,0,0,.45);
-    backdrop-filter: blur(10px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    z-index: 30;
-    padding: 15px;
+.arm{
+    position:absolute;
+    width:27px;
+    height:115px;
+    top:55px;
+    border-radius:20px;
+    background:linear-gradient(
+        90deg,
+        #07101b,
+        #263d58,
+        #07101b
+    );
+    transform-origin:top center;
 }
 
-button {
-    border: none;
-    border-radius: 14px;
-    padding: 15px 30px;
-    font-size: 18px;
-    font-weight: bold;
-    color: white;
-    cursor: pointer;
+.arm.left{
+    left:5px;
+    transform:rotate(25deg);
 }
 
-.shoot {
-    background: #eab308;
-    color: #111;
-    min-width: 170px;
+.arm.right{
+    right:5px;
+    transform:rotate(-25deg);
 }
 
-.save {
-    background: #2563eb;
-    min-width: 170px;
+.leg{
+    position:absolute;
+    width:30px;
+    height:80px;
+    top:160px;
+    background:#101a26;
+    border-radius:15px;
 }
 
-.reset {
-    background: #444;
+.leg.left{
+    left:36px;
 }
 
-/* الرسالة */
-.message {
-    position: absolute;
-    left: 50%;
-    top: 48%;
-    transform: translate(-50%, -50%);
-    z-index: 50;
-    font-size: clamp(35px, 7vw, 80px);
-    font-weight: 900;
-    text-shadow: 0 5px 15px rgba(0,0,0,.7);
-    opacity: 0;
-    pointer-events: none;
+.leg.right{
+    right:36px;
 }
 
-.message.show {
-    animation: message .9s ease forwards;
+/* =========================
+   GLOVES
+========================= */
+
+.glove{
+    position:absolute;
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    z-index:45;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #ffffff,
+            #bfcbd5 60%,
+            #66717b
+        );
+
+    border:4px solid #1260b5;
+
+    transform:translate(-50%,-50%);
+
+    box-shadow:
+        0 5px 15px rgba(0,0,0,.7);
+
+    cursor:pointer;
+
+    transition:
+        left .12s,
+        top .12s,
+        transform .35s;
 }
 
-@keyframes message {
-    0% {
-        opacity: 0;
-        transform: translate(-50%, -40%) scale(.6);
+.glove::after{
+    content:"🧤";
+    position:absolute;
+    font-size:30px;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+}
+
+/* =========================
+   PLAYER
+========================= */
+
+.player{
+    position:absolute;
+    width:125px;
+    height:260px;
+    left:50%;
+    bottom:-145px;
+    transform:translateX(-50%);
+    z-index:25;
+}
+
+.player-head{
+    position:absolute;
+    width:43px;
+    height:43px;
+    left:50%;
+    top:0;
+    transform:translateX(-50%);
+    border-radius:50%;
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #e4a173,
+            #8e4e30
+        );
+}
+
+.player-body{
+    position:absolute;
+    width:70px;
+    height:105px;
+    left:50%;
+    top:42px;
+    transform:translateX(-50%);
+    background:
+        linear-gradient(
+            90deg,
+            #7c1119,
+            #d61f2c,
+            #7c1119
+        );
+    border-radius:22px;
+}
+
+.player-shorts{
+    position:absolute;
+    width:65px;
+    height:55px;
+    left:50%;
+    top:137px;
+    transform:translateX(-50%);
+    background:#eeeeee;
+    border-radius:8px;
+}
+
+.player-leg{
+    position:absolute;
+    width:24px;
+    height:90px;
+    top:180px;
+    background:#d99465;
+    border-radius:12px;
+}
+
+.player-leg.left{
+    left:38px;
+}
+
+.player-leg.right{
+    right:38px;
+}
+
+.player-foot{
+    position:absolute;
+    width:48px;
+    height:20px;
+    background:#111;
+    border-radius:15px;
+    top:255px;
+}
+
+.player-foot.left{
+    left:20px;
+}
+
+.player-foot.right{
+    right:20px;
+}
+
+/* =========================
+   BALL
+========================= */
+
+.ball{
+    position:absolute;
+    width:43px;
+    height:43px;
+    left:50%;
+    bottom:5%;
+    transform:translateX(-50%);
+    z-index:50;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #fff,
+            #d9d9d9 60%,
+            #777
+        );
+
+    box-shadow:
+        0 5px 10px rgba(0,0,0,.6);
+
+    transition:none;
+}
+
+.ball::after{
+    content:"⚽";
+    position:absolute;
+    font-size:38px;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+}
+
+/* =========================
+   UI
+========================= */
+
+.top{
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    height:85px;
+    z-index:100;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 25px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,.7),
+            transparent
+        );
+}
+
+.title{
+    color:white;
+    font-size:25px;
+    font-weight:900;
+}
+
+.score{
+    background:rgba(0,0,0,.5);
+    padding:12px 18px;
+    border-radius:15px;
+    color:white;
+    font-weight:bold;
+}
+
+/* =========================
+   CONTROL BAR
+========================= */
+
+.controls{
+    position:absolute;
+    bottom:0;
+    left:0;
+    right:0;
+    height:105px;
+
+    z-index:100;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(0,0,0,.9),
+            rgba(0,0,0,.4)
+        );
+
+    padding:15px;
+}
+
+button{
+    border:0;
+    border-radius:14px;
+    padding:15px 28px;
+    font-size:17px;
+    font-weight:900;
+    cursor:pointer;
+}
+
+.shoot{
+    background:#e8b900;
+    color:#111;
+    min-width:180px;
+}
+
+.keeperBtn{
+    background:#1769c2;
+    color:white;
+    min-width:180px;
+}
+
+.reset{
+    background:#444;
+    color:white;
+}
+
+/* =========================
+   MESSAGE
+========================= */
+
+.message{
+    position:absolute;
+    left:50%;
+    top:45%;
+    transform:translate(-50%,-50%);
+    z-index:200;
+
+    color:white;
+
+    font-size:
+        clamp(45px,9vw,100px);
+
+    font-weight:1000;
+
+    text-shadow:
+        0 7px 20px rgba(0,0,0,.8);
+
+    opacity:0;
+    pointer-events:none;
+}
+
+.message.show{
+    animation:result .9s ease forwards;
+}
+
+@keyframes result{
+    0%{
+        opacity:0;
+        transform:
+            translate(-50%,-40%)
+            scale(.5);
     }
-    30% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1.15);
+
+    30%{
+        opacity:1;
+        transform:
+            translate(-50%,-50%)
+            scale(1.15);
     }
-    100% {
-        opacity: 0;
-        transform: translate(-50%, -60%) scale(1);
+
+    100%{
+        opacity:0;
+        transform:
+            translate(-50%,-60%)
+            scale(1);
     }
 }
 
-/* تعليمات */
-.help {
-    position: absolute;
-    top: 82px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 20;
-    background: rgba(0,0,0,.45);
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 14px;
-    white-space: nowrap;
-}
+/* =========================
+   MOBILE
+========================= */
 
-/* للجوال والآيباد */
-@media (max-width: 700px) {
-    .topbar {
-        height: 60px;
-        padding: 0 12px;
+@media(max-width:700px){
+
+    .top{
+        height:65px;
+        padding:0 12px;
     }
 
-    .logo {
-        font-size: 18px;
+    .title{
+        font-size:18px;
     }
 
-    .score {
-        font-size: 13px;
-        padding: 8px 12px;
+    .score{
+        font-size:12px;
+        padding:9px 10px;
     }
 
-    .pitch {
-        top: 60px;
-        bottom: 105px;
+    .goal{
+        width:94%;
+        height:52%;
+        top:13%;
     }
 
-    .goal {
-        width: 92%;
-        height: 48%;
-        min-height: 230px;
-        top: 8%;
+    .keeper{
+        transform:
+            translateX(-50%)
+            scale(.75);
+        transform-origin:bottom center;
     }
 
-    .keeper {
-        transform: translateX(-50%) scale(.8);
-        transform-origin: bottom center;
+    .player{
+        transform:
+            translateX(-50%)
+            scale(.75);
+        transform-origin:bottom center;
     }
 
-    .controls {
-        height: 105px;
-        gap: 8px;
+    .glove{
+        width:52px;
+        height:52px;
     }
 
-    button {
-        padding: 13px 12px;
-        font-size: 15px;
+    .controls{
+        height:105px;
+        padding:10px;
+    }
+
+    button{
+        font-size:14px;
+        padding:13px 10px;
     }
 
     .shoot,
-    .save {
-        min-width: 0;
-        flex: 1;
+    .keeperBtn{
+        min-width:0;
+        flex:1;
     }
 
-    .reset {
-        width: 55px;
-        padding: 10px;
-    }
-
-    .help {
-        top: 67px;
-        font-size: 12px;
+    .reset{
+        width:48px;
+        padding:10px;
     }
 }
 </style>
@@ -445,368 +764,768 @@ button {
 
 <div class="game">
 
-    <div class="topbar">
-        <div class="logo">⚽ PENALTY</div>
-        <div class="score">
-            الأهداف: <span id="goals">0</span>
-            &nbsp;|&nbsp;
-            التصديات: <span id="saves">0</span>
-            &nbsp;|&nbsp;
-            <span id="round">1</span>/5
-        </div>
+<div class="camera" id="camera">
+
+<div class="stadium">
+
+    <div class="lights"></div>
+    <div class="crowd"></div>
+    <div class="field"></div>
+
+</div>
+
+<!-- TOP -->
+
+<div class="top">
+
+    <div class="title">
+        ⚽ PENALTY
     </div>
 
-    <div class="help">
-        🎯 اضغط داخل المرمى لتحديد مكان التسديدة
-    </div>
-
-    <div class="pitch">
-
-        <div class="goal">
-
-            <div class="net">
-                <div class="post left"></div>
-                <div class="post right"></div>
-                <div class="post top"></div>
-            </div>
-
-            <div class="target-zone" id="targetZone"></div>
-
-            <div class="aim" id="aim"></div>
-
-            <div class="keeper" id="keeper">
-                <div class="head"></div>
-                <div class="body"></div>
-                <div class="arm left"></div>
-                <div class="arm right"></div>
-                <div class="leg left"></div>
-                <div class="leg right"></div>
-            </div>
-
-            <div class="glove" id="glove">🧤</div>
-
-            <div class="ball" id="ball"></div>
-
-        </div>
-
-    </div>
-
-    <div class="message" id="message"></div>
-
-    <div class="controls">
-        <button class="save" id="saveBtn">🧤 اختر مكان الحارس</button>
-        <button class="shoot" id="shootBtn">⚽ سدد</button>
-        <button class="reset" id="resetBtn">↻</button>
+    <div class="score">
+        ⚽ <span id="goals">0</span>
+        &nbsp; -
+        &nbsp; 🧤 <span id="saves">0</span>
+        &nbsp;&nbsp;
+        <span id="round">1</span>/5
     </div>
 
 </div>
 
+
+<!-- GOAL -->
+
+<div class="goal">
+
+<div class="goal-depth">
+
+<div class="net">
+
+<div class="post left"></div>
+<div class="post right"></div>
+<div class="post top"></div>
+
+</div>
+
+
+<!-- TARGET -->
+
+<div class="target" id="target"></div>
+
+<div class="crosshair" id="crosshair"></div>
+
+
+<!-- KEEPER -->
+
+<div class="keeper" id="keeper">
+
+    <div class="keeper-head"></div>
+
+    <div class="keeper-body"></div>
+
+    <div class="arm left"></div>
+    <div class="arm right"></div>
+
+    <div class="leg left"></div>
+    <div class="leg right"></div>
+
+</div>
+
+
+<!-- GLOVE -->
+
+<div
+    class="glove"
+    id="glove">
+</div>
+
+
+<!-- BALL -->
+
+<div
+    class="ball"
+    id="ball">
+</div>
+
+
+<!-- PLAYER -->
+
+<div class="player">
+
+    <div class="player-head"></div>
+
+    <div class="player-body"></div>
+
+    <div class="player-shorts"></div>
+
+    <div class="player-leg left"></div>
+    <div class="player-leg right"></div>
+
+    <div class="player-foot left"></div>
+    <div class="player-foot right"></div>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- RESULT -->
+
+<div
+    class="message"
+    id="message">
+</div>
+
+
+<!-- CONTROLS -->
+
+<div class="controls">
+
+<button
+    class="keeperBtn"
+    id="keeperBtn">
+    🧤 وضع الحارس
+</button>
+
+<button
+    class="shoot"
+    id="shootBtn">
+    ⚽ تسديد
+</button>
+
+<button
+    class="reset"
+    id="resetBtn">
+    ↻
+</button>
+
+</div>
+
+</div>
+
+
 <script>
 
-const goal = document.querySelector(".goal");
-const targetZone = document.getElementById("targetZone");
-const aim = document.getElementById("aim");
-const glove = document.getElementById("glove");
-const ball = document.getElementById("ball");
-const keeper = document.getElementById("keeper");
+/* ==========================================
+   VARIABLES
+========================================== */
 
-const shootBtn = document.getElementById("shootBtn");
-const saveBtn = document.getElementById("saveBtn");
-const resetBtn = document.getElementById("resetBtn");
+const target =
+    document.getElementById("target");
 
-const message = document.getElementById("message");
+const crosshair =
+    document.getElementById("crosshair");
 
-const goalsText = document.getElementById("goals");
-const savesText = document.getElementById("saves");
-const roundText = document.getElementById("round");
+const glove =
+    document.getElementById("glove");
 
-let shotX = null;
-let shotY = null;
+const keeper =
+    document.getElementById("keeper");
 
-let keeperX = 50;
-let keeperY = 55;
+const ball =
+    document.getElementById("ball");
+
+const camera =
+    document.getElementById("camera");
+
+const shootBtn =
+    document.getElementById("shootBtn");
+
+const keeperBtn =
+    document.getElementById("keeperBtn");
+
+const resetBtn =
+    document.getElementById("resetBtn");
+
+const message =
+    document.getElementById("message");
+
+let shot = {
+    x:null,
+    y:null
+};
+
+let glovePos = {
+    x:50,
+    y:55
+};
+
+let mode = "shot";
 
 let goals = 0;
 let saves = 0;
 let round = 1;
 
-let selectingKeeper = false;
 let shooting = false;
 
 
-/* تحويل الضغط إلى نسبة داخل المرمى */
-function getPosition(e) {
+/* ==========================================
+   POSITION
+========================================== */
 
-    const rect = goal.getBoundingClientRect();
+function getPosition(e){
 
-    let clientX;
-    let clientY;
+    const rect =
+        target.getBoundingClientRect();
 
-    if (e.touches && e.touches.length > 0) {
-        clientX = e.touches[0].clientX;
-        clientY = e.touches[0].clientY;
-    } else {
-        clientX = e.clientX;
-        clientY = e.clientY;
+    let x;
+    let y;
+
+    if(e.touches){
+
+        x =
+            e.touches[0].clientX;
+
+        y =
+            e.touches[0].clientY;
+
+    }else{
+
+        x = e.clientX;
+        y = e.clientY;
+
     }
 
-    let x = ((clientX - rect.left) / rect.width) * 100;
-    let y = ((clientY - rect.top) / rect.height) * 100;
+    let px =
+        ((x - rect.left) /
+        rect.width) * 100;
 
-    x = Math.max(7, Math.min(93, x));
-    y = Math.max(7, Math.min(90, y));
+    let py =
+        ((y - rect.top) /
+        rect.height) * 100;
 
-    return {x, y};
+    px =
+        Math.max(
+            5,
+            Math.min(95,px)
+        );
+
+    py =
+        Math.max(
+            5,
+            Math.min(92,py)
+        );
+
+    return {
+        x:px,
+        y:py
+    };
 }
 
 
-/* اختيار مكان التسديدة */
-function chooseShot(e) {
+/* ==========================================
+   TARGET TOUCH
+========================================== */
 
-    if (shooting || selectingKeeper) return;
+target.addEventListener(
+    "pointerdown",
+    function(e){
 
-    const pos = getPosition(e);
+        if(shooting)
+            return;
 
-    shotX = pos.x;
-    shotY = pos.y;
+        const pos =
+            getPosition(e);
 
-    aim.style.left = shotX + "%";
-    aim.style.top = shotY + "%";
-    aim.style.display = "block";
-}
+        if(mode === "shot"){
+
+            shot.x =
+                pos.x;
+
+            shot.y =
+                pos.y;
+
+            crosshair.style.left =
+                pos.x + "%";
+
+            crosshair.style.top =
+                pos.y + "%";
+
+            crosshair.style.display =
+                "block";
+
+        }else{
+
+            moveGlove(
+                pos.x,
+                pos.y
+            );
+
+        }
+
+    }
+);
 
 
-/* اختيار مكان القفاز */
-function chooseKeeper(e) {
+/* ==========================================
+   MOVE GLOVE
+========================================== */
 
-    if (shooting) return;
+function moveGlove(x,y){
 
-    const pos = getPosition(e);
+    glovePos.x = x;
+    glovePos.y = y;
 
-    keeperX = pos.x;
-    keeperY = pos.y;
+    glove.style.left =
+        x + "%";
 
-    glove.style.left = keeperX + "%";
-    glove.style.top = keeperY + "%";
+    glove.style.top =
+        y + "%";
 
-    /* تحريك الحارس */
-    keeper.style.left = keeperX + "%";
+    keeper.style.left =
+        x + "%";
 
-    /* حركة بسيطة حسب مكان القفاز */
-    if (keeperX < 35) {
+    if(x < 35){
+
         keeper.style.transform =
-            "translateX(-50%) rotate(-12deg)";
-    } else if (keeperX > 65) {
+            "translateX(-50%) rotate(-15deg)";
+
+    }else if(x > 65){
+
         keeper.style.transform =
-            "translateX(-50%) rotate(12deg)";
-    } else {
+            "translateX(-50%) rotate(15deg)";
+
+    }else{
+
         keeper.style.transform =
             "translateX(-50%)";
+
     }
 }
 
 
-/* الضغط داخل المرمى */
-targetZone.addEventListener("pointerdown", function(e) {
+/* ==========================================
+   MODE
+========================================== */
 
-    if (shooting) return;
+keeperBtn.addEventListener(
+    "click",
+    function(){
 
-    if (selectingKeeper) {
-        chooseKeeper(e);
-    } else {
-        chooseShot(e);
+        if(shooting)
+            return;
+
+        if(mode === "shot"){
+
+            mode = "keeper";
+
+            keeperBtn.textContent =
+                "🎯 اختر التسديدة";
+
+            keeperBtn.style.background =
+                "#159447";
+
+        }else{
+
+            mode = "shot";
+
+            keeperBtn.textContent =
+                "🧤 وضع الحارس";
+
+            keeperBtn.style.background =
+                "#1769c2";
+
+        }
+
     }
-});
+);
 
 
-/* زر اختيار الحارس */
-saveBtn.addEventListener("click", function() {
+/* ==========================================
+   MESSAGE
+========================================== */
 
-    if (shooting) return;
+function result(text){
 
-    selectingKeeper = !selectingKeeper;
+    message.textContent =
+        text;
 
-    if (selectingKeeper) {
-
-        saveBtn.textContent = "🧤 اضغط مكان القفاز";
-
-        saveBtn.style.background = "#16a34a";
-
-    } else {
-
-        saveBtn.textContent = "🧤 اختر مكان الحارس";
-
-        saveBtn.style.background = "#2563eb";
-    }
-});
-
-
-/* إظهار النتيجة */
-function showMessage(text) {
-
-    message.textContent = text;
-
-    message.classList.remove("show");
+    message.classList.remove(
+        "show"
+    );
 
     void message.offsetWidth;
 
-    message.classList.add("show");
+    message.classList.add(
+        "show"
+    );
 }
 
 
-/* تنفيذ التسديدة */
-shootBtn.addEventListener("click", function() {
+/* ==========================================
+   SHOOT
+========================================== */
 
-    if (shooting) return;
+shootBtn.addEventListener(
+    "click",
+    shoot
+);
 
-    if (shotX === null) {
-        showMessage("🎯 اختر مكان التسديدة");
+
+function shoot(){
+
+    if(shooting)
+        return;
+
+    if(
+        shot.x === null ||
+        shot.y === null
+    ){
+
+        result(
+            "حدد مكان التسديدة"
+        );
+
         return;
     }
 
     shooting = true;
 
-    selectingKeeper = false;
+    mode = "shot";
 
-    saveBtn.textContent = "🧤 اختر مكان الحارس";
-    saveBtn.style.background = "#2563eb";
+    keeperBtn.textContent =
+        "🧤 وضع الحارس";
 
-    /* حركة الحارس نحو المكان المختار */
-    keeper.style.left = keeperX + "%";
+    keeperBtn.style.background =
+        "#1769c2";
 
-    /* الكرة تطير */
-    ball.style.left = shotX + "%";
-    ball.style.top = shotY + "%";
-    ball.style.bottom = "auto";
 
-    ball.style.transform =
-        "translate(-50%, -50%) scale(.65)";
+    /*
+       المسافة بين القفاز والكرة
+    */
 
-    setTimeout(function() {
+    const dx =
+        shot.x -
+        glovePos.x;
+
+    const dy =
+        shot.y -
+        glovePos.y;
+
+    const distance =
+        Math.sqrt(
+            dx*dx +
+            dy*dy
+        );
+
+
+    /*
+       حركة الحارس وقت التسديدة
+    */
+
+    keeper.style.transition =
+        "left .32s cubic-bezier(.15,.8,.2,1), transform .32s";
+
+    keeper.style.left =
+        glovePos.x + "%";
+
+
+    if(shot.x < 35){
+
+        keeper.style.transform =
+            "translateX(-50%) rotate(-35deg)";
+
+    }else if(shot.x > 65){
+
+        keeper.style.transform =
+            "translateX(-50%) rotate(35deg)";
+
+    }else{
+
+        keeper.style.transform =
+            "translateX(-50%) translateY(-10px)";
+
+    }
+
+
+    /*
+       حركة الكرة
+    */
+
+    const startX = 50;
+    const startY = 90;
+
+    const endX = shot.x;
+    const endY = shot.y;
+
+    const startTime =
+        performance.now();
+
+    const duration =
+        650;
+
+
+    function animateBall(now){
+
+        let progress =
+            (now - startTime) /
+            duration;
+
+        progress =
+            Math.min(1,progress);
+
 
         /*
-        حساب المسافة بين القفاز ومكان الكرة
+           منحنى واقعي للكرة
         */
-        const dx = shotX - keeperX;
-        const dy = shotY - keeperY;
 
-        const distance = Math.sqrt(dx * dx + dy * dy);
-
-        /*
-        إذا القفاز قريب من مكان التسديدة
-        */
-        if (distance < 13) {
-
-            saves++;
-
-            showMessage("🧤 تصدي!");
-
-            /* حركة القفاز */
-            glove.style.transform =
-                "translate(-50%, -50%) scale(1.3) rotate(-20deg)";
-
-        } else {
-
-            goals++;
-
-            showMessage("⚽ GOAL!");
-
-            glove.style.transform =
-                "translate(-50%, -50%) scale(1)";
-
-        }
-
-        goalsText.textContent = goals;
-        savesText.textContent = saves;
-
-    }, 650);
-
-
-    /* إعادة الجولة */
-    setTimeout(function() {
-
-        round++;
-
-        if (round > 5) {
-
-            showMessage(
-                "🏆 انتهت المباراة! " +
-                goals + " أهداف"
+        let ease =
+            1 -
+            Math.pow(
+                1-progress,
+                3
             );
 
-            round = 1;
 
-            setTimeout(resetGame, 1800);
+        let x =
+            startX +
+            (endX-startX) *
+            ease;
 
-        } else {
 
-            roundText.textContent = round;
+        let y =
+            startY +
+            (endY-startY) *
+            ease;
 
-            resetShot();
+
+        /*
+           ارتفاع الكرة
+        */
+
+        let arc =
+            Math.sin(
+                progress *
+                Math.PI
+            ) * 18;
+
+
+        ball.style.left =
+            x + "%";
+
+        ball.style.top =
+            (y-arc) + "%";
+
+        ball.style.bottom =
+            "auto";
+
+
+        let scale =
+            1 -
+            progress*.55;
+
+        ball.style.transform =
+            "translate(-50%,-50%) scale(" +
+            scale +
+            ")";
+
+
+        if(progress < 1){
+
+            requestAnimationFrame(
+                animateBall
+            );
 
         }
 
-    }, 1700);
+    }
 
-});
+    requestAnimationFrame(
+        animateBall
+    );
 
 
-/* إعادة الكرة */
-function resetShot() {
+    /*
+       تحديد النتيجة
+    */
 
-    shooting = false;
+    setTimeout(
+        function(){
 
-    shotX = null;
-    shotY = null;
+            /*
+               منطقة التصدي أصغر
+               لجعل اللعبة أصعب
+            */
 
-    aim.style.display = "none";
+            const saveDistance =
+                distance;
 
-    ball.style.left = "50%";
-    ball.style.top = "auto";
-    ball.style.bottom = "8%";
+            if(saveDistance < 15){
 
-    ball.style.transform =
-        "translateX(-50%)";
+                saves++;
 
-    /* يرجع الحارس للوسط */
-    keeperX = 50;
-    keeperY = 55;
+                result(
+                    "🧤 تصدي!"
+                );
 
-    keeper.style.left = "50%";
-    keeper.style.transform =
-        "translateX(-50%)";
+                camera.classList.add(
+                    "shake"
+                );
 
-    glove.style.left = "50%";
-    glove.style.top = "55%";
+                glove.style.transform =
+                    "translate(-50%,-50%) scale(1.35)";
 
-    glove.style.transform =
-        "translate(-50%, -50%)";
+            }else{
+
+                goals++;
+
+                result(
+                    "⚽ GOAL!"
+                );
+
+                camera.classList.add(
+                    "shake"
+                );
+
+            }
+
+            document.getElementById(
+                "goals"
+            ).textContent =
+                goals;
+
+            document.getElementById(
+                "saves"
+            ).textContent =
+                saves;
+
+        },
+        670
+    );
+
+
+    /*
+       الجولة القادمة
+    */
+
+    setTimeout(
+        function(){
+
+            round++;
+
+            if(round > 5){
+
+                setTimeout(
+                    function(){
+
+                        result(
+                            "🏆 انتهت المباراة"
+                        );
+
+                    },
+                    200
+                );
+
+                setTimeout(
+                    resetGame,
+                    1800
+                );
+
+            }else{
+
+                document.getElementById(
+                    "round"
+                ).textContent =
+                    round;
+
+                resetRound();
+
+            }
+
+        },
+        1600
+    );
+
 }
 
 
-/* إعادة اللعبة */
-function resetGame() {
+/* ==========================================
+   RESET ROUND
+========================================== */
+
+function resetRound(){
+
+    shooting = false;
+
+    shot.x = null;
+    shot.y = null;
+
+    crosshair.style.display =
+        "none";
+
+    ball.style.left =
+        "50%";
+
+    ball.style.top =
+        "auto";
+
+    ball.style.bottom =
+        "5%";
+
+    ball.style.transform =
+        "translateX(-50%)";
+
+    glove.style.transform =
+        "translate(-50%,-50%)";
+
+    moveGlove(
+        50,
+        55
+    );
+
+    camera.classList.remove(
+        "shake"
+    );
+
+}
+
+
+/* ==========================================
+   RESET GAME
+========================================== */
+
+function resetGame(){
 
     goals = 0;
     saves = 0;
     round = 1;
 
-    goalsText.textContent = "0";
-    savesText.textContent = "0";
-    roundText.textContent = "1";
+    document.getElementById(
+        "goals"
+    ).textContent = 0;
 
-    resetShot();
+    document.getElementById(
+        "saves"
+    ).textContent = 0;
+
+    document.getElementById(
+        "round"
+    ).textContent = 1;
+
+    resetRound();
+
 }
 
 
-/* زر إعادة */
-resetBtn.addEventListener("click", resetGame);
+/* ==========================================
+   RESET BUTTON
+========================================== */
+
+resetBtn.addEventListener(
+    "click",
+    resetGame
+);
 
 
-/* منع تكبير الآيباد باللمس المتكرر */
-document.addEventListener("gesturestart", function(e) {
-    e.preventDefault();
-});
+/* ==========================================
+   INITIAL POSITION
+========================================== */
+
+moveGlove(
+    50,
+    55
+);
 
 </script>
 
