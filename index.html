@@ -1,68 +1,1630 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>بطاقات الدوري السعودي</title>
-<link rel="manifest" href="manifest.json">
+
 <style>
-*{box-sizing:border-box} body{margin:0;background:#07100d;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"SF Arabic","Segoe UI",sans-serif}
-.app{min-height:100vh;background:radial-gradient(circle at 50% -10%,#234d38 0,#0a1712 38%,#050907 100%);padding:18px 14px 90px}
-.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.logo{font-size:22px;font-weight:900}.coins{background:#111d18;border:1px solid #b99b4a;border-radius:20px;padding:8px 12px;color:#f1d37b}
-.screen{display:none}.screen.active{display:block}
-h1{font-size:28px;margin:10px 0 20px}.subtitle{color:#aebbb4;margin-top:-12px;margin-bottom:20px}
-.menu{display:grid;gap:13px}.menu button,.back{border:1px solid #536c60;background:linear-gradient(135deg,#17271f,#0d1713);color:#fff;border-radius:18px;padding:20px;font-size:20px;font-weight:800;text-align:right;box-shadow:0 8px 25px #0005}
-.menu button:first-child{background:linear-gradient(135deg,#1e7a4e,#0d3927);border-color:#5fd39a}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.card{position:relative;overflow:hidden;border-radius:18px;padding:12px;min-height:220px;background:linear-gradient(160deg,#e8c66c,#66501f 42%,#14130d);color:#fff;border:2px solid #d9b85c;box-shadow:0 10px 25px #0008}.card.silver{background:linear-gradient(160deg,#e7edf0,#596267 48%,#171a1c);border-color:#cbd5d9}.card .ov{font-size:28px;font-weight:900}.card .pos{font-size:12px}.player{font-size:52px;text-align:center;margin:8px 0}.name{font-size:16px;font-weight:900}.club{font-size:12px;color:#e9e4cf}.stats{display:flex;justify-content:space-between;font-size:11px;margin-top:10px}.pill{display:inline-block;background:#0006;border-radius:10px;padding:4px 7px}
-.pack{border:1px solid #c5a54d;border-radius:22px;padding:28px;text-align:center;background:radial-gradient(circle,#6e5724,#18150c 60%,#0a0b09);margin-bottom:15px}.pack-icon{font-size:70px}.gold{color:#f3d477}
-.actions{display:flex;gap:10px;margin-top:18px}.primary{flex:1;border:0;border-radius:15px;padding:14px;background:#18804e;color:#fff;font-weight:900;font-size:17px}.secondary{flex:1;border:1px solid #64736c;border-radius:15px;padding:14px;background:#15201b;color:#fff;font-weight:800}
-.settings label{display:flex;justify-content:space-between;align-items:center;padding:18px;border-bottom:1px solid #26352e}.settings input{width:22px;height:22px}.formation{background:#12613d;border:2px solid #4dca8a;border-radius:24px;padding:18px;min-height:480px;display:grid;grid-template-rows:repeat(4,1fr);align-items:center;text-align:center;background-image:radial-gradient(circle,#ffffff14 1px,transparent 1px);background-size:22px 22px}.slot{margin:auto;background:#0b1511dd;border:1px solid #d7bc61;border-radius:14px;padding:9px;width:100px}.slot b{display:block}.owned{margin-top:18px}.toast{position:fixed;bottom:25px;left:20px;right:20px;background:#14251d;border:1px solid #4dca8a;padding:14px;border-radius:14px;text-align:center;display:none;z-index:5}
-nav{position:fixed;bottom:0;left:0;right:0;background:#07100df0;border-top:1px solid #293b33;display:flex;justify-content:space-around;padding:9px 5px calc(9px + env(safe-area-inset-bottom));z-index:4}nav button{background:none;border:0;color:#b8c4be;font-size:11px}nav .ico{font-size:21px;display:block}
-@media(min-width:700px){.app{max-width:900px;margin:auto}.grid{grid-template-columns:repeat(4,1fr)}.menu{grid-template-columns:repeat(2,1fr)}nav{max-width:900px;margin:auto}}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,Tahoma,sans-serif;
+}
+
+body{
+  background:
+    radial-gradient(circle at top,#173d2b 0,#07120e 38%,#030706 100%);
+  color:#fff;
+  min-height:100vh;
+}
+
+button{
+  border:0;
+  cursor:pointer;
+}
+
+.app{
+  max-width:1200px;
+  margin:auto;
+  min-height:100vh;
+  padding-bottom:40px;
+}
+
+/* HEADER */
+header{
+  padding:18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  border-bottom:1px solid rgba(212,175,55,.25);
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:rgba(3,10,7,.92);
+  backdrop-filter:blur(12px);
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.logo-icon{
+  width:45px;
+  height:45px;
+  border-radius:14px;
+  background:linear-gradient(135deg,#d4af37,#fff1a8,#a67c00);
+  color:#07120e;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+  box-shadow:0 0 20px rgba(212,175,55,.25);
+}
+
+.logo h1{
+  font-size:18px;
+}
+
+.logo small{
+  color:#9fb5aa;
+}
+
+.coins{
+  background:#10251b;
+  border:1px solid rgba(212,175,55,.35);
+  border-radius:14px;
+  padding:10px 14px;
+  color:#ffd95b;
+  font-weight:bold;
+}
+
+/* NAV */
+nav{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:8px;
+  padding:14px;
+}
+
+nav button{
+  background:#0c1913;
+  color:#aab9b1;
+  padding:12px 5px;
+  border-radius:12px;
+  border:1px solid #173025;
+  transition:.2s;
+}
+
+nav button.active,
+nav button:hover{
+  color:#07120e;
+  background:linear-gradient(135deg,#d4af37,#f8df78);
+}
+
+/* PAGES */
+.page{
+  display:none;
+  padding:18px;
+}
+
+.page.active{
+  display:block;
+}
+
+.hero{
+  background:
+    linear-gradient(135deg,rgba(212,175,55,.14),rgba(25,92,60,.18)),
+    #09150f;
+  border:1px solid rgba(212,175,55,.22);
+  border-radius:24px;
+  padding:25px;
+  margin-bottom:18px;
+  overflow:hidden;
+  position:relative;
+}
+
+.hero:after{
+  content:"⚽";
+  position:absolute;
+  left:30px;
+  top:20px;
+  font-size:80px;
+  opacity:.08;
+}
+
+.hero h2{
+  font-size:28px;
+  margin-bottom:8px;
+}
+
+.hero p{
+  color:#9fb5aa;
+}
+
+.section-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:22px 0 12px;
+}
+
+.section-title h3{
+  font-size:20px;
+}
+
+.muted{
+  color:#8da197;
+}
+
+/* BUTTONS */
+.gold-btn{
+  background:linear-gradient(135deg,#d4af37,#ffe783);
+  color:#07120e;
+  padding:13px 20px;
+  border-radius:13px;
+  font-weight:bold;
+  margin-top:15px;
+  box-shadow:0 8px 20px rgba(212,175,55,.15);
+}
+
+.green-btn{
+  background:#0e6b43;
+  color:#fff;
+  padding:12px 18px;
+  border-radius:12px;
+  font-weight:bold;
+}
+
+.dark-btn{
+  background:#12231b;
+  color:#ddd;
+  padding:12px 18px;
+  border-radius:12px;
+  border:1px solid #254536;
+}
+
+/* DASHBOARD */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.stat{
+  background:#0a1711;
+  border:1px solid #183126;
+  border-radius:17px;
+  padding:18px;
+}
+
+.stat span{
+  color:#8da197;
+  display:block;
+  margin-bottom:7px;
+}
+
+.stat strong{
+  font-size:24px;
+  color:#f1d260;
+}
+
+/* CARDS */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+  gap:14px;
+}
+
+.player-card{
+  min-height:270px;
+  border-radius:20px;
+  padding:15px;
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(145deg,#182b20,#07100c);
+  border:1px solid rgba(212,175,55,.45);
+  box-shadow:0 12px 30px rgba(0,0,0,.3);
+}
+
+.player-card.gold{
+  background:linear-gradient(145deg,#5e4811,#181204 70%);
+}
+
+.player-card.green{
+  background:linear-gradient(145deg,#0d5636,#06130d 70%);
+}
+
+.rating{
+  font-size:31px;
+  font-weight:bold;
+  color:#f5d866;
+}
+
+.position{
+  position:absolute;
+  left:15px;
+  top:15px;
+  background:#fff;
+  color:#111;
+  padding:5px 8px;
+  border-radius:8px;
+  font-size:11px;
+  font-weight:bold;
+}
+
+.player-avatar{
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  margin:12px auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:46px;
+  background:linear-gradient(145deg,#253d30,#0a120e);
+  border:2px solid rgba(255,255,255,.15);
+}
+
+.player-name{
+  text-align:center;
+  font-size:18px;
+  font-weight:bold;
+}
+
+.player-team{
+  text-align:center;
+  color:#9caf9f;
+  font-size:12px;
+  margin-top:4px;
+}
+
+.card-stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:5px;
+  margin-top:14px;
+}
+
+.card-stats div{
+  text-align:center;
+  background:rgba(0,0,0,.25);
+  padding:7px 2px;
+  border-radius:7px;
+  font-size:11px;
+}
+
+.card-stats b{
+  display:block;
+  color:#fff;
+}
+
+/* PACKS */
+.packs{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:18px;
+}
+
+.pack{
+  background:linear-gradient(145deg,#162c20,#07100b);
+  border:1px solid #315740;
+  border-radius:22px;
+  padding:25px;
+  text-align:center;
+  transition:.2s;
+}
+
+.pack:hover{
+  transform:translateY(-4px);
+  border-color:#d4af37;
+}
+
+.pack-icon{
+  font-size:65px;
+  margin-bottom:12px;
+}
+
+.pack h3{
+  margin-bottom:7px;
+}
+
+.pack p{
+  color:#8da197;
+  font-size:13px;
+}
+
+/* FORMATION */
+.formation{
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,.02) 0,
+      rgba(255,255,255,.02) 1px,
+      transparent 1px,
+      transparent 55px
+    ),
+    #0a4b2d;
+  border:4px solid rgba(255,255,255,.15);
+  border-radius:25px;
+  min-height:580px;
+  padding:25px;
+  position:relative;
+  overflow:hidden;
+}
+
+.formation:before{
+  content:"";
+  position:absolute;
+  inset:20px;
+  border:2px solid rgba(255,255,255,.2);
+  border-radius:15px;
+  pointer-events:none;
+}
+
+.pitch{
+  height:530px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-around;
+  position:relative;
+  z-index:2;
+}
+
+.row{
+  display:flex;
+  justify-content:center;
+  gap:18px;
+}
+
+.slot{
+  width:92px;
+  min-height:92px;
+  border-radius:50%;
+  background:rgba(5,20,12,.85);
+  border:2px solid #d4af37;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-size:11px;
+  cursor:pointer;
+}
+
+.slot .mini{
+  font-size:27px;
+}
+
+.slot.empty{
+  color:#c9d7cf;
+  border-style:dashed;
+}
+
+/* MARKET */
+.market-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:14px;
+}
+
+.market-card{
+  background:#0a1711;
+  border:1px solid #183126;
+  padding:16px;
+  border-radius:17px;
+}
+
+.market-top{
+  display:flex;
+  justify-content:space-between;
+}
+
+.price{
+  color:#f1d260;
+  font-weight:bold;
+  margin:10px 0;
+}
+
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.75);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:100;
+  padding:20px;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  width:min(500px,100%);
+  background:#0a1711;
+  border:1px solid #d4af37;
+  border-radius:25px;
+  padding:25px;
+  text-align:center;
+}
+
+.close{
+  float:left;
+  background:none;
+  color:#aaa;
+  font-size:25px;
+}
+
+/* CLUBS */
+.club-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:12px;
+}
+
+.club{
+  background:#0b1912;
+  border:1px solid #1c3829;
+  border-radius:16px;
+  padding:20px 10px;
+  text-align:center;
+  cursor:pointer;
+}
+
+.club:hover,
+.club.selected{
+  border-color:#d4af37;
+  background:#15291e;
+}
+
+.club-logo{
+  font-size:42px;
+  margin-bottom:8px;
+}
+
+/* TOAST */
+.toast{
+  position:fixed;
+  bottom:25px;
+  left:50%;
+  transform:translateX(-50%) translateY(100px);
+  background:#d4af37;
+  color:#07120e;
+  padding:13px 22px;
+  border-radius:12px;
+  font-weight:bold;
+  transition:.3s;
+  z-index:200;
+}
+
+.toast.show{
+  transform:translateX(-50%) translateY(0);
+}
+
+/* MOBILE */
+@media(max-width:650px){
+  nav{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .stats{
+    grid-template-columns:1fr;
+  }
+
+  .hero h2{
+    font-size:22px;
+  }
+
+  .cards{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .player-card{
+    min-height:250px;
+  }
+
+  .formation{
+    min-height:520px;
+    padding:12px;
+  }
+
+  .pitch{
+    height:480px;
+  }
+
+  .slot{
+    width:68px;
+    min-height:68px;
+    font-size:9px;
+  }
+
+  .slot .mini{
+    font-size:21px;
+  }
+
+  .row{
+    gap:8px;
+  }
+}
 </style>
 </head>
+
 <body>
+
 <div class="app">
-<div class="top"><div class="logo">⚽ بطاقات الدوري السعودي</div><div class="coins">🪙 <span id="coins">5000</span></div></div>
 
-<section id="home" class="screen active"><h1>مرحباً بك 👋</h1><div class="subtitle">اجمع البطاقات وطوّر تشكيلتك</div>
-<div class="menu">
-<button onclick="show('start')">▶️ ابدأ</button>
-<button onclick="show('formation')">👥 التشكيلة</button>
-<button onclick="show('packs')">🎁 البكجات</button>
-<button onclick="show('market')">💰 بيع البطاقات</button>
-<button onclick="show('settings')">⚙️ الإعدادات</button>
-</div></section>
+<header>
+  <div class="logo">
+    <div class="logo-icon">⚽</div>
+    <div>
+      <h1>بطاقات الدوري السعودي</h1>
+      <small id="clubName">اختر ناديك</small>
+    </div>
+  </div>
 
-<section id="start" class="screen"><button class="back" onclick="show('home')">رجوع</button><h1>ابدأ</h1><p class="subtitle">اختر تشكيلتك ثم جهّز فريقك للمباراة.</p><div class="formation"><div class="slot">🧤<b>حارس</b><span>اختيار</span></div><div><span class="slot">🛡️ مدافع</span> <span class="slot">🛡️ مدافع</span></div><div><span class="slot">⚽ وسط</span> <span class="slot">⚽ وسط</span></div><div class="slot">🔥 مهاجم</div></div></section>
+  <div class="coins">
+    🪙 <span id="coins">5000</span>
+  </div>
+</header>
 
-<section id="formation" class="screen"><button class="back" onclick="show('home')">رجوع</button><h1>التشكيلة</h1><p class="subtitle">البطاقات التي تملكها</p><div id="collection" class="grid"></div></section>
+<nav>
+  <button class="active" onclick="showPage('home',this)">🏠 الرئيسية</button>
+  <button onclick="showPage('squad',this)">👥 التشكيلة</button>
+  <button onclick="showPage('packs',this)">🎁 البكجات</button>
+  <button onclick="showPage('market',this)">🛒 السوق</button>
+  <button onclick="showPage('match',this)">⚽ المباراة</button>
+  <button onclick="showPage('club',this)">🏟️ النادي</button>
+</nav>
 
-<section id="packs" class="screen"><button class="back" onclick="show('home')">رجوع</button><h1>البكجات</h1><div class="pack"><div class="pack-icon">🎁</div><h2>البكج الذهبي</h2><p>بطاقة لاعب عشوائية</p><div class="gold">السعر: 1000 🪙</div><button class="primary" onclick="openPack()">فتح البكج</button></div><div id="packResult"></div></section>
 
-<section id="market" class="screen"><button class="back" onclick="show('home')">رجوع</button><h1>بيع البطاقات</h1><p class="subtitle">بيع البطاقات التي تملكها مقابل عملات.</p><div id="marketGrid" class="grid"></div></section>
+<!-- HOME -->
+<section id="home" class="page active">
 
-<section id="settings" class="screen"><button class="back" onclick="show('home')">رجوع</button><h1>الإعدادات</h1><div class="settings"><label>اللغة <select id="lang"><option>العربية</option><option>English</option></select></label><label>🎵 موسيقى اللعبة <input id="music" type="checkbox" checked></label><label>🔊 المؤثرات الصوتية <input id="sound" type="checkbox" checked></label></div></section>
+  <div class="hero">
+    <h2>مرحباً بك في دوري البطاقات 🇸🇦</h2>
+    <p>كوّن فريقك، افتح البكجات، اشترِ اللاعبين وابدأ المنافسة.</p>
+    <button class="gold-btn" onclick="showPage('packs')">
+      🎁 افتح بكج
+    </button>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <span>🪙 العملات</span>
+      <strong id="homeCoins">5000</strong>
+    </div>
+
+    <div class="stat">
+      <span>👥 لاعبوك</span>
+      <strong id="playerCount">3</strong>
+    </div>
+
+    <div class="stat">
+      <span>🏆 الانتصارات</span>
+      <strong id="wins">0</strong>
+    </div>
+  </div>
+
+  <div class="section-title">
+    <h3>⭐ لاعبوك</h3>
+  </div>
+
+  <div class="cards" id="homeCards"></div>
+
+</section>
+
+
+<!-- SQUAD -->
+<section id="squad" class="page">
+
+  <div class="hero">
+    <h2>👥 تشكيلتك</h2>
+    <p>11 لاعب أساسي + 5 لاعبين احتياط</p>
+  </div>
+
+  <div class="formation">
+
+    <div class="pitch">
+
+      <div class="row">
+        <div class="slot" id="slot-gk"></div>
+      </div>
+
+      <div class="row">
+        <div class="slot" id="slot-d1"></div>
+        <div class="slot" id="slot-d2"></div>
+        <div class="slot" id="slot-d3"></div>
+        <div class="slot" id="slot-d4"></div>
+      </div>
+
+      <div class="row">
+        <div class="slot" id="slot-m1"></div>
+        <div class="slot" id="slot-m2"></div>
+        <div class="slot" id="slot-m3"></div>
+      </div>
+
+      <div class="row">
+        <div class="slot" id="slot-f1"></div>
+        <div class="slot" id="slot-f2"></div>
+        <div class="slot" id="slot-f3"></div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="section-title">
+    <h3>🪑 الاحتياط</h3>
+  </div>
+
+  <div class="cards" id="bench"></div>
+
+</section>
+
+
+<!-- PACKS -->
+<section id="packs" class="page">
+
+  <div class="hero">
+    <h2>🎁 البكجات</h2>
+    <p>افتح البكج واحصل على لاعب عشوائي.</p>
+  </div>
+
+  <div class="packs">
+
+    <div class="pack">
+      <div class="pack-icon">🎁</div>
+      <h3>البكج البرونزي</h3>
+      <p>لاعب واحد عشوائي</p>
+      <button class="gold-btn" onclick="openPack(500,'bronze')">
+        🪙 500
+      </button>
+    </div>
+
+    <div class="pack">
+      <div class="pack-icon">🎁</div>
+      <h3>البكج الذهبي</h3>
+      <p>لاعب قوي بفرصة أعلى</p>
+      <button class="gold-btn" onclick="openPack(1000,'gold')">
+        🪙 1000
+      </button>
+    </div>
+
+    <div class="pack">
+      <div class="pack-icon">💎</div>
+      <h3>البكج الأسطوري</h3>
+      <p>فرصة كبيرة للاعب نادر</p>
+      <button class="gold-btn" onclick="openPack(2500,'legend')">
+        🪙 2500
+      </button>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- MARKET -->
+<section id="market" class="page">
+
+  <div class="hero">
+    <h2>🛒 سوق اللاعبين</h2>
+    <p>اشترِ اللاعبين وأضفهم إلى فريقك.</p>
+  </div>
+
+  <div class="market-grid" id="marketGrid"></div>
+
+</section>
+
+
+<!-- MATCH -->
+<section id="match" class="page">
+
+  <div class="hero">
+    <h2>⚽ ابدأ المباراة</h2>
+    <p>واجه فريقاً عشوائياً وحاول تحقيق الفوز.</p>
+
+    <button class="gold-btn" onclick="startMatch()">
+      ⚽ ابدأ المباراة
+    </button>
+  </div>
+
+  <div id="matchResult"></div>
+
+</section>
+
+
+<!-- CLUB -->
+<section id="club" class="page">
+
+  <div class="hero">
+    <h2>🏟️ اختر ناديك</h2>
+    <p>اختَر النادي الذي تريد تمثيله.</p>
+  </div>
+
+  <div class="club-grid">
+
+    <div class="club" onclick="chooseClub('الهلال')">
+      <div class="club-logo">🔵</div>
+      <b>الهلال</b>
+    </div>
+
+    <div class="club" onclick="chooseClub('النصر')">
+      <div class="club-logo">🟡</div>
+      <b>النصر</b>
+    </div>
+
+    <div class="club" onclick="chooseClub('الاتحاد')">
+      <div class="club-logo">⚫</div>
+      <b>الاتحاد</b>
+    </div>
+
+    <div class="club" onclick="chooseClub('الأهلي')">
+      <div class="club-logo">🟢</div>
+      <b>الأهلي</b>
+    </div>
+
+    <div class="club" onclick="chooseClub('الشباب')">
+      <div class="club-logo">⚪</div>
+      <b>الشباب</b>
+    </div>
+
+    <div class="club" onclick="chooseClub('القادسية')">
+      <div class="club-logo">🔴</div>
+      <b>القادسية</b>
+    </div>
+
+    <div class="club" onclick="chooseClub('الاتفاق')">
+      <div class="club-logo">🟢</div>
+      <b>الاتفاق</b>
+    </div>
+
+    <div class="club" onclick="chooseClub('ضمك')">
+      <div class="club-logo">🔴</div>
+      <b>ضمك</b>
+    </div>
+
+  </div>
+
+</section>
+
 </div>
-<nav><button onclick="show('home')"><span class="ico">🏠</span>الرئيسية</button><button onclick="show('formation')"><span class="ico">👥</span>التشكيلة</button><button onclick="show('packs')"><span class="ico">🎁</span>البكجات</button><button onclick="show('market')"><span class="ico">💰</span>البيع</button></nav>
-<div id="toast" class="toast"></div>
+
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+
+  <div class="modal-box">
+
+    <button class="close" onclick="closeModal()">×</button>
+
+    <div id="modalContent"></div>
+
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+
 <script>
-const players=[
-{name:"كريستيانو رونالدو",pos:"ST",ov:96,spd:92,sho:98,rar:"gold"},
-{name:"ساديو ماني",pos:"LW",ov:90,spd:93,sho:88,rar:"gold"},
-{name:"رياض محرز",pos:"RW",ov:89,spd:86,sho:91,rar:"gold"},
-{name:"سالم الدوسري",pos:"LW",ov:88,spd:90,sho:86,rar:"gold"},
-{name:"حسن كادش",pos:"LB",ov:79,spd:76,sho:55,rar:"silver"},
-{name:"حسان تمبكتي",pos:"CB",ov:80,spd:72,sho:45,rar:"silver"}
+
+/* =========================
+   DATA
+========================= */
+
+const players = [
+
+ {
+  id:1,
+  name:"ياسين بونو",
+  team:"الهلال",
+  pos:"GK",
+  rating:86,
+  pace:75,
+  shot:35,
+  pass:82,
+  emoji:"🧤"
+ },
+
+ {
+  id:2,
+  name:"سالم الدوسري",
+  team:"الهلال",
+  pos:"LW",
+  rating:88,
+  pace:91,
+  shot:86,
+  pass:84,
+  emoji:"⚡"
+ },
+
+ {
+  id:3,
+  name:"كريستيانو رونالدو",
+  team:"النصر",
+  pos:"ST",
+  rating:91,
+  pace:86,
+  shot:95,
+  pass:82,
+  emoji:"⭐"
+ },
+
+ {
+  id:4,
+  name:"ساديو ماني",
+  team:"النصر",
+  pos:"LW",
+  rating:88,
+  pace:92,
+  shot:86,
+  pass:80,
+  emoji:"⚡"
+ },
+
+ {
+  id:5,
+  name:"رياض محرز",
+  team:"الأهلي",
+  pos:"RW",
+  rating:87,
+  pace:85,
+  shot:88,
+  pass:89,
+  emoji:"⭐"
+ },
+
+ {
+  id:6,
+  name:"إيفان توني",
+  team:"الأهلي",
+  pos:"ST",
+  rating:86,
+  pace:78,
+  shot:91,
+  pass:76,
+  emoji:"🔥"
+ },
+
+ {
+  id:7,
+  name:"كريم بنزيما",
+  team:"الاتحاد",
+  pos:"ST",
+  rating:89,
+  pace:80,
+  shot:92,
+  pass:86,
+  emoji:"🔥"
+ },
+
+ {
+  id:8,
+  name:"كانتي",
+  team:"الاتحاد",
+  pos:"CM",
+  rating:85,
+  pace:78,
+  shot:65,
+  pass:88,
+  emoji:"🛡️"
+ },
+
+ {
+  id:9,
+  name:"ميتروفيتش",
+  team:"الهلال",
+  pos:"ST",
+  rating:88,
+  pace:75,
+  shot:93,
+  pass:70,
+  emoji:"💪"
+ },
+
+ {
+  id:10,
+  name:"روبن نيفيز",
+  team:"الهلال",
+  pos:"CM",
+  rating:87,
+  pace:70,
+  shot:76,
+  pass:93,
+  emoji:"🎯"
+ },
+
+ {
+  id:11,
+  name:"ثيو هيرنانديز",
+  team:"الهلال",
+  pos:"LB",
+  rating:89,
+  pace:94,
+  shot:78,
+  pass:85,
+  emoji:"⚡"
+ },
+
+ {
+  id:12,
+  name:"علي لاجامي",
+  team:"النصر",
+  pos:"CB",
+  rating:80,
+  pace:68,
+  shot:35,
+  pass:72,
+  emoji:"🛡️"
+ },
+
+ {
+  id:13,
+  name:"فرانك كيسي",
+  team:"الأهلي",
+  pos:"CM",
+  rating:84,
+  pace:72,
+  shot:78,
+  pass:82,
+  emoji:"💪"
+ },
+
+ {
+  id:14,
+  name:"موسى ديابي",
+  team:"الاتحاد",
+  pos:"RW",
+  rating:86,
+  pace:95,
+  shot:79,
+  pass:83,
+  emoji:"⚡"
+ }
+
 ];
-let owned=[players[0],players[3],players[4],players[5]];
-let coins=5000;
-function show(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');render()}
-function card(p){return `<div class="card ${p.rar==='silver'?'silver':''}"><div class="ov">${p.ov}</div><div class="pos">${p.pos}</div><div class="player">⚽</div><div class="name">${p.name}</div><div class="club">الدوري السعودي</div><div class="stats"><span>⚡ ${p.spd}</span><span>🎯 ${p.sho}</span><span class="pill">LVL 1</span></div></div>`}
-function render(){document.getElementById('coins').textContent=coins;document.getElementById('collection').innerHTML=owned.map(card).join('');document.getElementById('marketGrid').innerHTML=owned.map((p,i)=>card(p)+`<button class="secondary" style="grid-column:auto" onclick="sell(${i})">بيع بـ ${Math.max(300,p.ov*10)} 🪙</button>`).join('')}
-function toast(t){let e=document.getElementById('toast');e.textContent=t;e.style.display='block';setTimeout(()=>e.style.display='none',1800)}
-function openPack(){if(coins<1000){toast('لا تملك عملات كافية');return}coins-=1000;let p=players[Math.floor(Math.random()*players.length)];owned.push(p);document.getElementById('packResult').innerHTML='<h2>🎉 حصلت على</h2>'+card(p);toast('تم فتح البكج!');render()}
-function sell(i){let p=owned[i];let price=Math.max(300,p.ov*10);coins+=price;owned.splice(i,1);toast('تم بيع البطاقة بـ '+price+' 🪙');render()}
-render();
+
+
+/* =========================
+   STATE
+========================= */
+
+let coins = Number(localStorage.getItem("coins")) || 5000;
+
+let myPlayers =
+  JSON.parse(localStorage.getItem("myPlayers")) ||
+  [1,3,5];
+
+let club =
+  localStorage.getItem("club") || "";
+
+let wins =
+  Number(localStorage.getItem("wins")) || 0;
+
+
+/* =========================
+   INIT
+========================= */
+
+function save(){
+
+  localStorage.setItem("coins",coins);
+  localStorage.setItem("myPlayers",JSON.stringify(myPlayers));
+  localStorage.setItem("club",club);
+  localStorage.setItem("wins",wins);
+
+}
+
+function init(){
+
+  updateCoins();
+  renderHome();
+  renderMarket();
+  renderSquad();
+
+  if(club){
+    document.getElementById("clubName").textContent = club;
+  }
+
+}
+
+init();
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function showPage(id,btn){
+
+  document.querySelectorAll(".page")
+    .forEach(p=>p.classList.remove("active"));
+
+  document.getElementById(id)
+    .classList.add("active");
+
+  document.querySelectorAll("nav button")
+    .forEach(b=>b.classList.remove("active"));
+
+  if(btn) btn.classList.add("active");
+
+  if(id==="home") renderHome();
+  if(id==="squad") renderSquad();
+  if(id==="market") renderMarket();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================
+   COINS
+========================= */
+
+function updateCoins(){
+
+  document.getElementById("coins").textContent =
+    coins.toLocaleString();
+
+  document.getElementById("homeCoins").textContent =
+    coins.toLocaleString();
+
+  document.getElementById("wins").textContent =
+    wins;
+
+  document.getElementById("playerCount").textContent =
+    myPlayers.length;
+
+}
+
+
+/* =========================
+   PLAYER CARD
+========================= */
+
+function playerCard(p,style=""){
+
+  return `
+  <div class="player-card ${style}">
+
+    <div class="rating">${p.rating}</div>
+
+    <div class="position">${p.pos}</div>
+
+    <div class="player-avatar">
+      ${p.emoji}
+    </div>
+
+    <div class="player-name">
+      ${p.name}
+    </div>
+
+    <div class="player-team">
+      ${p.team}
+    </div>
+
+    <div class="card-stats">
+
+      <div>
+        <b>${p.pace}</b>
+        سرعة
+      </div>
+
+      <div>
+        <b>${p.shot}</b>
+        تسديد
+      </div>
+
+      <div>
+        <b>${p.pass}</b>
+        تمرير
+      </div>
+
+    </div>
+
+  </div>
+  `;
+
+}
+
+
+/* =========================
+   HOME
+========================= */
+
+function renderHome(){
+
+  const box =
+    document.getElementById("homeCards");
+
+  const list =
+    myPlayers
+      .map(id=>players.find(p=>p.id===id))
+      .filter(Boolean);
+
+  box.innerHTML =
+    list.map((p,i)=>
+      playerCard(
+        p,
+        i===0 ? "gold" : ""
+      )
+    ).join("");
+
+  updateCoins();
+
+}
+
+
+/* =========================
+   PACKS
+========================= */
+
+function openPack(price,type){
+
+  if(coins < price){
+
+    toast("❌ ما عندك عملات كافية");
+    return;
+
+  }
+
+  coins -= price;
+
+  let available =
+    players.filter(p=>!myPlayers.includes(p.id));
+
+  if(available.length===0){
+
+    available = players;
+
+  }
+
+  let p;
+
+  if(type==="legend"){
+
+    const legends =
+      available.filter(x=>x.rating>=88);
+
+    p =
+      legends.length
+      ? legends[Math.floor(Math.random()*legends.length)]
+      : available[Math.floor(Math.random()*available.length)];
+
+  }else if(type==="gold"){
+
+    const gold =
+      available.filter(x=>x.rating>=85);
+
+    p =
+      gold.length
+      ? gold[Math.floor(Math.random()*gold.length)]
+      : available[Math.floor(Math.random()*available.length)];
+
+  }else{
+
+    p =
+      available[Math.floor(Math.random()*available.length)];
+
+  }
+
+  if(!myPlayers.includes(p.id)){
+    myPlayers.push(p.id);
+  }
+
+  save();
+  updateCoins();
+  renderHome();
+
+  document.getElementById("modalContent").innerHTML = `
+
+    <div style="font-size:65px;margin:10px">
+      🎉
+    </div>
+
+    <h2>مبروك!</h2>
+
+    <p style="color:#aaa;margin:10px">
+      حصلت على اللاعب
+    </p>
+
+    <div style="margin:15px">
+      ${playerCard(p,"gold")}
+    </div>
+
+    <button class="gold-btn" onclick="closeModal()">
+      ممتاز
+    </button>
+
+  `;
+
+  document.getElementById("modal")
+    .classList.add("show");
+
+}
+
+
+/* =========================
+   MARKET
+========================= */
+
+function renderMarket(){
+
+  const box =
+    document.getElementById("marketGrid");
+
+  box.innerHTML =
+    players.map(p=>{
+
+      const owned =
+        myPlayers.includes(p.id);
+
+      const price =
+        Math.max(500,(p.rating-70)*150);
+
+      return `
+
+      <div class="market-card">
+
+        <div class="market-top">
+          <strong>${p.name}</strong>
+          <span>⭐ ${p.rating}</span>
+        </div>
+
+        <p class="muted">
+          ${p.team} • ${p.pos}
+        </p>
+
+        <div class="price">
+          🪙 ${price.toLocaleString()}
+        </div>
+
+        ${
+          owned
+          ?
+          `<button class="dark-btn" disabled>
+             ✔ موجود لديك
+           </button>`
+          :
+          `<button class="green-btn"
+             onclick="buyPlayer(${p.id},${price})">
+             شراء
+           </button>`
+        }
+
+      </div>
+
+      `;
+
+    }).join("");
+
+}
+
+
+function buyPlayer(id,price){
+
+  if(coins < price){
+
+    toast("❌ العملات غير كافية");
+    return;
+
+  }
+
+  if(myPlayers.includes(id)){
+
+    toast("اللاعب موجود عندك");
+    return;
+
+  }
+
+  coins -= price;
+  myPlayers.push(id);
+
+  save();
+  updateCoins();
+  renderMarket();
+  renderHome();
+
+  toast("✅ تمت إضافة اللاعب إلى فريقك");
+
+}
+
+
+/* =========================
+   SQUAD
+========================= */
+
+function renderSquad(){
+
+  const list =
+    myPlayers
+      .map(id=>players.find(p=>p.id===id))
+      .filter(Boolean);
+
+  const positions = [
+    "GK",
+    "LB","CB","CB","RB",
+    "CM","CM","CM",
+    "LW","ST","RW"
+  ];
+
+  const slots = [
+    "slot-gk",
+    "slot-d1","slot-d2","slot-d3","slot-d4",
+    "slot-m1","slot-m2","slot-m3",
+    "slot-f1","slot-f2","slot-f3"
+  ];
+
+  slots.forEach((slot,i)=>{
+
+    const el =
+      document.getElementById(slot);
+
+    const wanted =
+      positions[i];
+
+    let p =
+      list.find(x=>x.pos===wanted);
+
+    if(!p){
+
+      p =
+        list.find(x=>
+          ["CB","LB","RB"].includes(wanted) &&
+          ["CB","LB","RB"].includes(x.pos)
+        );
+
+    }
+
+    if(!p && i>=5 && i<=7){
+
+      p =
+        list.find(x=>
+          ["CM","LW","RW"].includes(x.pos)
+        );
+
+    }
+
+    if(!p && i>=8){
+
+      p =
+        list.find(x=>
+          ["ST","LW","RW"].includes(x.pos)
+        );
+
+    }
+
+    if(p){
+
+      el.className="slot";
+
+      el.innerHTML = `
+        <div class="mini">${p.emoji}</div>
+        <b>${p.name.split(" ")[0]}</b>
+        <small>${p.rating}</small>
+      `;
+
+    }else{
+
+      el.className="slot empty";
+
+      el.innerHTML=`
+        <div class="mini">+</div>
+        <span>فارغ</span>
+      `;
+
+    }
+
+  });
+
+
+  const bench =
+    document.getElementById("bench");
+
+  const used =
+    list.slice(0,11);
+
+  const reserve =
+    list.filter(p=>!used.includes(p));
+
+  bench.innerHTML =
+    reserve.length
+    ?
+    reserve.map(p=>playerCard(p)).join("")
+    :
+    `<p class="muted">أضف لاعبين أكثر ليظهروا هنا.</p>`;
+
+}
+
+
+/* =========================
+   CLUB
+========================= */
+
+function chooseClub(name){
+
+  club = name;
+
+  save();
+
+  document.getElementById("clubName")
+    .textContent = name;
+
+  document.querySelectorAll(".club")
+    .forEach(c=>c.classList.remove("selected"));
+
+  toast("🏟️ تم اختيار نادي "+name);
+
+  showPage("home");
+
+}
+
+
+/* =========================
+   MATCH
+========================= */
+
+function startMatch(){
+
+  if(!club){
+
+    toast("⚠️ اختر ناديك أولاً");
+    showPage("club");
+    return;
+
+  }
+
+  if(myPlayers.length < 3){
+
+    toast("⚠️ تحتاج إلى 3 لاعبين على الأقل");
+    return;
+
+  }
+
+  const opponent =
+    ["الهلال","النصر","الاتحاد","الأهلي","الشباب"]
+    [Math.floor(Math.random()*5)];
+
+  const teamPower =
+    myPlayers
+      .map(id=>players.find(p=>p.id===id))
+      .filter(Boolean)
+      .reduce((sum,p)=>sum+p.rating,0);
+
+  const average =
+    teamPower / myPlayers.length;
+
+  const opponentPower =
+    76 + Math.random()*14;
+
+  const chance =
+    average >= opponentPower
+    ? .65
+    : .45;
+
+  const won =
+    Math.random() < chance;
+
+  let myGoals =
+    Math.floor(Math.random()*4);
+
+  let oppGoals =
+    Math.floor(Math.random()*3);
+
+  if(won){
+
+    myGoals =
+      Math.max(myGoals,oppGoals+1);
+
+    wins++;
+    coins += 500;
+
+  }else{
+
+    oppGoals =
+      Math.max(oppGoals,myGoals+1);
+
+    coins += 150;
+
+  }
+
+  save();
+  updateCoins();
+
+  document.getElementById("matchResult").innerHTML = `
+
+    <div class="hero" style="text-align:center">
+
+      <div style="font-size:50px">
+        ${won ? "🏆" : "⚽"}
+      </div>
+
+      <h2>
+        ${won ? "فوز!" : "انتهت المباراة"}
+      </h2>
+
+      <p style="margin:12px">
+        ${club} ضد ${opponent}
+      </p>
+
+      <div style="
+        font-size:42px;
+        color:#f1d260;
+        margin:20px;
+      ">
+        ${myGoals} - ${oppGoals}
+      </div>
+
+      <p>
+        ${won
+          ? "🎉 حصلت على 500 عملة"
+          : "🪙 حصلت على 150 عملة"}
+      </p>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+function closeModal(){
+
+  document.getElementById("modal")
+    .classList.remove("show");
+
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
+let toastTimer;
+
+function toast(message){
+
+  const el =
+    document.getElementById("toast");
+
+  el.textContent=message;
+  el.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer =
+    setTimeout(()=>{
+      el.classList.remove("show");
+    },2200);
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+renderHome();
+renderMarket();
+renderSquad();
+
 </script>
-</body></html>
+
+</body>
+</html>
