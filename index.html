@@ -2,1054 +2,1483 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>بطاقات الدوري السعودي</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Saudi Cards</title>
 
 <style>
 *{box-sizing:border-box}
+
 body{
 margin:0;
-background:#030907;
-color:white;
-font-family:Arial,Tahoma,sans-serif;
+background:linear-gradient(135deg,#06120d,#101010 55%,#06120d);
+color:#fff;
+font-family:Arial,sans-serif;
+min-height:100vh;
 }
+
 button{
 border:0;
+border-radius:14px;
+padding:13px 18px;
+font-size:15px;
+font-weight:bold;
 cursor:pointer;
-font-family:inherit;
 }
-.app{
-max-width:1200px;
-margin:auto;
-min-height:100vh;
-padding-bottom:50px;
+
+input{
+width:100%;
+padding:14px;
+margin:7px 0;
+border-radius:12px;
+border:1px solid #444;
+background:#111;
+color:#fff;
+font-size:16px;
+outline:none;
 }
-header{
+
+.top{
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:#090909;
+border-bottom:1px solid #b99735;
 position:sticky;
 top:0;
 z-index:20;
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:15px;
-background:rgba(3,10,7,.94);
-border-bottom:1px solid #314c3b;
-backdrop-filter:blur(12px);
 }
+
 .logo{
-display:flex;
-align-items:center;
-gap:10px;
+font-size:20px;
+font-weight:900;
+color:#d9b84c;
 }
-.logoIcon{
-width:45px;
-height:45px;
-border-radius:14px;
-display:flex;
-align-items:center;
-justify-content:center;
-background:linear-gradient(135deg,#d4af37,#fff0a0);
-color:#07100b;
-font-size:25px;
+
+.userBox{
+font-size:13px;
+color:#aaa;
 }
-.logo h1{
-font-size:17px;
-margin:0;
-}
-.logo small{
-color:#8ea095;
-}
+
 .coins{
-padding:10px 14px;
-border-radius:13px;
-background:#10251a;
-border:1px solid #80691e;
-color:#ffd95c;
+color:#ffd95a;
 font-weight:bold;
 }
+
 nav{
-display:grid;
-grid-template-columns:repeat(7,1fr);
-gap:7px;
+display:flex;
+gap:8px;
+overflow-x:auto;
 padding:12px;
+background:#0b0b0b;
+position:sticky;
+top:61px;
+z-index:19;
 }
+
 nav button{
-padding:11px 4px;
-border-radius:11px;
-background:#0c1812;
-color:#a9b8af;
-border:1px solid #193125;
+background:#171717;
+color:white;
+white-space:nowrap;
 }
+
 nav button.active{
-background:linear-gradient(135deg,#d4af37,#ffe887);
-color:#07100b;
+background:#b99735;
+color:#111;
 }
+
 .page{
 display:none;
-padding:18px;
+padding:20px;
+max-width:1100px;
+margin:auto;
 }
+
 .page.active{
 display:block;
 }
+
 .hero{
-background:linear-gradient(135deg,#10261a,#09110d);
-border:1px solid #355340;
-border-radius:23px;
-padding:25px;
-margin-bottom:18px;
+text-align:center;
+padding:35px 10px;
 }
-.hero h2{
-margin:0 0 8px;
-font-size:27px;
+
+.hero h1{
+font-size:38px;
+margin:10px;
+color:#d9b84c;
 }
+
 .hero p{
-color:#91a198;
+color:#aaa;
 }
-.gold{
-background:linear-gradient(135deg,#d4af37,#ffe783);
-color:#07100b;
-padding:13px 20px;
-border-radius:12px;
-font-weight:bold;
+
+.mainBtn{
+background:linear-gradient(135deg,#d8b84c,#8f6c18);
+color:#111;
+min-width:180px;
 }
-.green{
-background:#087143;
-color:white;
-padding:12px 18px;
-border-radius:12px;
-font-weight:bold;
-}
-.dark{
-background:#13231b;
-color:white;
-padding:11px 17px;
-border-radius:12px;
-border:1px solid #294534;
-}
-.stats{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:12px;
-}
-.stat{
-background:#09150f;
-border:1px solid #1c3628;
-border-radius:16px;
-padding:17px;
-}
-.stat span{
-display:block;
-color:#84958c;
-margin-bottom:7px;
-}
-.stat strong{
-font-size:25px;
-color:#f2d25b;
-}
-.title{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin:22px 0 12px;
-}
+
 .cards{
 display:grid;
-grid-template-columns:repeat(auto-fill,minmax(185px,1fr));
-gap:14px;
-}
-.card{
-position:relative;
-overflow:hidden;
-min-height:275px;
-border-radius:20px;
-padding:14px;
-background:linear-gradient(145deg,#183423,#07100b);
-border:1px solid #4e6a2d;
-box-shadow:0 12px 30px #0007;
-}
-.card.goldCard{
-background:linear-gradient(145deg,#715716,#181105);
-border-color:#d4af37;
-}
-.card.legend{
-background:linear-gradient(145deg,#512477,#12091a);
-border-color:#c873ff;
-}
-.card.silver{
-background:linear-gradient(145deg,#3e4542,#101412);
-border-color:#bfc6c2;
-}
-.rating{
-font-size:31px;
-font-weight:bold;
-color:#f4d45c;
-}
-.pos{
-position:absolute;
-left:13px;
-top:13px;
-background:white;
-color:#111;
-padding:5px 8px;
-border-radius:7px;
-font-size:10px;
-font-weight:bold;
-}
-.avatar{
-width:88px;
-height:88px;
-border-radius:50%;
-margin:12px auto;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:44px;
-background:#101b15;
-border:2px solid #ffffff20;
-}
-.name{
-text-align:center;
-font-size:17px;
-font-weight:bold;
-}
-.team{
-text-align:center;
-font-size:12px;
-color:#94a49b;
-margin-top:4px;
-}
-.cardStats{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:5px;
-margin-top:13px;
-}
-.cardStats div{
-background:#0004;
-border-radius:7px;
-padding:6px;
-text-align:center;
-font-size:10px;
-}
-.cardStats b{
-display:block;
-font-size:13px;
-}
-.packs{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:17px;
-}
-.pack{
-text-align:center;
-padding:27px;
-border-radius:22px;
-background:linear-gradient(145deg,#152c20,#07100b);
-border:1px solid #34553e;
-}
-.packIcon{
-font-size:65px;
-margin-bottom:10px;
-}
-.pack p{
-color:#91a198;
-font-size:13px;
-}
-.pack button{
-margin-top:10px;
-}
-.formation{
-min-height:580px;
-border-radius:25px;
-padding:20px;
-background:
-linear-gradient(#ffffff08 1px,transparent 1px),
-#07532f;
-background-size:100% 55px;
-border:4px solid #ffffff20;
-}
-.pitch{
-height:530px;
-display:flex;
-flex-direction:column;
-justify-content:space-around;
-}
-.row{
-display:flex;
-justify-content:center;
+grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
 gap:15px;
 }
-.slot{
-width:88px;
-height:88px;
-border-radius:50%;
-background:#07150eeb;
-border:2px solid #d4af37;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-font-size:10px;
-cursor:pointer;
-}
-.slot .emoji{
-font-size:26px;
-}
-.slot.empty{
-border-style:dashed;
-color:#b8c6bf;
-}
-.bench{
-margin-top:15px;
-}
-.market{
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
-gap:13px;
-}
-.marketCard{
-background:#09150f;
-border:1px solid #1c3628;
-border-radius:17px;
-padding:16px;
-}
-.price{
-color:#f1d25b;
-font-weight:bold;
-margin:10px 0;
-}
-.clubs{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-gap:12px;
-}
-.club{
-background:#09150f;
-border:1px solid #1c3628;
-border-radius:17px;
-padding:22px;
+
+.card{
+background:linear-gradient(145deg,#191919,#080808);
+border:1px solid #333;
+border-radius:20px;
+padding:14px;
 text-align:center;
-cursor:pointer;
-}
-.club:hover{
-border-color:#d4af37;
-}
-.clubIcon{
-font-size:43px;
-margin-bottom:8px;
-}
-.ranking{
-background:#09150f;
-border:1px solid #1c3628;
-border-radius:18px;
+box-shadow:0 10px 30px #0008;
+position:relative;
 overflow:hidden;
 }
-.rank{
-display:grid;
-grid-template-columns:50px 1fr 80px 80px;
-padding:15px;
-border-bottom:1px solid #182b20;
-align-items:center;
+
+.playerName{
+font-size:18px;
+font-weight:900;
+margin:8px;
 }
-.rank:first-child{
-background:#17291e;
+
+.club{
+color:#aaa;
 }
-.points{
-color:#f3d25a;
-font-weight:bold;
+
+.rating{
+font-size:30px;
+font-weight:900;
+color:#d9b84c;
 }
-.matchBox{
-text-align:center;
-background:#09150f;
-border:1px solid #284532;
+
+.rarity{
+display:inline-block;
+padding:5px 10px;
 border-radius:20px;
-padding:25px;
+margin:5px;
+font-size:12px;
 }
-.score{
-font-size:55px;
+
+.common{
+background:#286b38;
+}
+
+.rare{
+background:#155ca8;
+}
+
+.epic{
+background:#7134a8;
+}
+
+.legendary{
+background:#a97800;
+}
+
+.cardBtns{
+display:flex;
+gap:6px;
+margin-top:10px;
+}
+
+.cardBtns button{
+flex:1;
+font-size:12px;
+padding:10px 5px;
+}
+
+.sell{
+background:#8b2626;
+color:white;
+}
+
+.add{
+background:#1e7a42;
+color:white;
+}
+
+.remove{
+background:#555;
+color:white;
+}
+
+.packGrid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:18px;
+}
+
+.pack{
+background:linear-gradient(145deg,#171717,#080808);
+border:1px solid #80651e;
+border-radius:22px;
+padding:22px;
+text-align:center;
+}
+
+.packIcon{
+font-size:65px;
+}
+
+.pack h3{
+color:#d9b84c;
+}
+
+.price{
+color:#ffd95a;
+font-size:20px;
 font-weight:bold;
-color:#f2d25b;
-margin:20px;
 }
-.event{
-background:#10251a;
-border-radius:10px;
-padding:12px;
-margin:7px 0;
-text-align:right;
+
+.center{
+text-align:center;
 }
+
+.stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+margin:15px 0;
+}
+
+.stat{
+background:#151515;
+border:1px solid #333;
+padding:15px;
+border-radius:15px;
+text-align:center;
+}
+
+.stat b{
+display:block;
+font-size:24px;
+color:#d9b84c;
+}
+
+.rank{
+background:#151515;
+padding:15px;
+margin:8px 0;
+border-radius:14px;
+display:flex;
+justify-content:space-between;
+}
+
+.rank.me{
+border:1px solid #d9b84c;
+}
+
 .modal{
 position:fixed;
 inset:0;
+background:#000e;
 display:none;
 align-items:center;
 justify-content:center;
-background:#000b;
 z-index:100;
-padding:20px;
 }
+
 .modal.show{
 display:flex;
 }
-.modalBox{
-width:min(450px,100%);
-background:#09150f;
-border:1px solid #d4af37;
-border-radius:24px;
-padding:25px;
+
+.packScene{
+width:min(92vw,420px);
 text-align:center;
+position:relative;
 }
-.packAnimation{
-font-size:90px;
-animation:shake .7s infinite alternate;
+
+.packBox{
+width:230px;
+height:300px;
+margin:20px auto;
+border-radius:28px;
+background:linear-gradient(145deg,#c99f2e,#111 45%,#07552d);
+border:3px solid #e5c85c;
+box-shadow:0 0 60px #d7b63c66;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:80px;
 }
+
+.packBox.shake{
+animation:shake .15s infinite;
+}
+
 @keyframes shake{
-from{transform:rotate(-7deg) scale(1)}
-to{transform:rotate(7deg) scale(1.08)}
+0%{transform:rotate(0) scale(1)}
+25%{transform:rotate(4deg) scale(1.04)}
+50%{transform:rotate(-4deg) scale(1.07)}
+75%{transform:rotate(3deg) scale(1.04)}
+100%{transform:rotate(0) scale(1)}
 }
-.reveal{
-animation:reveal .8s ease;
+
+.revealCard{
+display:none;
+width:280px;
+min-height:390px;
+margin:15px auto;
+border-radius:28px;
+padding:25px;
+background:linear-gradient(145deg,#161616,#050505);
+border:3px solid #d9b84c;
+box-shadow:0 0 80px #d9b84c88;
 }
+
+.revealCard.show{
+display:block;
+animation:reveal .8s forwards;
+}
+
 @keyframes reveal{
-from{transform:scale(.2) rotateY(180deg);opacity:0}
-to{transform:scale(1) rotateY(0);opacity:1}
+from{
+transform:rotateY(90deg) scale(.7);
+opacity:0
 }
+to{
+transform:rotateY(0) scale(1);
+opacity:1
+}
+}
+
+.revealRating{
+font-size:70px;
+font-weight:900;
+color:#e6c65a;
+}
+
+.revealName{
+font-size:28px;
+font-weight:900;
+margin:12px;
+}
+
+.revealClub{
+font-size:18px;
+color:#aaa;
+}
+
+.revealRarity{
+font-size:18px;
+margin:12px;
+}
+
+.legendaryGlow{
+animation:legend 1s infinite alternate;
+}
+
+@keyframes legend{
+from{
+box-shadow:0 0 30px #ffd21f
+}
+to{
+box-shadow:0 0 100px #fff000,0 0 160px #d29b00
+}
+}
+
+.flash{
+position:fixed;
+inset:0;
+background:white;
+opacity:0;
+pointer-events:none;
+z-index:150;
+}
+
+.flash.go{
+animation:flash .5s;
+}
+
+@keyframes flash{
+0%{opacity:0}
+30%{opacity:.8}
+100%{opacity:0}
+}
+
 .toast{
 position:fixed;
-bottom:25px;
+bottom:20px;
 left:50%;
-transform:translate(-50%,100px);
-background:#d4af37;
-color:#07100b;
+transform:translateX(-50%);
+background:#191919;
+border:1px solid #d9b84c;
 padding:13px 22px;
-border-radius:12px;
-font-weight:bold;
-transition:.3s;
+border-radius:14px;
+display:none;
 z-index:200;
 }
-.toast.show{
-transform:translate(-50%,0);
+
+/* LOGIN */
+
+#loginScreen{
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at center,#123d27,#050505 65%);
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:9999;
+padding:20px;
 }
-@media(max-width:700px){
-nav{grid-template-columns:repeat(4,1fr)}
-.stats{grid-template-columns:repeat(2,1fr)}
-.packs{grid-template-columns:1fr}
-.cards{grid-template-columns:repeat(2,1fr)}
-.formation{padding:10px}
-.slot{width:65px;height:65px}
-.row{gap:6px}
-.pitch{height:500px}
+
+.loginBox{
+width:min(95%,400px);
+background:#101010;
+border:1px solid #c39d32;
+border-radius:25px;
+padding:30px;
+box-shadow:0 0 60px #000;
+text-align:center;
+}
+
+.loginLogo{
+font-size:35px;
+font-weight:900;
+color:#d9b84c;
+margin-bottom:5px;
+}
+
+.loginBox h2{
+margin-top:5px;
+}
+
+.loginBox button{
+width:100%;
+margin-top:10px;
+}
+
+.switch{
+margin-top:18px;
+color:#aaa;
+font-size:14px;
+}
+
+.switch span{
+color:#e1bd4b;
+cursor:pointer;
+font-weight:bold;
+}
+
+.logout{
+background:#7d2222;
+color:white;
+padding:8px 12px;
+font-size:12px;
+}
+
+.hidden{
+display:none!important;
 }
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<!-- LOGIN -->
 
-<header>
+<div id="loginScreen">
+
+<div class="loginBox">
+
+<div class="loginLogo">SAUDI CARDS 🇸🇦</div>
+
+<h2 id="loginTitle">تسجيل الدخول</h2>
+
+<div id="loginForm">
+
+<input id="loginUser" placeholder="اسم المستخدم">
+<input id="loginPass" type="password" placeholder="كلمة المرور">
+
+<button class="mainBtn" onclick="login()">دخول</button>
+
+<div class="switch">
+ما عندك حساب؟
+<span onclick="showRegister()">إنشاء حساب</span>
+</div>
+
+</div>
+
+<div id="registerForm" class="hidden">
+
+<input id="registerUser" placeholder="اسم المستخدم">
+<input id="registerPass" type="password" placeholder="كلمة المرور">
+<input id="registerPass2" type="password" placeholder="تأكيد كلمة المرور">
+
+<button class="mainBtn" onclick="register()">إنشاء الحساب</button>
+
+<div class="switch">
+عندك حساب؟
+<span onclick="showLogin()">تسجيل الدخول</span>
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+<div id="game" class="hidden">
+
+<div class="top">
+
 <div class="logo">
-<div class="logoIcon">⚽</div>
+🇸🇦 SAUDI CARDS
+</div>
+
 <div>
-<h1>بطاقات الدوري السعودي</h1>
-<small id="clubName">اختر ناديك</small>
+<div class="coins">
+💰 <span id="coins">0</span>
+</div>
+
+<div class="userBox">
+👤 <span id="currentUser"></span>
+<button class="logout" onclick="logout()">خروج</button>
 </div>
 </div>
 
-<div class="coins">
-🪙 <span id="coins">5000</span>
 </div>
-</header>
 
 <nav>
-<button class="active" onclick="page('home',this)">🏠 الرئيسية</button>
-<button onclick="page('squad',this)">👥 التشكيلة</button>
-<button onclick="page('packs',this)">🎁 البكجات</button>
-<button onclick="page('market',this)">🛒 السوق</button>
-<button onclick="page('match',this)">⚽ المباراة</button>
-<button onclick="page('ranking',this)">🏆 التصنيف</button>
-<button onclick="page('club',this)">🏟️ النادي</button>
+
+<button onclick="showPage('home')" class="active">الرئيسية</button>
+
+<button onclick="showPage('collection')">
+البطاقات
+</button>
+
+<button onclick="showPage('squad')">
+التشكيلة
+</button>
+
+<button onclick="showPage('packs')">
+البكجات
+</button>
+
+<button onclick="showPage('market')">
+السوق
+</button>
+
+<button onclick="showPage('match')">
+المباراة
+</button>
+
+<button onclick="showPage('ranking')">
+الترتيب
+</button>
+
 </nav>
 
 
 <section id="home" class="page active">
 
 <div class="hero">
-<h2>مرحباً بك في بطاقات الدوري السعودي 🇸🇦</h2>
-<p>كوّن فريقك وافتح البكجات ونافس في المباريات.</p>
-<button class="gold" onclick="page('packs')">🎁 افتح بكج</button>
+
+<h1>SAUDI CARDS</h1>
+
+<p>
+اجمع أقوى لاعبي الدوري السعودي وابنِ تشكيلتك.
+</p>
+
+<button class="mainBtn"
+onclick="showPage('packs')">
+ابدأ فتح البكجات 🔥
+</button>
+
 </div>
 
 <div class="stats">
-<div class="stat">
-<span>🪙 العملات</span>
-<strong id="homeCoins">5000</strong>
-</div>
 
 <div class="stat">
-<span>👥 البطاقات</span>
-<strong id="count">0</strong>
+البطاقات
+<b id="statCards">0</b>
 </div>
 
 <div class="stat">
-<span>🏆 النقاط</span>
-<strong id="points">0</strong>
+التشكيلة
+<b id="statSquad">0/11</b>
 </div>
 
 <div class="stat">
-<span>🏅 الانتصارات</span>
-<strong id="wins">0</strong>
-</div>
-</div>
-
-<div class="title">
-<h3>⭐ مجموعتك</h3>
+النقاط
+<b id="statPoints">0</b>
 </div>
 
-<div class="cards" id="homeCards"></div>
+</div>
+
+</section>
+
+
+<section id="collection" class="page">
+
+<h2>🃏 مجموعتي</h2>
+
+<p>
+البطاقات المكررة مسموحة في المجموعة.
+</p>
+
+<div id="collectionCards" class="cards"></div>
 
 </section>
 
 
 <section id="squad" class="page">
 
-<div class="hero">
-<h2>👥 التشكيلة</h2>
-<p>لا يمكن استخدام نفس اللاعب مرتين في التشكيلة.</p>
-</div>
+<h2>⚽ التشكيلة</h2>
 
-<div class="formation">
+<p>
+لا يمكن وضع نفس اللاعب مرتين في التشكيلة.
+</p>
 
-<div class="pitch">
-
-<div class="row">
-<div class="slot" id="s1"></div>
-</div>
-
-<div class="row">
-<div class="slot" id="s2"></div>
-<div class="slot" id="s3"></div>
-<div class="slot" id="s4"></div>
-<div class="slot" id="s5"></div>
-</div>
-
-<div class="row">
-<div class="slot" id="s6"></div>
-<div class="slot" id="s7"></div>
-<div class="slot" id="s8"></div>
-</div>
-
-<div class="row">
-<div class="slot" id="s9"></div>
-<div class="slot" id="s10"></div>
-<div class="slot" id="s11"></div>
-</div>
-
-</div>
-</div>
-
-<div class="title">
-<h3>🪑 الاحتياط</h3>
-</div>
-
-<div class="cards bench" id="bench"></div>
+<div id="squadCards" class="cards"></div>
 
 </section>
 
 
 <section id="packs" class="page">
 
-<div class="hero">
-<h2>🎁 البكجات</h2>
-<p>افتح البكج وشاهد البطاقة وهي تنكشف أمامك.</p>
-</div>
+<h2>📦 البكجات</h2>
 
-<div class="packs">
+<div class="packGrid">
 
 <div class="pack">
-<div class="packIcon">🎁</div>
-<h3>البكج البرونزي</h3>
-<p>لاعب عشوائي</p>
-<button class="gold" onclick="pack(500,'bronze')">🪙 500</button>
+
+<div class="packIcon">📦</div>
+
+<h3>بكج عادي</h3>
+
+<p>
+من جميع الأندية
+</p>
+
+<div class="price">
+3,000 💰
 </div>
+
+<button class="mainBtn"
+onclick="openPack('all')">
+فتح البكج
+</button>
+
+</div>
+
 
 <div class="pack">
-<div class="packIcon">🎁</div>
-<h3>البكج الذهبي</h3>
-<p>فرصة أكبر للاعب قوي</p>
-<button class="gold" onclick="pack(1000,'gold')">🪙 1000</button>
+
+<div class="packIcon">⭐</div>
+
+<h3>بكج النصر</h3>
+
+<p>
+لاعبي النصر فقط
+</p>
+
+<div class="price">
+10,000 💰
 </div>
+
+<button class="mainBtn"
+onclick="openPack('النصر')">
+فتح البكج
+</button>
+
+</div>
+
 
 <div class="pack">
-<div class="packIcon">💎</div>
-<h3>البكج الأسطوري</h3>
-<p>فرصة عالية للاعب نادر</p>
-<button class="gold" onclick="pack(2500,'legend')">🪙 2500</button>
+
+<div class="packIcon">🔵</div>
+
+<h3>بكج الهلال</h3>
+
+<p>
+لاعبي الهلال فقط
+</p>
+
+<div class="price">
+10,000 💰
+</div>
+
+<button class="mainBtn"
+onclick="openPack('الهلال')">
+فتح البكج
+</button>
+
+</div>
+
+
+<div class="pack">
+
+<div class="packIcon">🟡</div>
+
+<h3>بكج الاتحاد</h3>
+
+<p>
+لاعبي الاتحاد فقط
+</p>
+
+<div class="price">
+10,000 💰
+</div>
+
+<button class="mainBtn"
+onclick="openPack('الاتحاد')">
+فتح البكج
+</button>
+
+</div>
+
+
+<div class="pack">
+
+<div class="packIcon">🟢</div>
+
+<h3>بكج الأهلي</h3>
+
+<p>
+لاعبي الأهلي فقط
+</p>
+
+<div class="price">
+10,000 💰
+</div>
+
+<button class="mainBtn"
+onclick="openPack('الأهلي')">
+فتح البكج
+</button>
+
+</div>
+
+
+<div class="pack">
+
+<div class="packIcon">🔴</div>
+
+<h3>بكج القادسية</h3>
+
+<p>
+لاعبي القادسية فقط
+</p>
+
+<div class="price">
+10,000 💰
+</div>
+
+<button class="mainBtn"
+onclick="openPack('القادسية')">
+فتح البكج
+</button>
+
+</div>
+
+
+<div class="pack">
+
+<div class="packIcon">🎴</div>
+
+<h3>باقي الأندية</h3>
+
+<p>
+لاعبي الأندية الأخرى
+</p>
+
+<div class="price">
+3,000 💰
+</div>
+
+<button class="mainBtn"
+onclick="openPack('other')">
+فتح البكج
+</button>
+
 </div>
 
 </div>
+
+<br>
+
+<div class="center">
+
+<p>
+🟢 عادي 65%
+&nbsp;
+🔵 نادر 25%
+&nbsp;
+🟣 ملحمي 8%
+&nbsp;
+🟡 أسطوري 2%
+</p>
+
+</div>
+
 </section>
 
 
 <section id="market" class="page">
 
-<div class="hero">
 <h2>🛒 السوق</h2>
-<p>اشترِ البطاقات وأضفها إلى مجموعتك.</p>
-</div>
 
-<div class="market" id="market"></div>
+<p>
+اضغط بيع لبيع نسخة واحدة من البطاقة.
+</p>
+
+<div id="marketCards" class="cards"></div>
 
 </section>
 
 
 <section id="match" class="page">
 
-<div class="hero">
-<h2>⚽ طور المباراة</h2>
-<p>المباراة الآن أصبحت على جولات وأحداث.</p>
+<h2>🏟️ المباراة</h2>
 
-<button class="gold" onclick="startMatch()">⚽ ابدأ المباراة</button>
+<div class="stats">
+
+<div class="stat">
+الفوز
+<b>+3</b>
 </div>
 
-<div id="matchArea"></div>
+<div class="stat">
+التعادل
+<b>+1</b>
+</div>
+
+<div class="stat">
+الخسارة
+<b>-2</b>
+</div>
+
+</div>
+
+<div class="center">
+
+<p id="matchStatus">
+جهز تشكيلتك المكونة من 11 لاعبًا.
+</p>
+
+<button class="mainBtn"
+onclick="startMatch()">
+ابدأ المباراة ⚽
+</button>
+
+<div id="matchEvents"></div>
+
+</div>
 
 </section>
 
 
 <section id="ranking" class="page">
 
-<div class="hero">
-<h2>🏆 التصنيف</h2>
-<p>الفوز +3 | التعادل +1 | الخسارة −2</p>
-</div>
+<h2>🏆 الترتيب</h2>
 
-<div class="ranking" id="rankingList"></div>
+<div id="rankingList"></div>
 
 </section>
 
-
-<section id="club" class="page">
-
-<div class="hero">
-<h2>🏟️ اختر ناديك</h2>
-<p>اختر النادي الذي تريد تمثيله.</p>
-</div>
-
-<div class="clubs">
-
-<div class="club" onclick="chooseClub('الهلال')">
-<div class="clubIcon">🔵</div>
-الهلال
-</div>
-
-<div class="club" onclick="chooseClub('النصر')">
-<div class="clubIcon">🟡</div>
-النصر
-</div>
-
-<div class="club" onclick="chooseClub('الاتحاد')">
-<div class="clubIcon">⚫</div>
-الاتحاد
-</div>
-
-<div class="club" onclick="chooseClub('الأهلي')">
-<div class="clubIcon">🟢</div>
-الأهلي
-</div>
-
-<div class="club" onclick="chooseClub('الشباب')">
-<div class="clubIcon">⚪</div>
-الشباب
-</div>
-
-<div class="club" onclick="chooseClub('القادسية')">
-<div class="clubIcon">🔴</div>
-القادسية
-</div>
-
-</div>
-</section>
-
 </div>
 
 
-<div class="modal" id="modal">
-<div class="modalBox" id="modalBox"></div>
+<!-- PACK MODAL -->
+
+<div id="modal" class="modal">
+
+<div class="packScene">
+
+<h2 id="packTitle">
+فتح البكج
+</h2>
+
+<div id="packBox" class="packBox">
+📦
 </div>
 
-<div class="toast" id="toast"></div>
+<button
+id="openBtn"
+class="mainBtn"
+onclick="startReveal()">
+افتح البكج 🔥
+</button>
+
+<div id="revealCard" class="revealCard">
+
+<div id="revealRating"
+class="revealRating">
+90
+</div>
+
+<div id="revealName"
+class="revealName">
+PLAYER
+</div>
+
+<div id="revealClub"
+class="revealClub">
+النادي
+</div>
+
+<div id="revealRarity"
+class="revealRarity">
+أسطوري
+</div>
+
+<button
+class="add"
+onclick="addRevealed()">
+إضافة للتشكيلة ⚽
+</button>
+
+<button
+class="sell"
+onclick="sellRevealed()">
+بيع 💰
+</button>
+
+<br><br>
+
+<button onclick="closePack()">
+إغلاق
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div id="flash" class="flash"></div>
+
+<div id="toast" class="toast"></div>
 
 
 <script>
 
 /* =========================
-   اللاعبين
+   PLAYERS
 ========================= */
 
 const players=[
-{id:1,name:"ياسين بونو",team:"الهلال",pos:"GK",rating:86,pace:75,shot:35,pass:82,emoji:"🧤"},
-{id:2,name:"سالم الدوسري",team:"الهلال",pos:"LW",rating:88,pace:91,shot:86,pass:84,emoji:"⚡"},
-{id:3,name:"كريستيانو رونالدو",team:"النصر",pos:"ST",rating:91,pace:86,shot:95,pass:82,emoji:"⭐"},
-{id:4,name:"ساديو ماني",team:"النصر",pos:"LW",rating:88,pace:92,shot:86,pass:80,emoji:"⚡"},
-{id:5,name:"رياض محرز",team:"الأهلي",pos:"RW",rating:87,pace:85,shot:88,pass:89,emoji:"⭐"},
-{id:6,name:"إيفان توني",team:"الأهلي",pos:"ST",rating:86,pace:78,shot:91,pass:76,emoji:"🔥"},
-{id:7,name:"كريم بنزيما",team:"الاتحاد",pos:"ST",rating:89,pace:80,shot:92,pass:86,emoji:"🔥"},
-{id:8,name:"كانتي",team:"الاتحاد",pos:"CM",rating:85,pace:78,shot:65,pass:88,emoji:"🛡️"},
-{id:9,name:"ميتروفيتش",team:"الهلال",pos:"ST",rating:88,pace:75,shot:93,pass:70,emoji:"💪"},
-{id:10,name:"روبن نيفيز",team:"الهلال",pos:"CM",rating:87,pace:70,shot:76,pass:93,emoji:"🎯"},
-{id:11,name:"ثيو هيرنانديز",team:"الهلال",pos:"LB",rating:89,pace:94,shot:78,pass:85,emoji:"⚡"},
-{id:12,name:"علي لاجامي",team:"النصر",pos:"CB",rating:80,pace:68,shot:35,pass:72,emoji:"🛡️"},
-{id:13,name:"فرانك كيسي",team:"الأهلي",pos:"CM",rating:84,pace:72,shot:78,pass:82,emoji:"💪"},
-{id:14,name:"موسى ديابي",team:"الاتحاد",pos:"RW",rating:86,pace:95,shot:79,pass:83,emoji:"⚡"}
+
+{id:1,name:"كريستيانو رونالدو",club:"النصر",rating:92},
+{id:2,name:"ساديو ماني",club:"النصر",rating:88},
+{id:3,name:"مارسيلو بروزوفيتش",club:"النصر",rating:86},
+{id:4,name:"أوتافيو",club:"النصر",rating:85},
+
+{id:5,name:"روبين نيفيز",club:"الهلال",rating:89},
+{id:6,name:"سالم الدوسري",club:"الهلال",rating:87},
+{id:7,name:"ميتروفيتش",club:"الهلال",rating:89},
+{id:8,name:"مالكوم",club:"الهلال",rating:88},
+
+{id:9,name:"كريم بنزيما",club:"الاتحاد",rating:89},
+{id:10,name:"نغولو كانتي",club:"الاتحاد",rating:87},
+{id:11,name:"حسام عوار",club:"الاتحاد",rating:84},
+{id:12,name:"موسى ديابي",club:"الاتحاد",rating:86},
+
+{id:13,name:"رياض محرز",club:"الأهلي",rating:88},
+{id:14,name:"روبرتو فيرمينو",club:"الأهلي",rating:84},
+{id:15,name:"إدوارد ميندي",club:"الأهلي",rating:84},
+{id:16,name:"إيفان توني",club:"الأهلي",rating:87},
+
+{id:17,name:"أوباميانغ",club:"القادسية",rating:86},
+{id:18,name:"ناتشو",club:"القادسية",rating:83},
+{id:19,name:"كاميرون بويرت",club:"القادسية",rating:80},
+
+{id:20,name:"لاعب 20",club:"الشباب",rating:78},
+{id:21,name:"لاعب 21",club:"الاتفاق",rating:76},
+{id:22,name:"لاعب 22",club:"الفتح",rating:74},
+{id:23,name:"لاعب 23",club:"ضمك",rating:72},
+{id:24,name:"لاعب 24",club:"الرائد",rating:70},
+{id:25,name:"لاعب 25",club:"الخليج",rating:69}
+
 ];
 
 
 /* =========================
-   الحفظ
+   ACCOUNT SYSTEM
 ========================= */
 
-let coins=Number(localStorage.getItem("coins"))||5000;
+let currentUser=localStorage.getItem("currentUser");
 
-let collection=
-JSON.parse(localStorage.getItem("collection"))||[1,3,5];
+function getAccounts(){
 
-let squad=
-JSON.parse(localStorage.getItem("squad"))||[];
+return JSON.parse(
+localStorage.getItem("saudiAccounts") || "{}"
+);
 
-let club=localStorage.getItem("club")||"";
+}
 
-let points=Number(localStorage.getItem("points"))||0;
+function saveAccounts(accounts){
 
-let wins=Number(localStorage.getItem("wins"))||0;
+localStorage.setItem(
+"saudiAccounts",
+JSON.stringify(accounts)
+);
 
-let draws=Number(localStorage.getItem("draws"))||0;
+}
 
-let losses=Number(localStorage.getItem("losses"))||0;
+function showRegister(){
 
+document.getElementById("loginForm")
+.classList.add("hidden");
+
+document.getElementById("registerForm")
+.classList.remove("hidden");
+
+document.getElementById("loginTitle")
+.textContent="إنشاء حساب";
+
+}
+
+function showLogin(){
+
+document.getElementById("registerForm")
+.classList.add("hidden");
+
+document.getElementById("loginForm")
+.classList.remove("hidden");
+
+document.getElementById("loginTitle")
+.textContent="تسجيل الدخول";
+
+}
+
+function register(){
+
+let username=
+document.getElementById("registerUser").value.trim();
+
+let password=
+document.getElementById("registerPass").value;
+
+let password2=
+document.getElementById("registerPass2").value;
+
+if(username.length<3){
+
+alert("اسم المستخدم لازم يكون 3 أحرف على الأقل");
+return;
+
+}
+
+if(password.length<4){
+
+alert("كلمة المرور لازم تكون 4 أحرف على الأقل");
+return;
+
+}
+
+if(password!==password2){
+
+alert("كلمتا المرور غير متطابقتين");
+return;
+
+}
+
+let accounts=getAccounts();
+
+if(accounts[username]){
+
+alert("اسم المستخدم موجود مسبقًا");
+return;
+
+}
+
+accounts[username]={
+
+password:password,
+
+coins:50000,
+
+collection:[1,3,5,7,9,13,17],
+
+squad:[],
+
+points:0,
+
+wins:0,
+
+draws:0,
+
+losses:0
+
+};
+
+saveAccounts(accounts);
+
+localStorage.setItem("currentUser",username);
+
+currentUser=username;
+
+startGame();
+
+alert("تم إنشاء الحساب بنجاح 🎉");
+
+}
+
+function login(){
+
+let username=
+document.getElementById("loginUser").value.trim();
+
+let password=
+document.getElementById("loginPass").value;
+
+let accounts=getAccounts();
+
+if(!accounts[username]){
+
+alert("الحساب غير موجود");
+return;
+
+}
+
+if(accounts[username].password!==password){
+
+alert("كلمة المرور غير صحيحة");
+return;
+
+}
+
+localStorage.setItem("currentUser",username);
+
+currentUser=username;
+
+startGame();
+
+}
+
+function logout(){
+
+save();
+
+localStorage.removeItem("currentUser");
+
+location.reload();
+
+}
+
+function startGame(){
+
+document.getElementById("loginScreen")
+.classList.add("hidden");
+
+document.getElementById("game")
+.classList.remove("hidden");
+
+loadUserData();
+
+document.getElementById("currentUser")
+.textContent=currentUser;
+
+renderAll();
+
+}
+
+
+/* =========================
+   USER DATA
+========================= */
+
+let coins=50000;
+let collection=[];
+let squad=[];
+let points=0;
+let wins=0;
+let draws=0;
+let losses=0;
+
+function loadUserData(){
+
+let accounts=getAccounts();
+
+let u=accounts[currentUser];
+
+if(!u)return;
+
+coins=u.coins;
+collection=u.collection || [];
+squad=u.squad || [];
+points=u.points || 0;
+wins=u.wins || 0;
+draws=u.draws || 0;
+losses=u.losses || 0;
+
+}
 
 function save(){
 
-localStorage.setItem("coins",coins);
-localStorage.setItem("collection",JSON.stringify(collection));
-localStorage.setItem("squad",JSON.stringify(squad));
-localStorage.setItem("club",club);
-localStorage.setItem("points",points);
-localStorage.setItem("wins",wins);
-localStorage.setItem("draws",draws);
-localStorage.setItem("losses",losses);
+let accounts=getAccounts();
+
+if(!accounts[currentUser])return;
+
+accounts[currentUser]={
+
+password:accounts[currentUser].password,
+
+coins:coins,
+
+collection:collection,
+
+squad:squad,
+
+points:points,
+
+wins:wins,
+
+draws:draws,
+
+losses:losses
+
+};
+
+saveAccounts(accounts);
 
 }
 
 
 /* =========================
-   الصوت
+   GAME
 ========================= */
 
-let audioCtx=null;
-let musicOn=false;
-let musicTimer=null;
+function playerById(id){
 
-function audio(){
-
-if(!audioCtx){
-audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-}
-
-if(audioCtx.state==="suspended"){
-audioCtx.resume();
-}
+return players.find(p=>p.id===id);
 
 }
 
-function sound(freq=500,duration=.12,type="sine"){
+function rarity(r){
 
-try{
+if(r>=90)
+return ["أسطوري","legendary"];
 
-audio();
+if(r>=85)
+return ["ملحمي","epic"];
 
-const osc=audioCtx.createOscillator();
-const gain=audioCtx.createGain();
+if(r>=78)
+return ["نادر","rare"];
 
-osc.type=type;
-osc.frequency.value=freq;
-
-gain.gain.setValueAtTime(.0001,audioCtx.currentTime);
-gain.gain.exponentialRampToValueAtTime(.08,audioCtx.currentTime+.02);
-gain.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+duration);
-
-osc.connect(gain);
-gain.connect(audioCtx.destination);
-
-osc.start();
-osc.stop(audioCtx.currentTime+duration);
-
-}catch(e){}
+return ["عادي","common"];
 
 }
 
-function music(){
+function sellPrice(p){
 
-if(musicOn){
-musicOn=false;
-clearInterval(musicTimer);
-toast("🔇 تم إيقاف الموسيقى");
-return;
-}
+if(p.rating>=90)
+return 12000;
 
-audio();
-musicOn=true;
+if(p.rating>=85)
+return 7500;
 
-toast("🎵 الموسيقى تعمل");
+if(p.rating>=78)
+return 4500;
 
-const notes=[261.63,329.63,392,329.63];
-
-let i=0;
-
-musicTimer=setInterval(()=>{
-
-if(!musicOn)return;
-
-sound(notes[i%notes.length],.25,"triangle");
-i++;
-
-},600);
+return 2500;
 
 }
 
+function renderCard(p){
 
-/* =========================
-   التنقل
-========================= */
+const [rar,cls]=rarity(p.rating);
 
-function page(id,btn){
+let inSquad=squad.includes(p.id);
 
-document.querySelectorAll(".page")
-.forEach(x=>x.classList.remove("active"));
+return `
 
-document.getElementById(id).classList.add("active");
+<div class="card">
 
-document.querySelectorAll("nav button")
-.forEach(x=>x.classList.remove("active"));
-
-if(btn)btn.classList.add("active");
-
-if(id==="home")renderHome();
-if(id==="squad")renderSquad();
-if(id==="market")renderMarket();
-if(id==="ranking")renderRanking();
-
-window.scrollTo({top:0,behavior:"smooth"});
-
-}
-
-
-/* =========================
-   بطاقة
-========================= */
-
-function card(p,extra=""){
-
-let style="";
-
-if(p.rating>=90)style="legend";
-else if(p.rating>=88)style="goldCard";
-else if(p.rating<=82)style="silver";
-
-return`
-
-<div class="card ${style} ${extra}">
-
-<div class="rating">${p.rating}</div>
-
-<div class="pos">${p.pos}</div>
-
-<div class="avatar">${p.emoji}</div>
-
-<div class="name">${p.name}</div>
-
-<div class="team">${p.team}</div>
-
-<div class="cardStats">
-
-<div><b>${p.pace}</b>سرعة</div>
-<div><b>${p.shot}</b>تسديد</div>
-<div><b>${p.pass}</b>تمرير</div>
-
+<div class="rating">
+${p.rating}
 </div>
 
+<div class="playerName">
+${p.name}
 </div>
 
-`;
-
-}
-
-
-/* =========================
-   الرئيسية
-========================= */
-
-function renderHome(){
-
-document.getElementById("coins").textContent=coins.toLocaleString();
-document.getElementById("homeCoins").textContent=coins.toLocaleString();
-document.getElementById("count").textContent=collection.length;
-document.getElementById("points").textContent=points;
-document.getElementById("wins").textContent=wins;
-
-if(club)
-document.getElementById("clubName").textContent=club;
-
-document.getElementById("homeCards").innerHTML=
-collection
-.map(id=>players.find(p=>p.id===id))
-.filter(Boolean)
-.map(p=>card(p))
-.join("");
-
-}
-
-
-/* =========================
-   البكج
-========================= */
-
-function pack(price,type){
-
-if(coins<price){
-
-toast("❌ لا تملك عملات كافية");
-return;
-
-}
-
-coins-=price;
-save();
-renderHome();
-
-sound(180,.3,"square");
-
-const modal=document.getElementById("modal");
-const box=document.getElementById("modalBox");
-
-modal.classList.add("show");
-
-box.innerHTML=`
-
-<div class="packAnimation">🎁</div>
-
-<h2>فتح البكج...</h2>
-
-<p style="color:#94a49b">
-جاري فتح البكج
-</p>
-
-`;
-
-setTimeout(()=>{
-
-sound(350,.15);
-sound(500,.15);
-
-let available=players.filter(p=>!collection.includes(p.id));
-
-if(!available.length)
-available=players;
-
-let selected;
-
-if(type==="legend"){
-
-let x=available.filter(p=>p.rating>=88);
-
-selected=x.length
-?x[Math.floor(Math.random()*x.length)]
-:available[Math.floor(Math.random()*available.length)];
-
-}
-else if(type==="gold"){
-
-let x=available.filter(p=>p.rating>=85);
-
-selected=x.length
-?x[Math.floor(Math.random()*x.length)]
-:available[Math.floor(Math.random()*available.length)];
-
-}
-else{
-
-selected=available[Math.floor(Math.random()*available.length)];
-
-}
-
-if(!collection.includes(selected.id))
-collection.push(selected.id);
-
-save();
-renderHome();
-
-box.innerHTML=`
-
-<h2>✨ تم الكشف عن البطاقة!</h2>
-
-<p style="color:#d4af37;margin:8px">
-${selected.rating>=90?"LEGENDARY":
-selected.rating>=88?"GOLD":"RARE"}
-</p>
-
-<div class="reveal">
-${card(selected)}
+<div class="club">
+${p.club}
 </div>
 
-<button class="gold" onclick="closeModal()">
-✔ إضافة إلى المجموعة
+<div class="rarity ${cls}">
+${rar}
+</div>
+
+<div class="cardBtns">
+
+${
+inSquad
+
+?
+
+`<button class="remove"
+onclick="removeFromSquad(${p.id})">
+إزالة
+</button>`
+
+:
+
+`<button class="add"
+onclick="addToSquad(${p.id})">
+إضافة للتشكيلة
+</button>`
+
+}
+
+<button class="sell"
+onclick="sellPlayer(${p.id})">
+بيع 💰
 </button>
 
+</div>
+
+</div>
+
 `;
 
-sound(700,.15);
-sound(900,.2);
+}
 
-},1800);
+function renderCollection(){
+
+let html=collection
+.map(id=>playerById(id))
+.filter(Boolean)
+.map(p=>renderCard(p))
+.join("");
+
+document.getElementById("collectionCards").innerHTML=
+html || "<p>لا توجد بطاقات.</p>";
 
 }
 
+function renderSquad(){
 
-/* =========================
-   إغلاق
-========================= */
+let html=squad
+.map(id=>playerById(id))
+.filter(Boolean)
+.map(p=>renderCard(p))
+.join("");
 
-function closeModal(){
-
-document.getElementById("modal")
-.classList.remove("show");
+document.getElementById("squadCards").innerHTML=
+html || "<p>التشكيلة فارغة.</p>";
 
 }
 
+function renderMarket(){
 
-/* =========================
-   التشكيلة
-========================= */
+let html=collection
+.map(id=>playerById(id))
+.filter(Boolean)
+.map(p=>renderCard(p))
+.join("");
 
-/*
-مهم:
-collection يمكن أن تحتوي نسخ مكررة مستقبلاً.
-لكن squad عبارة عن IDs للاعبين المستخدمين.
-نفس ID لا يمكن وضعه مرتين.
-*/
+document.getElementById("marketCards").innerHTML=
+html || "<p>لا توجد بطاقات للبيع.</p>";
+
+}
+
+function renderRanking(){
+
+let teams=[
+
+["الهلال",34],
+["النصر",31],
+["الاتحاد",28],
+["الأهلي",25],
+["القادسية",22],
+["فريقك",points]
+
+];
+
+teams.sort((a,b)=>b[1]-a[1]);
+
+document.getElementById("rankingList").innerHTML=
+
+teams.map((t,i)=>`
+
+<div class="rank ${t[0]=="فريقك"?"me":""}">
+
+<span>
+${i+1}. ${t[0]}
+</span>
+
+<b>
+${t[1]} نقطة
+</b>
+
+</div>
+
+`).join("");
+
+}
+
+function renderAll(){
+
+document.getElementById("coins")
+.textContent=coins.toLocaleString();
+
+document.getElementById("statCards")
+.textContent=collection.length;
+
+document.getElementById("statSquad")
+.textContent=squad.length+"/11";
+
+document.getElementById("statPoints")
+.textContent=points;
+
+renderCollection();
+renderSquad();
+renderMarket();
+renderRanking();
+
+}
+
+function showPage(id){
+
+document.querySelectorAll(".page")
+.forEach(p=>p.classList.remove("active"));
+
+document.getElementById(id)
+.classList.add("active");
+
+renderAll();
+
+}
+
+function toast(msg){
+
+let t=document.getElementById("toast");
+
+t.textContent=msg;
+t.style.display="block";
+
+setTimeout(()=>{
+t.style.display="none";
+},2200);
+
+}
 
 function addToSquad(id){
 
 if(squad.includes(id)){
 
-toast("⚠️ هذا اللاعب موجود بالفعل في التشكيلة");
+toast("هذا اللاعب موجود بالتشكيلة");
 return;
 
 }
 
 if(squad.length>=11){
 
-toast("⚠️ التشكيلة مكتملة");
+toast("التشكيلة مكتملة");
+return;
+
+}
+
+if(!collection.includes(id)){
+
+toast("لا تملك هذا اللاعب");
 return;
 
 }
@@ -1057,9 +1486,9 @@ return;
 squad.push(id);
 
 save();
-renderSquad();
+renderAll();
 
-sound(600,.1);
+toast("تمت إضافة اللاعب ⚽");
 
 }
 
@@ -1068,528 +1497,414 @@ function removeFromSquad(id){
 squad=squad.filter(x=>x!==id);
 
 save();
-renderSquad();
+renderAll();
+
+toast("تمت إزالة اللاعب");
 
 }
 
+function sellPlayer(id){
 
-/* عرض التشكيلة */
+let index=collection.indexOf(id);
 
-function renderSquad(){
+if(index===-1)return;
 
-let list=
-squad
-.map(id=>players.find(p=>p.id===id))
-.filter(Boolean);
+if(squad.includes(id)){
 
-/* منع التكرار حتى لو كانت بيانات قديمة */
-list=[...new Map(list.map(p=>[p.id,p])).values()];
-
-const slots=[
-"s1","s2","s3","s4","s5",
-"s6","s7","s8",
-"s9","s10","s11"
-];
-
-slots.forEach((slot,i)=>{
-
-const el=document.getElementById(slot);
-const p=list[i];
-
-if(p){
-
-el.className="slot";
-
-el.innerHTML=`
-<div class="emoji">${p.emoji}</div>
-<b>${p.name.split(" ")[0]}</b>
-<small>${p.rating}</small>
-`;
-
-el.onclick=()=>removeFromSquad(p.id);
-
-}else{
-
-el.className="slot empty";
-
-el.innerHTML=`
-<div class="emoji">+</div>
-<span>فارغ</span>
-`;
-
-el.onclick=null;
+toast("أخرج اللاعب من التشكيلة أولًا");
+return;
 
 }
 
-});
+let p=playerById(id);
 
+let price=sellPrice(p);
 
-/* البطاقات المتاحة */
+collection.splice(index,1);
 
-let available=collection
-.map(id=>players.find(p=>p.id===id))
-.filter(Boolean);
+coins+=price;
 
-/* البطاقة قد تتكرر في المجموعة */
-document.getElementById("bench").innerHTML=
-available.map(p=>`
+save();
+renderAll();
 
-<div onclick="addToSquad(${p.id})">
-${card(p)}
-</div>
-
-`).join("");
+toast(
+`تم بيع ${p.name} بـ ${price.toLocaleString()} 💰`
+);
 
 }
 
 
 /* =========================
-   السوق
+   PACKS
 ========================= */
 
-function renderMarket(){
+function weightedRarity(){
 
-document.getElementById("market").innerHTML=
-players.map(p=>{
+let n=Math.random()*100;
 
-let price=Math.max(500,(p.rating-70)*150);
+if(n<2)
+return "legendary";
 
-let owned=collection.includes(p.id);
+if(n<10)
+return "epic";
 
-return`
+if(n<35)
+return "rare";
 
-<div class="marketCard">
-
-<strong>${p.name}</strong>
-
-<div style="color:#91a198">
-${p.team} • ${p.pos}
-</div>
-
-<div class="price">
-🪙 ${price.toLocaleString()}
-</div>
-
-${
-owned
-?`<button class="dark" disabled>✔ موجود</button>`
-:`<button class="green" onclick="buy(${p.id},${price})">شراء</button>`
-}
-
-</div>
-
-`;
-
-}).join("");
+return "common";
 
 }
 
+function choosePlayer(type){
 
-function buy(id,price){
+let pool=players;
+
+if(type==="other"){
+
+pool=players.filter(p=>
+![
+"النصر",
+"الهلال",
+"الاتحاد",
+"الأهلي",
+"القادسية"
+].includes(p.club)
+);
+
+}
+
+else if(type!=="all"){
+
+pool=players.filter(p=>p.club===type);
+
+}
+
+if(!pool.length)
+pool=players;
+
+let wanted=weightedRarity();
+
+let possible=pool.filter(
+p=>rarity(p.rating)[1]===wanted
+);
+
+if(!possible.length)
+possible=pool;
+
+return possible[
+Math.floor(Math.random()*possible.length)
+];
+
+}
+
+function packPrice(type){
+
+if([
+"النصر",
+"الهلال",
+"الاتحاد",
+"الأهلي",
+"القادسية"
+].includes(type))
+return 10000;
+
+return 3000;
+
+}
+
+let selectedPack="all";
+let revealed=null;
+
+function openPack(type){
+
+let price=packPrice(type);
 
 if(coins<price){
 
-toast("❌ العملات غير كافية");
+toast("ما عندك عملات كافية 💰");
 return;
 
 }
 
 coins-=price;
-collection.push(id);
+
+selectedPack=type;
+
+revealed=null;
+
+document.getElementById("modal")
+.classList.add("show");
+
+document.getElementById("packBox")
+.style.display="flex";
+
+document.getElementById("packBox")
+.className="packBox";
+
+document.getElementById("revealCard")
+.className="revealCard";
+
+document.getElementById("openBtn")
+.style.display="inline-block";
+
+document.getElementById("packTitle")
+.textContent="جهز نفسك... 🔥";
 
 save();
-renderHome();
-renderMarket();
 
-sound(700,.1);
+renderAll();
 
-toast("✅ تمت إضافة البطاقة");
+}
+
+function startReveal(){
+
+let box=document.getElementById("packBox");
+
+document.getElementById("openBtn")
+.style.display="none";
+
+box.classList.add("shake");
+
+document.getElementById("packTitle")
+.textContent="افتح البكج...";
+
+setTimeout(()=>{
+
+box.classList.remove("shake");
+
+document.getElementById("flash")
+.classList.add("go");
+
+setTimeout(()=>{
+
+revealPlayer();
+
+},350);
+
+},1800);
+
+}
+
+function revealPlayer(){
+
+revealed=choosePlayer(selectedPack);
+
+let [rar,cls]=rarity(revealed.rating);
+
+document.getElementById("packBox")
+.style.display="none";
+
+let card=document.getElementById("revealCard");
+
+card.className="revealCard "+cls;
+
+if(cls==="legendary")
+card.classList.add("legendaryGlow");
+
+document.getElementById("revealRating")
+.textContent=revealed.rating;
+
+document.getElementById("revealName")
+.textContent=revealed.name;
+
+document.getElementById("revealClub")
+.textContent=revealed.club;
+
+document.getElementById("revealRarity")
+.textContent=rar;
+
+card.classList.add("show");
+
+document.getElementById("packTitle")
+.textContent=
+cls==="legendary"
+?
+"🔥🔥 أسطوري! 🔥🔥"
+:
+"تم فتح البطاقة!";
+
+collection.push(revealed.id);
+
+save();
+renderAll();
+
+}
+
+function addRevealed(){
+
+if(!revealed)return;
+
+if(squad.includes(revealed.id)){
+
+toast("اللاعب موجود بالتشكيلة");
+return;
+
+}
+
+if(squad.length>=11){
+
+toast("التشكيلة مكتملة");
+return;
+
+}
+
+squad.push(revealed.id);
+
+save();
+renderAll();
+
+toast("تمت إضافة اللاعب ⚽");
+
+}
+
+function sellRevealed(){
+
+if(!revealed)return;
+
+let index=collection.lastIndexOf(revealed.id);
+
+if(index===-1)return;
+
+if(squad.includes(revealed.id)){
+
+toast("لا يمكن بيع لاعب موجود بالتشكيلة");
+return;
+
+}
+
+let price=sellPrice(revealed);
+
+collection.splice(index,1);
+
+coins+=price;
+
+save();
+renderAll();
+
+toast(
+`تم البيع بـ ${price.toLocaleString()} 💰`
+);
+
+closePack();
+
+}
+
+function closePack(){
+
+document.getElementById("modal")
+.classList.remove("show");
+
+renderAll();
 
 }
 
 
 /* =========================
-   النادي
+   MATCH
 ========================= */
-
-function chooseClub(name){
-
-club=name;
-
-save();
-
-document.getElementById("clubName").textContent=name;
-
-sound(500,.15);
-
-toast("🏟️ تم اختيار "+name);
-
-}
-
-
-/* =========================
-   المباراة
-========================= */
-
-let match=null;
 
 function startMatch(){
 
-if(!club){
-
-toast("⚠️ اختر ناديك أولاً");
-page("club");
-return;
-
-}
-
 if(squad.length<11){
 
-toast("⚠️ تحتاج إلى 11 لاعباً في التشكيلة");
-page("squad");
+toast("لازم يكون عندك 11 لاعب في التشكيلة");
 return;
 
 }
 
-const opponents=
-["الهلال","النصر","الاتحاد","الأهلي","الشباب","القادسية"];
+let events=[
 
-let opponent=
-opponents[Math.floor(Math.random()*opponents.length)];
+"⚽ الدقيقة 12: هجمة خطيرة!",
+"🧤 الدقيقة 27: تصدي رائع!",
+"🔥 الدقيقة 39: فرصة خطيرة!",
+"⚽ الدقيقة 55: تسديدة قوية!",
+"🟨 الدقيقة 68: بطاقة صفراء!",
+"🔥 الدقيقة 81: هجمة مرتدة!"
 
-if(opponent===club)
-opponent="الشباب";
+];
 
-match={
-opponent,
-round:0,
-myGoals:0,
-oppGoals:0,
-events:[]
-};
+let box=document.getElementById("matchEvents");
 
-showMatch();
+let status=document.getElementById("matchStatus");
 
-}
+box.innerHTML="";
 
+status.textContent="بدأت المباراة...";
 
-/* المباراة على جولات */
+let i=0;
 
-function showMatch(){
+let timer=setInterval(()=>{
 
-const area=document.getElementById("matchArea");
+box.innerHTML+=
+`<p>${events[i]}</p>`;
 
-area.innerHTML=`
+i++;
 
-<div class="matchBox">
+if(i>=events.length){
 
-<h2>⚽ ${club} × ${match.opponent}</h2>
+clearInterval(timer);
 
-<div class="score">
-${match.myGoals} - ${match.oppGoals}
-</div>
+setTimeout(()=>{
 
-<div id="events">
+let result=Math.random();
 
-${match.events.map(x=>
-`<div class="event">${x}</div>`
-).join("")}
-
-</div>
-
-${
-match.round<6
-?
-`<button class="gold" onclick="nextRound()">
-${match.round===0?"▶️ بداية المباراة":
-match.round===3?"▶️ بداية الشوط الثاني":
-"⏱️ الجولة التالية"}
-</button>`
-:
-`<button class="green" onclick="finishMatch()">
-🏁 إنهاء المباراة
-</button>`
-}
-
-</div>
-
-`;
-
-}
-
-
-/* كل ضغطة جولة */
-
-function nextRound(){
-
-match.round++;
-
-sound(400,.12);
-
-if(match.round===1){
-
-match.events.push("🟢 بدأت المباراة!");
-
-}
-
-else if(match.round===2){
-
-randomEvent();
-
-}
-
-else if(match.round===3){
-
-match.events.push("⏸️ انتهى الشوط الأول");
-
-}
-
-else if(match.round===4){
-
-match.events.push("🔵 بدأ الشوط الثاني");
-
-randomEvent();
-
-}
-
-else if(match.round===5){
-
-randomEvent();
-
-}
-
-else if(match.round===6){
-
-randomEvent();
-
-}
-
-showMatch();
-
-}
-
-
-function randomEvent(){
-
-let r=Math.random();
-
-if(r<.35){
-
-match.myGoals++;
-
-match.events.push("⚽ هدف لـ "+club+"!");
-
-sound(800,.25,"triangle");
-
-}
-
-else if(r<.60){
-
-match.oppGoals++;
-
-match.events.push("⚽ هدف لـ "+match.opponent);
-
-sound(250,.25,"square");
-
-}
-
-else if(r<.75){
-
-match.events.push("🟨 بطاقة صفراء");
-
-}
-
-else if(r<.9){
-
-match.events.push("🔥 فرصة خطيرة!");
-
-}
-
-else{
-
-match.events.push("🧤 تصدٍ رائع من الحارس!");
-
-}
-
-}
-
-
-/* النتيجة والنقاط */
-
-function finishMatch(){
-
-let result;
-
-if(match.myGoals>match.oppGoals){
-
-result="win";
+if(result<.45){
 
 wins++;
 points+=3;
-coins+=500;
+
+status.textContent=
+"🏆 فوز! +3 نقاط";
 
 }
-else if(match.myGoals===match.oppGoals){
 
-result="draw";
+else if(result<.7){
+
 draws++;
 points+=1;
-coins+=250;
+
+status.textContent=
+"🤝 تعادل! +1 نقطة";
 
 }
+
 else{
 
-result="loss";
 losses++;
 points-=2;
 
-if(points<0)points=0;
-
-coins+=100;
+status.textContent=
+"❌ خسارة! -2 نقاط";
 
 }
 
 save();
-renderHome();
-renderRanking();
+renderAll();
 
-sound(
-result==="win"?900:
-result==="draw"?500:180,
-.4,
-"triangle"
-);
+},1000);
 
-document.getElementById("matchArea").innerHTML=`
-
-<div class="matchBox">
-
-<div style="font-size:65px">
-${result==="win"?"🏆":
-result==="draw"?"🤝":"😔"}
-</div>
-
-<h2>
-${
-result==="win"
-?"فوز!"
-:result==="draw"
-?"تعادل"
-:"خسارة"
 }
-</h2>
 
-<div class="score">
-${match.myGoals} - ${match.oppGoals}
-</div>
-
-<p>
-${
-result==="win"
-?"🟢 +3 نقاط"
-:result==="draw"
-?"🟡 +1 نقطة"
-:"🔴 −2 نقاط"
-}
-</p>
-
-<p>
-🪙 مكافأة المباراة:
-${
-result==="win"?500:
-result==="draw"?250:100
-}
-</p>
-
-<button class="gold" onclick="startMatch()">
-⚽ مباراة جديدة
-</button>
-
-</div>
-
-`;
+},1200);
 
 }
 
 
 /* =========================
-   التصنيف
+   AUTO LOGIN
 ========================= */
 
-function renderRanking(){
+if(currentUser){
 
-let myPoints=points;
+let accounts=getAccounts();
 
-let teams=[
-{name:club||"فريقك",points:myPoints,me:true},
-{name:"الهلال",points:15},
-{name:"النصر",points:13},
-{name:"الاتحاد",points:11},
-{name:"الأهلي",points:9},
-{name:"الشباب",points:7},
-{name:"القادسية",points:5}
-];
+if(accounts[currentUser]){
 
-teams.sort((a,b)=>b.points-a.points);
-
-document.getElementById("rankingList").innerHTML=
-teams.map((x,i)=>`
-
-<div class="rank"
-style="${x.me?"background:#17291e":""}">
-
-<strong>#${i+1}</strong>
-
-<div>
-${x.me?"⭐ ":""}${x.name}
-</div>
-
-<div>
-${x.points}
-</div>
-
-<div class="points">
-نقطة
-</div>
-
-</div>
-
-`).join("");
+startGame();
 
 }
 
-
-/* =========================
-   Toast
-========================= */
-
-let toastTimer;
-
-function toast(msg){
-
-let t=document.getElementById("toast");
-
-t.textContent=msg;
-
-t.classList.add("show");
-
-clearTimeout(toastTimer);
-
-toastTimer=setTimeout(()=>{
-t.classList.remove("show");
-},2200);
-
 }
-
-
-/* =========================
-   البداية
-========================= */
-
-renderHome();
-renderSquad();
-renderMarket();
-renderRanking();
 
 </script>
 
