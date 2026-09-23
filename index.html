@@ -122,7 +122,6 @@ body {
     box-shadow:
         0 0 45px rgba(255,48,48,.14),
         inset 0 0 35px rgba(0,0,0,.5);
-    transition: .15s;
 }
 .timer::before {
     content: "";
@@ -190,7 +189,7 @@ body {
     text-align: center;
     margin-top: 13px;
 }
-/* النافذة */
+/* النوافذ */
 .overlay {
     position: fixed;
     inset: 0;
@@ -226,13 +225,27 @@ body {
     margin-bottom: 8px;
 }
 .modal h2 {
-    margin: 5px 0 10px;
+    margin: 5px 0 15px;
     font-size: 29px;
 }
 .modal p {
     color: #9da8b9;
-    line-height: 1.7;
+    line-height: 1.9;
     margin-bottom: 20px;
+    font-size: 16px;
+}
+.loss-time {
+    color: #ff4545;
+    font-size: 25px;
+    font-weight: 900;
+}
+.target-result {
+    color: white;
+    font-weight: 800;
+}
+.difference {
+    color: #ff8b8b;
+    font-weight: 800;
 }
 .modal-button {
     width: 100%;
@@ -330,16 +343,13 @@ body {
     class="overlay"
     id="lossOverlay">
     <div class="modal">
-        <div
-            class="modal-icon">
+        <div class="modal-icon">
             ❌
         </div>
         <h2>
             خسارة
         </h2>
-        <p id="lossText">
-            تجاوزت الوقت المحدد.
-        </p>
+        <p id="lossText"></p>
         <button
             class="modal-button"
             id="nextButton">
@@ -347,13 +357,12 @@ body {
         </button>
     </div>
 </div>
-<!-- نافذة النهاية -->
+<!-- نهاية اللعبة -->
 <div
     class="overlay"
     id="endOverlay">
     <div class="modal">
-        <div
-            class="modal-icon">
+        <div class="modal-icon">
             🎉
         </div>
         <h2>
@@ -372,7 +381,7 @@ body {
 <script>
 /*
 ========================================
-الجولات
+أهداف الجولات
 ========================================
 */
 const targets = [
@@ -382,7 +391,7 @@ const targets = [
 ];
 /*
 ========================================
-متغيرات
+متغيرات اللعبة
 ========================================
 */
 let round = 0;
@@ -458,7 +467,7 @@ function updateUI() {
 }
 /*
 ========================================
-إرجاع دائرة العداد
+إعادة دائرة العداد
 ========================================
 */
 function resetCircle() {
@@ -475,7 +484,7 @@ function resetCircle() {
 }
 /*
 ========================================
-تحديث العداد
+تحديث الوقت
 ========================================
 */
 function updateTimer() {
@@ -485,7 +494,7 @@ function updateTimer() {
     const now =
         performance.now();
     /*
-    يبدأ من الرقم الذي توقفنا عنده
+    يكمل من الرقم السابق
     */
     currentTime =
         (
@@ -496,7 +505,7 @@ function updateTimer() {
     timeDisplay.textContent =
         currentTime.toFixed(2);
     /*
-    حركة الدائرة
+    دائرة التقدم
     */
     const target =
         targets[round];
@@ -523,12 +532,16 @@ function updateTimer() {
     if (
         currentTime >= target
     ) {
-        currentTime =
-            target;
-        timeDisplay.textContent =
-            target.toFixed(2);
+        /*
+        نترك القيمة الحقيقية
+        التي وصل إليها اللاعب.
+        مثال:
+        5.13
+        */
         stopTimer();
-        loseRound();
+        loseRound(
+            currentTime
+        );
         return;
     }
     animationFrame =
@@ -547,8 +560,7 @@ function startTimer() {
     }
     running = true;
     /*
-    أهم نقطة:
-    يكمل من نفس الرقم
+    يكمل من الرقم السابق
     */
     startTimestamp =
         performance.now()
@@ -585,7 +597,7 @@ function stopTimer() {
 }
 /*
 ========================================
-ضغط المستخدم للإيقاف
+إيقاف يدوي
 ========================================
 */
 function stopByUser() {
@@ -605,25 +617,40 @@ function stopByUser() {
 }
 /*
 ========================================
-خسارة الجولة
+الخسارة
 ========================================
 */
-function loseRound() {
+function loseRound(
+    actualTime
+) {
     mainButton.classList.add(
         "disabled"
     );
-    status.textContent =
-        "انتهى الوقت";
+    const target =
+        targets[round];
+    /*
+    نحسب مقدار التجاوز
+    */
+    const difference =
+        actualTime - target;
+    /*
+    عرض الرقم الحقيقي
+    */
     lossText.innerHTML =
-        "وصلت إلى "
-        +
-        "<strong>"
-        +
-        targets[round].toFixed(2)
-        +
-        "</strong>"
-        +
-        " ثانية.";
+        `توقفت عند
+        <span class="loss-time">
+            ${actualTime.toFixed(2)} ثانية
+        </span>
+        <br>
+        والهدف كان
+        <span class="target-result">
+            ${target.toFixed(2)} ثانية
+        </span>
+        <br>
+        تجاوزت الهدف بـ
+        <span class="difference">
+            ${difference.toFixed(2)} ثانية
+        </span>`;
     /*
     الجولة الثالثة
     */
@@ -643,7 +670,7 @@ function loseRound() {
 }
 /*
 ========================================
-زر اللعبة الرئيسي
+زر التشغيل / الإيقاف
 ========================================
 */
 mainButton.addEventListener(
@@ -676,7 +703,7 @@ nextButton.addEventListener(
             "show"
         );
         /*
-        إذا كانت الجولة الثالثة
+        بعد خسارة الجولة الثالثة
         */
         if (
             round === 2
@@ -691,7 +718,7 @@ nextButton.addEventListener(
         */
         round++;
         /*
-        تصفير العداد
+        كل جولة جديدة تبدأ من صفر
         */
         currentTime = 0;
         running = false;
@@ -716,7 +743,7 @@ nextButton.addEventListener(
 );
 /*
 ========================================
-إعادة اللعب
+إعادة اللعبة
 ========================================
 */
 restartButton.addEventListener(
@@ -749,7 +776,7 @@ restartButton.addEventListener(
 );
 /*
 ========================================
-تشغيل اللعبة
+تشغيل أولي
 ========================================
 */
 updateUI();
