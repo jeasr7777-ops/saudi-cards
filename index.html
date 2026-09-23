@@ -1,44 +1,32 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
 <meta charset="UTF-8">
-
 <meta name="viewport"
 content="width=device-width,
 initial-scale=1.0,
 maximum-scale=1.0,
 user-scalable=no">
-
-<title>تحدي الوقت</title>
-
-<!-- خط رقمي للعداد -->
+<title>تحدي الألعاب</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
-
 <style>
-
-/* =========================
+/* =====================================================
    الأساس
-========================= */
-
+===================================================== */
 * {
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
 }
-
 body {
     margin: 0;
     min-height: 100vh;
-
     font-family:
         -apple-system,
         BlinkMacSystemFont,
         "Segoe UI",
         Arial,
         sans-serif;
-
     color: white;
-
     background:
         radial-gradient(
             circle at top,
@@ -46,91 +34,182 @@ body {
             #111827 40%,
             #06080d 100%
         );
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    overflow: hidden;
+    overflow-x: hidden;
 }
-
-.game {
+button {
+    font-family: inherit;
+}
+.hidden {
+    display: none !important;
+}
+/* =====================================================
+   التطبيق
+===================================================== */
+.app {
     width: 100%;
     max-width: 650px;
     min-height: 100vh;
-
+    margin: auto;
     padding: 22px 18px;
-
     display: flex;
     flex-direction: column;
-
+    align-items: center;
+}
+/* =====================================================
+   الصفحة الرئيسية
+===================================================== */
+.home {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-
-
-/* =========================
-   العنوان
-========================= */
-
-.logo {
-    font-size: 34px;
+.home-logo {
+    font-size: 38px;
     font-weight: 900;
     text-align: center;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
-
-.subtitle {
+.home-subtitle {
     color: #9ca8bb;
-    font-size: 14px;
+    font-size: 15px;
     text-align: center;
-    margin-bottom: 22px;
+    margin-bottom: 30px;
 }
-
-
-/* =========================
-   اختيار الوضع
-========================= */
-
+.game-menu {
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.game-card {
+    width: 100%;
+    min-height: 125px;
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: 24px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.09),
+            rgba(255,255,255,.035)
+        );
+    color: white;
+    cursor: pointer;
+    text-align: right;
+    padding: 22px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    transition: .15s;
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.20);
+}
+.game-card:active {
+    transform: scale(.97);
+}
+.game-icon {
+    width: 68px;
+    height: 68px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 35px;
+    flex-shrink: 0;
+}
+.time-card .game-icon {
+    background:
+        linear-gradient(145deg,#ff4545,#c80000);
+    box-shadow:
+        0 10px 30px rgba(255,0,0,.25);
+}
+.million-card .game-icon {
+    background:
+        linear-gradient(145deg,#e7b83f,#9b6700);
+    box-shadow:
+        0 10px 30px rgba(231,184,63,.20);
+}
+.game-card-title {
+    font-size: 22px;
+    font-weight: 900;
+    margin-bottom: 6px;
+}
+.game-card-description {
+    color: #9da8bb;
+    font-size: 13px;
+    line-height: 1.6;
+}
+/* =====================================================
+   رؤوس الألعاب
+===================================================== */
+.game-screen {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10px;
+}
+.top-bar {
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.back-button {
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(255,255,255,.06);
+    color: white;
+    border-radius: 14px;
+    min-width: 80px;
+    height: 42px;
+    font-weight: 800;
+    cursor: pointer;
+}
+.screen-title {
+    font-size: 22px;
+    font-weight: 900;
+}
+/* =====================================================
+   تحدي الوقت
+===================================================== */
+.time-game {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .mode-selection {
     width: 100%;
     max-width: 430px;
     margin-bottom: 15px;
 }
-
 .mode-title {
     text-align: center;
     color: #aab4c5;
     font-size: 14px;
     margin-bottom: 10px;
 }
-
 .mode-buttons {
     display: flex;
     gap: 10px;
 }
-
 .mode-button {
     flex: 1;
     min-height: 58px;
-
-    border: 1px solid
-        rgba(255,255,255,.10);
-
+    border: 1px solid rgba(255,255,255,.10);
     border-radius: 17px;
-
-    background:
-        rgba(255,255,255,.06);
-
+    background: rgba(255,255,255,.06);
     color: white;
-
     font-size: 15px;
     font-weight: 800;
-
     cursor: pointer;
-    touch-action: manipulation;
 }
-
 .mode-button.active {
     background:
         linear-gradient(
@@ -138,1490 +217,1808 @@ body {
             #ff4545,
             #d60000
         );
-
     border-color: #ff3030;
-
     box-shadow:
-        0 8px 25px
-        rgba(255,48,48,.22);
+        0 8px 25px rgba(255,48,48,.22);
 }
-
-
-/* =========================
-   الجولة
-========================= */
-
 .round-box {
     width: 100%;
     max-width: 430px;
-
     padding: 14px;
-
     border-radius: 18px;
-
     text-align: center;
-
-    background:
-        rgba(255,255,255,.06);
-
+    background: rgba(255,255,255,.06);
     border:
         1px solid
         rgba(255,255,255,.08);
-
     margin-bottom: 13px;
 }
-
 .round-title {
     color: #9da8bb;
     font-size: 13px;
     margin-bottom: 3px;
 }
-
 .round-number {
     font-size: 21px;
     font-weight: 900;
 }
-
-
-/* =========================
-   رسالة بداية الجولة
-========================= */
-
 .round-instruction {
     width: 100%;
     max-width: 430px;
-
     padding: 17px 15px;
-
     border-radius: 18px;
-
     text-align: center;
-
     background:
         linear-gradient(
             145deg,
             rgba(255,48,48,.16),
             rgba(255,255,255,.05)
         );
-
     border:
         1px solid
         rgba(255,70,70,.22);
-
     margin-bottom: 17px;
 }
-
 .warning {
     font-size: 20px;
     font-weight: 900;
     margin-bottom: 7px;
 }
-
 .instruction-text {
     color: #dce2eb;
     font-size: 16px;
     line-height: 1.7;
 }
-
 .instruction-time {
     color: #ff4b4b;
     font-size: 25px;
     font-weight: 900;
 }
-
-
-/* =========================
-   الهدف
-========================= */
-
 .target {
     text-align: center;
     margin-bottom: 8px;
 }
-
 .target-label {
     color: #9da8bb;
     font-size: 13px;
 }
-
 .target-time {
     font-size: 25px;
     font-weight: 900;
     margin-top: 2px;
 }
-
-
-/* =========================
-   شاشة العداد الرقمية
-========================= */
-
 .timer-container {
     display: flex;
-
     justify-content: center;
     align-items: center;
-
     margin: 10px 0 20px;
 }
-
 .timer {
-
     width: 340px;
     height: 110px;
-
     border-radius: 12px;
-
     display: flex;
-
     justify-content: center;
     align-items: center;
-
     position: relative;
-
     background:
         linear-gradient(
             180deg,
             #1b1b1b,
             #050505
         );
-
-    border:
-        4px solid #111;
-
+    border: 4px solid #111;
     box-shadow:
-
-        inset 0 0 20px
-        rgba(0,0,0,.95),
-
-        inset 0 2px 0
-        rgba(255,255,255,.05),
-
-        0 10px 30px
-        rgba(0,0,0,.45);
+        inset 0 0 20px rgba(0,0,0,.95),
+        inset 0 2px 0 rgba(255,255,255,.05),
+        0 10px 30px rgba(0,0,0,.45);
 }
-
-
-/* إطار داخلي */
-
 .timer::after {
-
     content: "";
-
     position: absolute;
-
     inset: 8px;
-
     border-radius: 6px;
-
     border:
         1px solid
         rgba(255,255,255,.05);
-
     pointer-events: none;
 }
-
-
-/* الأرقام */
-
 .time {
-
-    font-family:
-        'Orbitron',
-        monospace;
-
+    font-family: 'Orbitron', monospace;
     color: #ff2020;
-
     font-size: 58px;
-
     font-weight: 900;
-
     letter-spacing: 4px;
-
     line-height: 1;
-
     direction: ltr;
-
     z-index: 2;
-
     text-shadow:
-
-        0 0 5px
-        rgba(255,0,0,.95),
-
-        0 0 12px
-        rgba(255,0,0,.75),
-
-        0 0 22px
-        rgba(255,0,0,.45);
+        0 0 5px rgba(255,0,0,.95),
+        0 0 12px rgba(255,0,0,.75),
+        0 0 22px rgba(255,0,0,.45);
 }
-
-
-/* =========================
-   وضع إخفاء الوقت
-========================= */
-
 body.hidden-playing .timer-container {
     display: none;
 }
-
 body.hidden-playing .target {
     display: none;
 }
-
 body.hidden-playing .round-instruction {
     display: none;
 }
-
-
-/* =========================
-   الحالة
-========================= */
-
 .status {
     min-height: 23px;
-
     color: #aeb8c9;
-
     font-size: 14px;
-
     text-align: center;
-
     margin-bottom: 13px;
 }
-
-
-/* =========================
-   الزر الأحمر الدائري
-========================= */
-
-.button {
-
+.time-button {
     width: 170px;
     height: 170px;
-
     border: none;
-
     border-radius: 50%;
-
     background:
         linear-gradient(
             145deg,
             #ff4545,
             #d60000
         );
-
     color: white;
-
     font-size: 25px;
-
     font-weight: 900;
-
     box-shadow:
-
-        0 15px 40px
-        rgba(220,0,0,.35),
-
-        inset 0 3px 0
-        rgba(255,255,255,.20),
-
-        inset 0 -8px 15px
-        rgba(100,0,0,.25);
-
+        0 15px 40px rgba(220,0,0,.35),
+        inset 0 3px 0 rgba(255,255,255,.20),
+        inset 0 -8px 15px rgba(100,0,0,.25);
     cursor: pointer;
-
     touch-action: manipulation;
-
     transition: .12s;
-
     display: flex;
-
     justify-content: center;
     align-items: center;
 }
-
-.button:active {
+.time-button:active {
     transform: scale(.94);
 }
-
-.button.disabled {
+.time-button.disabled {
     opacity: .55;
     pointer-events: none;
 }
-
-
-/* =========================
-   المعلومات
-========================= */
-
 .info {
     color: #68758a;
-
     font-size: 12px;
-
     text-align: center;
-
     margin-top: 12px;
-
     line-height: 1.6;
 }
-
-
-/* =========================
-   النوافذ
-========================= */
-
-.overlay {
-
-    position: fixed;
-
-    inset: 0;
-
-    background:
-        rgba(4,7,12,.91);
-
-    backdrop-filter:
-        blur(12px);
-
-    display: none;
-
-    justify-content: center;
-    align-items: center;
-
-    padding: 20px;
-
-    z-index: 100;
-}
-
-.overlay.show {
-    display: flex;
-}
-
-.modal {
-
+/* =====================================================
+   من سيربح المليون
+===================================================== */
+.million-game {
     width: 100%;
-    max-width: 430px;
-
-    background: #111824;
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.money-display {
+    width: 100%;
+    max-width: 440px;
+    padding: 15px;
+    border-radius: 20px;
+    text-align: center;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(231,184,63,.15),
+            rgba(255,255,255,.04)
+        );
+    border:
+        1px solid
+        rgba(231,184,63,.25);
+    margin-bottom: 15px;
+}
+.money-label {
+    color: #aab4c5;
+    font-size: 12px;
+}
+.money-value {
+    color: #f2c94c;
+    font-size: 29px;
+    font-weight: 900;
+    margin-top: 3px;
+}
+.question-number {
+    color: #9da8bb;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+.question-box {
+    width: 100%;
+    max-width: 440px;
+    padding: 22px 18px;
+    border-radius: 22px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.09),
+            rgba(255,255,255,.035)
+        );
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.20);
+    margin-bottom: 14px;
+    text-align: center;
+}
+.question-text {
+    font-size: 20px;
+    font-weight: 900;
+    line-height: 1.7;
+}
+.answers {
+    width: 100%;
+    max-width: 440px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+.answer {
+    min-height: 68px;
+    border-radius: 17px;
     border:
         1px solid
         rgba(255,255,255,.10);
-
+    background:
+        rgba(255,255,255,.055);
+    color: white;
+    font-size: 15px;
+    font-weight: 800;
+    padding: 10px;
+    cursor: pointer;
+    transition: .15s;
+}
+.answer:active {
+    transform: scale(.97);
+}
+.answer.correct {
+    background:
+        linear-gradient(
+            145deg,
+            #159447,
+            #08702f
+        );
+    border-color: #20b95e;
+}
+.answer.wrong {
+    background:
+        linear-gradient(
+            145deg,
+            #b72c2c,
+            #790f0f
+        );
+    border-color: #ff4545;
+}
+.answer.disabled {
+    opacity: .35;
+    pointer-events: none;
+}
+.lifelines {
+    width: 100%;
+    max-width: 440px;
+    display: grid;
+    grid-template-columns:
+        repeat(3,1fr);
+    gap: 9px;
+    margin-bottom: 12px;
+}
+.life-button {
+    min-height: 52px;
+    border:
+        1px solid
+        rgba(242,201,76,.25);
+    border-radius: 15px;
+    background:
+        rgba(242,201,76,.08);
+    color: #f2c94c;
+    font-size: 12px;
+    font-weight: 900;
+    cursor: pointer;
+}
+.life-button.used {
+    opacity: .30;
+    pointer-events: none;
+}
+.million-progress {
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 5px;
+}
+.prize-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 12px;
+    color: #7f8da2;
+    font-size: 12px;
+    border-radius: 8px;
+}
+.prize-row.current {
+    background:
+        rgba(242,201,76,.14);
+    color: #f2c94c;
+    font-weight: 900;
+}
+/* =====================================================
+   النوافذ
+===================================================== */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background:
+        rgba(4,7,12,.91);
+    backdrop-filter:
+        blur(12px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 100;
+}
+.overlay.show {
+    display: flex;
+}
+.modal {
+    width: 100%;
+    max-width: 430px;
+    background: #111824;
+    border:
+        1px solid
+        rgba(255,255,255,.10);
     border-radius: 25px;
-
     padding: 30px;
-
     text-align: center;
-
     box-shadow:
         0 25px 80px
         rgba(0,0,0,.55);
 }
-
 .modal-icon {
     font-size: 58px;
     margin-bottom: 7px;
 }
-
 .modal h2 {
-
     margin: 5px 0 15px;
-
     font-size: 29px;
 }
-
 .modal p {
-
     color: #9da8b9;
-
     line-height: 1.9;
-
     margin-bottom: 20px;
-
     font-size: 16px;
 }
-
 .loss-time {
-
     color: #ff4545;
-
     font-size: 26px;
-
     font-weight: 900;
 }
-
 .target-result {
-
     color: white;
-
     font-weight: 800;
 }
-
 .difference {
-
     color: #ff8b8b;
-
     font-weight: 800;
 }
-
 .modal-button {
-
     width: 100%;
-
     height: 56px;
-
     border: none;
-
     border-radius: 16px;
-
     background:
         linear-gradient(
             145deg,
             #ff4545,
             #d60000
         );
-
     color: white;
-
     font-size: 18px;
-
     font-weight: 900;
-
     cursor: pointer;
 }
-
-
-/* =========================
-   إخفاء اختيار الوضع
-========================= */
-
-.playing .mode-selection {
-    display: none;
+.gold-button {
+    background:
+        linear-gradient(
+            145deg,
+            #e7b83f,
+            #9b6700
+        );
 }
-
-
-/* =========================
+/* =====================================================
    الجوال
-========================= */
-
+===================================================== */
 @media (max-width: 500px) {
-
-    .game {
-        padding:
-            18px 15px;
+    .app {
+        padding: 18px 15px;
     }
-
-    .logo {
-        font-size: 30px;
+    .home-logo {
+        font-size: 32px;
     }
-
     .timer {
         width: 310px;
         height: 100px;
     }
-
     .time {
         font-size: 48px;
         letter-spacing: 3px;
     }
-
-    .button {
+    .time-button {
         width: 155px;
         height: 155px;
         font-size: 22px;
     }
+    .question-text {
+        font-size: 18px;
+    }
+    .answer {
+        min-height: 64px;
+        font-size: 14px;
+    }
 }
-
 </style>
 </head>
-
-
 <body>
-
-<div class="game" id="game">
-
-
-    <!-- العنوان -->
-
-    <div class="logo">
-        ⏱️ تحدي الوقت
+<div class="app">
+<!-- =====================================================
+     الصفحة الرئيسية
+===================================================== -->
+<section
+    class="home"
+    id="homeScreen">
+    <div class="home-logo">
+        🎮 تحدي الألعاب
     </div>
-
-    <div class="subtitle">
-        حاول الوصول للهدف بأكبر دقة
+    <div class="home-subtitle">
+        اختر اللعبة التي تريد اللعب بها
     </div>
-
-
-    <!-- اختيار الوضع -->
-
-    <div
-        class="mode-selection"
-        id="modeSelection">
-
-        <div class="mode-title">
-            اختر طريقة اللعب
-        </div>
-
-        <div class="mode-buttons">
-
-            <button
-                class="mode-button active"
-                id="showMode">
-
-                🕐 إظهار الوقت
-
-            </button>
-
-
-            <button
-                class="mode-button"
-                id="hideMode">
-
-                🔴 إخفاء الوقت
-
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <!-- الجولة -->
-
-    <div class="round-box">
-
-        <div class="round-title">
-            الجولة
-        </div>
-
-        <div
-            class="round-number"
-            id="roundText">
-
-            1 من 3
-
-        </div>
-
-    </div>
-
-
-    <!-- تعليمات الجولة -->
-
-    <div
-        class="round-instruction"
-        id="roundInstruction">
-
-        <div class="warning">
-            ⚠️ انتبه!
-        </div>
-
-        <div class="instruction-text">
-
-            لازم توقف عند
-
-            <br>
-
-            <span
-                class="instruction-time"
-                id="instructionTime">
-
-                5.00 ثانية
-
-            </span>
-
-        </div>
-
-    </div>
-
-
-    <!-- الهدف -->
-
-    <div
-        class="target"
-        id="targetBox">
-
-        <div class="target-label">
-            الهدف
-        </div>
-
-        <div
-            class="target-time"
-            id="targetText">
-
-            5.00 ثانية
-
-        </div>
-
-    </div>
-
-
-    <!-- شاشة العداد -->
-
-    <div
-        class="timer-container"
-        id="timerContainer">
-
-        <div
-            class="timer"
-            id="timerCircle">
-
-            <div
-                class="time"
-                id="timeDisplay">
-
-                00:00.00
-
+    <div class="game-menu">
+        <button
+            class="game-card time-card"
+            id="openTimeGame">
+            <div class="game-icon">
+                ⏱️
             </div>
-
+            <div>
+                <div class="game-card-title">
+                    تحدي الوقت
+                </div>
+                <div class="game-card-description">
+                    حاول الوصول للهدف بأكبر دقة ممكنة.
+                </div>
+            </div>
+        </button>
+        <button
+            class="game-card million-card"
+            id="openMillionGame">
+            <div class="game-icon">
+                💰
+            </div>
+            <div>
+                <div class="game-card-title">
+                    من سيربح المليون
+                </div>
+                <div class="game-card-description">
+                    أجب عن 15 سؤالًا وحاول الوصول إلى المليون.
+                </div>
+            </div>
+        </button>
+    </div>
+</section>
+<!-- =====================================================
+     لعبة تحدي الوقت
+===================================================== -->
+<section
+    class="game-screen hidden"
+    id="timeScreen">
+    <div class="top-bar">
+        <button
+            class="back-button"
+            id="timeBack">
+            ← رجوع
+        </button>
+        <div class="screen-title">
+            ⏱️ تحدي الوقت
         </div>
-
+        <div style="width:80px;"></div>
     </div>
-
-
-    <!-- الحالة -->
-
-    <div
-        class="status"
-        id="status">
-
-        اضغط ابدأ لبدء الجولة
-
+    <div class="time-game">
+        <div
+            class="mode-selection"
+            id="modeSelection">
+            <div class="mode-title">
+                اختر طريقة اللعب
+            </div>
+            <div class="mode-buttons">
+                <button
+                    class="mode-button active"
+                    id="showMode">
+                    🕐 إظهار الوقت
+                </button>
+                <button
+                    class="mode-button"
+                    id="hideMode">
+                    🔴 إخفاء الوقت
+                </button>
+            </div>
+        </div>
+        <div class="round-box">
+            <div class="round-title">
+                الجولة
+            </div>
+            <div
+                class="round-number"
+                id="roundText">
+                1 من 3
+            </div>
+        </div>
+        <div
+            class="round-instruction"
+            id="roundInstruction">
+            <div class="warning">
+                ⚠️ انتبه!
+            </div>
+            <div class="instruction-text">
+                لازم توقف عند
+                <br>
+                <span
+                    class="instruction-time"
+                    id="instructionTime">
+                    5.00 ثانية
+                </span>
+            </div>
+        </div>
+        <div
+            class="target"
+            id="targetBox">
+            <div class="target-label">
+                الهدف
+            </div>
+            <div
+                class="target-time"
+                id="targetText">
+                5.00 ثانية
+            </div>
+        </div>
+        <div
+            class="timer-container">
+            <div
+                class="timer">
+                <div
+                    class="time"
+                    id="timeDisplay">
+                    00:00.00
+                </div>
+            </div>
+        </div>
+        <div
+            class="status"
+            id="status">
+            اضغط ابدأ لبدء الجولة
+        </div>
+        <button
+            class="time-button"
+            id="mainButton">
+            ابدأ
+        </button>
+        <div
+            class="info"
+            id="info">
+            اختر الوضع ثم ابدأ الجولة
+        </div>
     </div>
-
-
-    <!-- الزر -->
-
-    <button
-        class="button"
-        id="mainButton">
-
-        ابدأ
-
-    </button>
-
-
-    <div
-        class="info"
-        id="info">
-
-        اختر الوضع ثم ابدأ الجولة
-
+</section>
+<!-- =====================================================
+     من سيربح المليون
+===================================================== -->
+<section
+    class="game-screen hidden"
+    id="millionScreen">
+    <div class="top-bar">
+        <button
+            class="back-button"
+            id="millionBack">
+            ← رجوع
+        </button>
+        <div class="screen-title">
+            💰 المليون
+        </div>
+        <div style="width:80px;"></div>
     </div>
-
+    <div class="million-game">
+        <div class="money-display">
+            <div class="money-label">
+                الجائزة الحالية
+            </div>
+            <div
+                class="money-value"
+                id="moneyValue">
+                100 ريال
+            </div>
+        </div>
+        <div
+            class="question-number"
+            id="questionNumber">
+            السؤال 1 من 15
+        </div>
+        <div class="question-box">
+            <div
+                class="question-text"
+                id="questionText">
+                السؤال
+            </div>
+        </div>
+        <div
+            class="answers"
+            id="answers">
+        </div>
+        <div class="lifelines">
+            <button
+                class="life-button"
+                id="fiftyButton">
+                50:50
+            </button>
+            <button
+                class="life-button"
+                id="audienceButton">
+                👥 الجمهور
+            </button>
+            <button
+                class="life-button"
+                id="friendButton">
+                📞 صديق
+            </button>
+        </div>
+        <div
+            class="million-progress"
+            id="millionProgress">
+        </div>
+    </div>
+</section>
 </div>
-
-
-<!-- =========================
-     نافذة الخسارة
-========================= -->
-
+<!-- =====================================================
+     نافذة خسارة تحدي الوقت
+===================================================== -->
 <div
     class="overlay"
     id="lossOverlay">
-
     <div class="modal">
-
         <div class="modal-icon">
             ❌
         </div>
-
         <h2>
             خسارة
         </h2>
-
         <p id="lossText"></p>
-
         <button
             class="modal-button"
             id="nextButton">
-
             الجولة التالية
-
         </button>
-
     </div>
-
 </div>
-
-
-<!-- =========================
-     نهاية اللعبة
-========================= -->
-
+<!-- =====================================================
+     نهاية تحدي الوقت
+===================================================== -->
 <div
     class="overlay"
     id="endOverlay">
-
     <div class="modal">
-
         <div class="modal-icon">
             🎉
         </div>
-
         <h2>
             انتهت اللعبة
         </h2>
-
         <p>
             انتهيت من جميع الجولات.
         </p>
-
         <button
             class="modal-button"
             id="restartButton">
-
             🔄 إعادة اللعب
-
         </button>
-
     </div>
-
 </div>
-
-
+<!-- =====================================================
+     نافذة نتيجة المليون
+===================================================== -->
+<div
+    class="overlay"
+    id="millionOverlay">
+    <div class="modal">
+        <div
+            class="modal-icon"
+            id="millionIcon">
+            🎉
+        </div>
+        <h2
+            id="millionResultTitle">
+            مبروك!
+        </h2>
+        <p
+            id="millionResultText">
+        </p>
+        <button
+            class="modal-button gold-button"
+            id="millionRestart">
+            🔄 لعب من جديد
+        </button>
+    </div>
+</div>
+<!-- =====================================================
+     JavaScript
+===================================================== -->
 <script>
-
-/* =========================
-   أهداف الجولات
-========================= */
-
-const targets = [
+/* =====================================================
+   التنقل بين الألعاب
+===================================================== */
+const homeScreen =
+    document.getElementById("homeScreen");
+const timeScreen =
+    document.getElementById("timeScreen");
+const millionScreen =
+    document.getElementById("millionScreen");
+document.getElementById("openTimeGame")
+.addEventListener("click", function() {
+    homeScreen.classList.add("hidden");
+    timeScreen.classList.remove("hidden");
+});
+document.getElementById("openMillionGame")
+.addEventListener("click", function() {
+    homeScreen.classList.add("hidden");
+    millionScreen.classList.remove("hidden");
+    startMillionGame();
+});
+document.getElementById("timeBack")
+.addEventListener("click", function() {
+    if (timeRunning) {
+        return;
+    }
+    timeScreen.classList.add("hidden");
+    homeScreen.classList.remove("hidden");
+});
+document.getElementById("millionBack")
+.addEventListener("click", function() {
+    millionScreen.classList.add("hidden");
+    homeScreen.classList.remove("hidden");
+});
+/* =====================================================
+   تحدي الوقت
+===================================================== */
+const timeTargets = [
     5,
     8,
     10
 ];
-
-
-/* =========================
-   متغيرات اللعبة
-========================= */
-
-let round = 0;
-
+let timeRound = 0;
 let currentTime = 0;
-
-let running = false;
-
-let startTimestamp = 0;
-
-let animationFrame = null;
-
+let timeRunning = false;
+let timeStartTimestamp = 0;
+let timeAnimationFrame = null;
 let selectedMode = "show";
-
-
-/* =========================
-   العناصر
-========================= */
-
-const game =
-    document.getElementById(
-        "game"
-    );
-
 const showMode =
-    document.getElementById(
-        "showMode"
-    );
-
+    document.getElementById("showMode");
 const hideMode =
-    document.getElementById(
-        "hideMode"
-    );
-
+    document.getElementById("hideMode");
 const roundText =
-    document.getElementById(
-        "roundText"
-    );
-
+    document.getElementById("roundText");
 const instructionTime =
-    document.getElementById(
-        "instructionTime"
-    );
-
+    document.getElementById("instructionTime");
 const targetText =
-    document.getElementById(
-        "targetText"
-    );
-
+    document.getElementById("targetText");
 const timeDisplay =
-    document.getElementById(
-        "timeDisplay"
-    );
-
-const timerCircle =
-    document.getElementById(
-        "timerCircle"
-    );
-
+    document.getElementById("timeDisplay");
 const status =
-    document.getElementById(
-        "status"
-    );
-
+    document.getElementById("status");
 const mainButton =
-    document.getElementById(
-        "mainButton"
-    );
-
+    document.getElementById("mainButton");
 const info =
-    document.getElementById(
-        "info"
-    );
-
+    document.getElementById("info");
 const roundInstruction =
-    document.getElementById(
-        "roundInstruction"
-    );
-
+    document.getElementById("roundInstruction");
 const targetBox =
-    document.getElementById(
-        "targetBox"
-    );
-
+    document.getElementById("targetBox");
 const lossOverlay =
-    document.getElementById(
-        "lossOverlay"
-    );
-
+    document.getElementById("lossOverlay");
 const lossText =
-    document.getElementById(
-        "lossText"
-    );
-
+    document.getElementById("lossText");
 const nextButton =
-    document.getElementById(
-        "nextButton"
-    );
-
+    document.getElementById("nextButton");
 const endOverlay =
-    document.getElementById(
-        "endOverlay"
-    );
-
+    document.getElementById("endOverlay");
 const restartButton =
-    document.getElementById(
-        "restartButton"
-    );
-
-
-/* =========================
-   عرض الوقت
-========================= */
-
+    document.getElementById("restartButton");
 function displayTime(value) {
-
     const total =
         value.toFixed(2);
-
     const parts =
         total.split(".");
-
     timeDisplay.textContent =
         "00:" +
-        parts[0].padStart(2, "0") +
+        parts[0].padStart(2,"0") +
         "." +
         parts[1];
 }
-
-
-/* =========================
-   تحديث معلومات الجولة
-========================= */
-
-function updateRoundInfo() {
-
+function updateTimeRoundInfo() {
     const target =
-        targets[round];
-
+        timeTargets[timeRound];
     roundText.textContent =
-        (round + 1) +
+        (timeRound + 1) +
         " من 3";
-
     instructionTime.textContent =
         target.toFixed(2) +
         " ثانية";
-
     targetText.textContent =
         target.toFixed(2) +
         " ثانية";
-
     displayTime(currentTime);
 }
-
-
-/* =========================
-   اختيار إظهار الوقت
-========================= */
-
-showMode.addEventListener(
-    "click",
-    function() {
-
-        if (running) {
-            return;
-        }
-
-        selectedMode = "show";
-
-        document.body.classList.remove(
-            "hidden-playing"
-        );
-
-        showMode.classList.add(
-            "active"
-        );
-
-        hideMode.classList.remove(
-            "active"
-        );
-
-        status.textContent =
-            "اضغط ابدأ لبدء الجولة";
-
-        info.textContent =
-            "الوقت سيظهر أثناء اللعب";
-
-    }
-);
-
-
-/* =========================
-   اختيار إخفاء الوقت
-========================= */
-
-hideMode.addEventListener(
-    "click",
-    function() {
-
-        if (running) {
-            return;
-        }
-
-        selectedMode = "hide";
-
-        document.body.classList.remove(
-            "hidden-playing"
-        );
-
-        hideMode.classList.add(
-            "active"
-        );
-
-        showMode.classList.remove(
-            "active"
-        );
-
-        status.textContent =
-            "اضغط ابدأ ثم اعتمد على إحساسك بالوقت";
-
-        info.textContent =
-            "بعد ابدأ سيختفي العداد";
-
-    }
-);
-
-
-/* =========================
-   إعادة شكل العداد
-========================= */
-
-function resetCircle() {
-
-    displayTime(currentTime);
-
-}
-
-
-/* =========================
-   بدء الجولة
-========================= */
-
+showMode.addEventListener("click", function() {
+    if (timeRunning) return;
+    selectedMode = "show";
+    document.body.classList.remove(
+        "hidden-playing"
+    );
+    showMode.classList.add("active");
+    hideMode.classList.remove("active");
+    status.textContent =
+        "اضغط ابدأ لبدء الجولة";
+    info.textContent =
+        "الوقت سيظهر أثناء اللعب";
+});
+hideMode.addEventListener("click", function() {
+    if (timeRunning) return;
+    selectedMode = "hide";
+    document.body.classList.remove(
+        "hidden-playing"
+    );
+    hideMode.classList.add("active");
+    showMode.classList.remove("active");
+    status.textContent =
+        "اضغط ابدأ ثم اعتمد على إحساسك بالوقت";
+    info.textContent =
+        "بعد ابدأ سيختفي العداد";
+});
 function startTimer() {
-
-    if (running) {
-        return;
-    }
-
-    running = true;
-
-
-    /*
-    نكمل من الوقت السابق
-    */
-
-    startTimestamp =
-        performance.now()
-        -
-        (
-            currentTime * 1000
-        );
-
-
-    /*
-    نخفي تعليمات الهدف أثناء اللعب
-    */
-
+    if (timeRunning) return;
+    timeRunning = true;
+    timeStartTimestamp =
+        performance.now() -
+        (currentTime * 1000);
     roundInstruction.style.display =
         "none";
-
-
-    /*
-    وضع إخفاء الوقت
-    */
-
-    if (
-        selectedMode === "hide"
-    ) {
-
+    if (selectedMode === "hide") {
         document.body.classList.add(
             "hidden-playing"
         );
-
     }
-
-
-    game.classList.add(
-        "playing"
-    );
-
-
     mainButton.textContent =
         "إيقاف";
-
-
-    if (
-        selectedMode === "hide"
-    ) {
-
+    if (selectedMode === "hide") {
         status.textContent =
             "اعتمد على إحساسك بالوقت";
-
-    }
-
-    else {
-
+    } else {
         status.textContent =
             "الوقت يعمل... اضغط للإيقاف";
-
     }
-
-
-    animationFrame =
+    timeAnimationFrame =
         requestAnimationFrame(
             updateTimer
         );
 }
-
-
-/* =========================
-   تحديث الوقت
-========================= */
-
 function updateTimer() {
-
-    if (!running) {
-        return;
-    }
-
+    if (!timeRunning) return;
     const now =
         performance.now();
-
     currentTime =
-        (
-            now -
-            startTimestamp
-        ) / 1000;
-
-
-    /*
-    إظهار الوقت
-    */
-
-    if (
-        selectedMode === "show"
-    ) {
-
+        (now - timeStartTimestamp) / 1000;
+    if (selectedMode === "show") {
         displayTime(currentTime);
-
     }
-
-
-    /*
-    إذا وصل للهدف أو تجاوزه
-    */
-
     const target =
-        targets[round];
-
-
-    if (
-        currentTime >= target
-    ) {
-
-        /*
-        نحتفظ بالوقت الحقيقي
-        */
-
+        timeTargets[timeRound];
+    if (currentTime >= target) {
         const actualTime =
             currentTime;
-
         stopTimer();
-
-        loseRound(
-            actualTime
-        );
-
+        loseTimeRound(actualTime);
         return;
     }
-
-
-    animationFrame =
+    timeAnimationFrame =
         requestAnimationFrame(
             updateTimer
         );
 }
-
-
-/* =========================
-   إيقاف العداد
-========================= */
-
 function stopTimer() {
-
-    running = false;
-
-    if (animationFrame) {
-
+    timeRunning = false;
+    if (timeAnimationFrame) {
         cancelAnimationFrame(
-            animationFrame
+            timeAnimationFrame
         );
-
-        animationFrame = null;
+        timeAnimationFrame = null;
     }
-
     mainButton.textContent =
         "استمر";
 }
-
-
-/* =========================
-   إيقاف يدوي
-========================= */
-
 function stopByUser() {
-
     stopTimer();
-
-    if (
-        currentTime <
-        targets[round]
-    ) {
-
+    if (currentTime < timeTargets[timeRound]) {
         status.textContent =
             "تم إيقاف الوقت عند " +
             currentTime.toFixed(2) +
             " ثانية";
-
     }
 }
-
-
-/* =========================
-   الخسارة
-========================= */
-
-function loseRound(
-    actualTime
-) {
-
+function loseTimeRound(actualTime) {
     mainButton.classList.add(
         "disabled"
     );
-
     const target =
-        targets[round];
-
+        timeTargets[timeRound];
     const difference =
         actualTime - target;
-
-
     lossText.innerHTML =
-
         `توقفت عند
         <span class="loss-time">
-            ${actualTime.toFixed(2)} ثانية
+        ${actualTime.toFixed(2)} ثانية
         </span>
         <br>
         والهدف كان
         <span class="target-result">
-            ${target.toFixed(2)} ثانية
+        ${target.toFixed(2)} ثانية
         </span>
         <br>
         تجاوزت الهدف بـ
         <span class="difference">
-            ${difference.toFixed(2)} ثانية
+        ${difference.toFixed(2)} ثانية
         </span>`;
-
-
-    if (
-        round === 2
-    ) {
-
+    if (timeRound === 2) {
         nextButton.textContent =
             "إنهاء اللعبة";
-
-    }
-
-    else {
-
+    } else {
         nextButton.textContent =
             "الجولة التالية";
-
     }
-
-
-    lossOverlay.classList.add(
+    lossOverlay.classList.add("show");
+}
+mainButton.addEventListener("click", function() {
+    if (
+        mainButton.classList.contains("disabled")
+    ) {
+        return;
+    }
+    if (timeRunning) {
+        stopByUser();
+    } else {
+        startTimer();
+    }
+});
+nextButton.addEventListener("click", function() {
+    lossOverlay.classList.remove("show");
+    if (timeRound === 2) {
+        endOverlay.classList.add("show");
+        return;
+    }
+    timeRound++;
+    currentTime = 0;
+    timeRunning = false;
+    if (timeAnimationFrame) {
+        cancelAnimationFrame(
+            timeAnimationFrame
+        );
+        timeAnimationFrame = null;
+    }
+    roundInstruction.style.display =
+        "block";
+    targetBox.style.display =
+        "block";
+    document.body.classList.remove(
+        "hidden-playing"
+    );
+    mainButton.classList.remove(
+        "disabled"
+    );
+    mainButton.textContent =
+        "ابدأ";
+    status.textContent =
+        "انتبه للهدف قبل أن تبدأ";
+    if (selectedMode === "hide") {
+        info.textContent =
+            "تذكر الهدف ثم اضغط ابدأ";
+    } else {
+        info.textContent =
+            "الوقت سيظهر أثناء اللعب";
+    }
+    displayTime(currentTime);
+    updateTimeRoundInfo();
+});
+restartButton.addEventListener("click", function() {
+    endOverlay.classList.remove("show");
+    timeRound = 0;
+    currentTime = 0;
+    timeRunning = false;
+    if (timeAnimationFrame) {
+        cancelAnimationFrame(
+            timeAnimationFrame
+        );
+        timeAnimationFrame = null;
+    }
+    document.body.classList.remove(
+        "hidden-playing"
+    );
+    roundInstruction.style.display =
+        "block";
+    targetBox.style.display =
+        "block";
+    mainButton.classList.remove(
+        "disabled"
+    );
+    mainButton.textContent =
+        "ابدأ";
+    status.textContent =
+        "انتبه للهدف قبل أن تبدأ";
+    displayTime(0);
+    updateTimeRoundInfo();
+});
+updateTimeRoundInfo();
+/* =====================================================
+   من سيربح المليون
+===================================================== */
+/*
+   الأسئلة:
+   الصعوبة ترتفع تدريجيًا.
+   الأسئلة 1-5 متوسطة.
+   6-10 متوسطة إلى صعبة.
+   11-15 صعبة جدًا.
+*/
+const millionQuestions = [
+/* =========================
+   أسئلة متوسطة
+========================= */
+{
+    q: "كم عدد أركان الإسلام؟",
+    options: [
+        "ثلاثة",
+        "أربعة",
+        "خمسة",
+        "ستة"
+    ],
+    answer: 2
+},
+{
+    q: "ما عاصمة اليابان؟",
+    options: [
+        "بكين",
+        "طوكيو",
+        "سيول",
+        "بانكوك"
+    ],
+    answer: 1
+},
+{
+    q: "أي عضو يضخ الدم إلى أنحاء الجسم؟",
+    options: [
+        "الرئة",
+        "الكبد",
+        "القلب",
+        "المعدة"
+    ],
+    answer: 2
+},
+{
+    q: "ما السورة التي تُسمى أم الكتاب؟",
+    options: [
+        "البقرة",
+        "الفاتحة",
+        "يس",
+        "الإخلاص"
+    ],
+    answer: 1
+},
+{
+    q: "ما عاصمة كندا؟",
+    options: [
+        "تورنتو",
+        "فانكوفر",
+        "أوتاوا",
+        "مونتريال"
+    ],
+    answer: 2
+},
+/* =========================
+   متوسط +
+========================= */
+{
+    q: "كم عدد عظام جسم الإنسان البالغ تقريبًا؟",
+    options: [
+        "186",
+        "206",
+        "216",
+        "226"
+    ],
+    answer: 1
+},
+{
+    q: "ما عاصمة أستراليا؟",
+    options: [
+        "سيدني",
+        "ملبورن",
+        "بيرث",
+        "كانبيرا"
+    ],
+    answer: 3
+},
+{
+    q: "في أي شهر هجري يؤدي المسلمون فريضة الصيام؟",
+    options: [
+        "شعبان",
+        "رمضان",
+        "شوال",
+        "محرم"
+    ],
+    answer: 1
+},
+{
+    q: "ما أكبر عضو في جسم الإنسان؟",
+    options: [
+        "الكبد",
+        "الجلد",
+        "الرئة",
+        "الدماغ"
+    ],
+    answer: 1
+},
+{
+    q: "ما عاصمة قازاخستان؟",
+    options: [
+        "أستانا",
+        "طشقند",
+        "بيشكيك",
+        "دوشنبه"
+    ],
+    answer: 0
+},
+/* =========================
+   صعب
+========================= */
+{
+    q: "ما السورة التي وردت فيها البسملة مرتين؟",
+    options: [
+        "القصص",
+        "النمل",
+        "التوبة",
+        "يوسف"
+    ],
+    answer: 1
+},
+{
+    q: "ما أصغر عظمة في جسم الإنسان؟",
+    options: [
+        "السندان",
+        "المطرقة",
+        "الركاب",
+        "الشظية"
+    ],
+    answer: 2
+},
+{
+    q: "ما عاصمة بوتان؟",
+    options: [
+        "كاتماندو",
+        "تيمفو",
+        "دكا",
+        "نيودلهي"
+    ],
+    answer: 1
+},
+{
+    q: "أي هرمون يخفض مستوى السكر في الدم؟",
+    options: [
+        "الجلوكاجون",
+        "الأدرينالين",
+        "الأنسولين",
+        "الكورتيزول"
+    ],
+    answer: 2
+},
+{
+    q: "من هو الصحابي الذي اهتز لموته عرش الرحمن؟",
+    options: [
+        "سعد بن أبي وقاص",
+        "سعد بن معاذ",
+        "معاذ بن جبل",
+        "أبو عبيدة بن الجراح"
+    ],
+    answer: 1
+},
+/* =========================
+   مليون - الأصعب
+========================= */
+{
+    q: "ما اسم الشريان الرئيسي الذي يخرج من البطين الأيسر للقلب؟",
+    options: [
+        "الشريان الرئوي",
+        "الشريان الأبهر",
+        "الشريان التاجي",
+        "الشريان السباتي"
+    ],
+    answer: 1
+},
+{
+    q: "ما عاصمة ناميبيا؟",
+    options: [
+        "لوساكا",
+        "غابورون",
+        "ويندهوك",
+        "مابوتو"
+    ],
+    answer: 2
+},
+{
+    q: "ما السورة التي لا تبدأ بالبسملة؟",
+    options: [
+        "الأنفال",
+        "التوبة",
+        "يونس",
+        "المائدة"
+    ],
+    answer: 1
+},
+{
+    q: "ما الجزء المسؤول بشكل أساسي عن تنسيق الحركة والتوازن؟",
+    options: [
+        "المخيخ",
+        "المهاد",
+        "الفص الجبهي",
+        "النخاع الشوكي"
+    ],
+    answer: 0
+},
+{
+    q: "ما عاصمة قيرغيزستان؟",
+    options: [
+        "دوشنبه",
+        "بيشكيك",
+        "عشق آباد",
+        "طشقند"
+    ],
+    answer: 1
+},
+{
+    q: "أي جزء من الكلية يقوم بشكل أساسي بعملية ترشيح الدم في الوحدة الكلوية؟",
+    options: [
+        "الحويضة الكلوية",
+        "الكبيبة",
+        "الحالب",
+        "قشرة الغدة الكظرية"
+    ],
+    answer: 1
+}
+];
+/*
+   نحتاج 15 سؤال فقط في كل لعبة.
+   يتم اختيار سؤال من مجموعة الصعوبة المناسبة.
+*/
+const prizeLevels = [
+    100,
+    200,
+    500,
+    1000,
+    2000,
+    4000,
+    8000,
+    16000,
+    32000,
+    64000,
+    125000,
+    250000,
+    500000,
+    750000,
+    1000000
+];
+let millionRound = 0;
+let millionQuestionsPlayed = [];
+let fiftyUsed = false;
+let audienceUsed = false;
+let friendUsed = false;
+/* =====================================================
+   تجهيز سلم الجوائز
+===================================================== */
+const millionProgress =
+    document.getElementById(
+        "millionProgress"
+    );
+function buildPrizeList() {
+    millionProgress.innerHTML = "";
+    for (
+        let i = prizeLevels.length - 1;
+        i >= 0;
+        i--
+    ) {
+        const row =
+            document.createElement("div");
+        row.className =
+            "prize-row";
+        row.id =
+            "prize-" + i;
+        row.innerHTML =
+            `<span>${i + 1}</span>
+             <span>${formatMoney(prizeLevels[i])}</span>`;
+        millionProgress.appendChild(row);
+    }
+}
+function formatMoney(value) {
+    return value.toLocaleString("ar-SA") +
+        " ريال";
+}
+/* =====================================================
+   بدء اللعبة
+===================================================== */
+function startMillionGame() {
+    millionRound = 0;
+    millionQuestionsPlayed = [];
+    fiftyUsed = false;
+    audienceUsed = false;
+    friendUsed = false;
+    document.getElementById("fiftyButton")
+        .classList.remove("used");
+    document.getElementById("audienceButton")
+        .classList.remove("used");
+    document.getElementById("friendButton")
+        .classList.remove("used");
+    buildPrizeList();
+    showMillionQuestion();
+}
+/* =====================================================
+   اختيار سؤال مناسب
+===================================================== */
+function getQuestionForRound() {
+    /*
+       نستخدم الأسئلة بترتيب صعوبة:
+       1-5 = متوسط
+       6-10 = متوسط+
+       11-15 = صعب
+    */
+    let start;
+    let end;
+    if (millionRound < 5) {
+        start = 0;
+        end = 10;
+    }
+    else if (millionRound < 10) {
+        start = 5;
+        end = 15;
+    }
+    else {
+        start = 10;
+        end = millionQuestions.length;
+    }
+    let available = [];
+    for (
+        let i = start;
+        i < end;
+        i++
+    ) {
+        if (
+            !millionQuestionsPlayed.includes(i)
+        ) {
+            available.push(i);
+        }
+    }
+    /*
+       إذا خلصت الأسئلة المناسبة،
+       نستخدم أي سؤال لم يستخدم.
+    */
+    if (available.length === 0) {
+        for (
+            let i = 0;
+            i < millionQuestions.length;
+            i++
+        ) {
+            if (
+                !millionQuestionsPlayed.includes(i)
+            ) {
+                available.push(i);
+            }
+        }
+    }
+    const randomIndex =
+        Math.floor(
+            Math.random() * available.length
+        );
+    const selected =
+        available[randomIndex];
+    millionQuestionsPlayed.push(selected);
+    return millionQuestions[selected];
+}
+/* =====================================================
+   عرض السؤال
+===================================================== */
+function showMillionQuestion() {
+    const question =
+        getQuestionForRound();
+    document.getElementById(
+        "questionNumber"
+    ).textContent =
+        "السؤال " +
+        (millionRound + 1) +
+        " من 15";
+    document.getElementById(
+        "moneyValue"
+    ).textContent =
+        formatMoney(
+            prizeLevels[millionRound]
+        );
+    document.getElementById(
+        "questionText"
+    ).textContent =
+        question.q;
+    const answers =
+        document.getElementById("answers");
+    answers.innerHTML = "";
+    question.options.forEach(
+        function(option,index) {
+            const button =
+                document.createElement("button");
+            button.className =
+                "answer";
+            button.dataset.index =
+                index;
+            button.textContent =
+                option;
+            button.addEventListener(
+                "click",
+                function() {
+                    selectMillionAnswer(
+                        button,
+                        index,
+                        question.answer
+                    );
+                }
+            );
+            answers.appendChild(button);
+        }
+    );
+    updatePrizeHighlight();
+}
+/* =====================================================
+   تحديد الإجابة
+===================================================== */
+function selectMillionAnswer(
+    selectedButton,
+    selectedIndex,
+    correctIndex
+) {
+    const buttons =
+        document.querySelectorAll(
+            ".answer"
+        );
+    buttons.forEach(
+        function(button) {
+            button.disabled = true;
+            button.classList.add(
+                "disabled"
+            );
+        }
+    );
+    if (
+        selectedIndex === correctIndex
+    ) {
+        selectedButton.classList.remove(
+            "disabled"
+        );
+        selectedButton.classList.add(
+            "correct"
+        );
+        setTimeout(
+            function() {
+                if (
+                    millionRound === 14
+                ) {
+                    showMillionResult(
+                        true
+                    );
+                    return;
+                }
+                millionRound++;
+                showMillionQuestion();
+            },
+            900
+        );
+    } else {
+        selectedButton.classList.remove(
+            "disabled"
+        );
+        selectedButton.classList.add(
+            "wrong"
+        );
+        buttons.forEach(
+            function(button) {
+                if (
+                    Number(button.dataset.index)
+                    === correctIndex
+                ) {
+                    button.classList.remove(
+                        "disabled"
+                    );
+                    button.classList.add(
+                        "correct"
+                    );
+                }
+            }
+        );
+        setTimeout(
+            function() {
+                showMillionResult(
+                    false
+                );
+            },
+            1100
+        );
+    }
+}
+/* =====================================================
+   تحديث سلم الجوائز
+===================================================== */
+function updatePrizeHighlight() {
+    document
+        .querySelectorAll(".prize-row")
+        .forEach(
+            function(row) {
+                row.classList.remove(
+                    "current"
+                );
+            }
+        );
+    const current =
+        document.getElementById(
+            "prize-" + millionRound
+        );
+    if (current) {
+        current.classList.add(
+            "current"
+        );
+    }
+}
+/* =====================================================
+   50:50
+===================================================== */
+document.getElementById(
+    "fiftyButton"
+).addEventListener(
+    "click",
+    function() {
+        if (fiftyUsed) return;
+        fiftyUsed = true;
+        this.classList.add("used");
+        const questionIndex =
+            millionQuestionsPlayed[
+                millionQuestionsPlayed.length - 1
+            ];
+        const question =
+            millionQuestions[
+                questionIndex
+            ];
+        const buttons =
+            Array.from(
+                document.querySelectorAll(
+                    ".answer"
+                )
+            );
+        let wrongButtons =
+            buttons.filter(
+                function(button) {
+                    return Number(
+                        button.dataset.index
+                    ) !== question.answer;
+                }
+            );
+        wrongButtons =
+            wrongButtons.sort(
+                () => Math.random() - .5
+            );
+        wrongButtons
+            .slice(0,2)
+            .forEach(
+                function(button) {
+                    button.classList.add(
+                        "disabled"
+                    );
+                    button.disabled = true;
+                    button.textContent = "—";
+                }
+            );
+    }
+);
+/* =====================================================
+   سؤال الجمهور
+===================================================== */
+document.getElementById(
+    "audienceButton"
+).addEventListener(
+    "click",
+    function() {
+        if (audienceUsed) return;
+        audienceUsed = true;
+        this.classList.add("used");
+        const questionIndex =
+            millionQuestionsPlayed[
+                millionQuestionsPlayed.length - 1
+            ];
+        const question =
+            millionQuestions[
+                questionIndex
+            ];
+        let percentages =
+            [10,10,10,10];
+        percentages[
+            question.answer
+        ] = 70;
+        let remaining =
+            30;
+        for (
+            let i = 0;
+            i < 4;
+            i++
+        ) {
+            if (
+                i !== question.answer
+            ) {
+                const value =
+                    i === 3
+                    ? remaining
+                    : Math.floor(
+                        Math.random() *
+                        Math.max(
+                            1,
+                            remaining
+                        )
+                    );
+                percentages[i] =
+                    value;
+                remaining -= value;
+            }
+        }
+        alert(
+            "نتيجة تصويت الجمهور:\n\n" +
+            percentages
+                .map(
+                    (v,i) =>
+                    String.fromCharCode(
+                        65+i
+                    ) +
+                    ": " +
+                    v +
+                    "%"
+                )
+                .join("\n")
+        );
+    }
+);
+/* =====================================================
+   اتصال بصديق
+===================================================== */
+document.getElementById(
+    "friendButton"
+).addEventListener(
+    "click",
+    function() {
+        if (friendUsed) return;
+        friendUsed = true;
+        this.classList.add("used");
+        const questionIndex =
+            millionQuestionsPlayed[
+                millionQuestionsPlayed.length - 1
+            ];
+        const question =
+            millionQuestions[
+                questionIndex
+            ];
+        const friendChance =
+            Math.random();
+        if (friendChance < .8) {
+            alert(
+                "📞 صديقك يقول:\n\n" +
+                "أعتقد أن الإجابة الصحيحة هي:\n" +
+                question.options[
+                    question.answer
+                ]
+            );
+        } else {
+            alert(
+                "📞 صديقك يقول:\n\n" +
+                "لست متأكدًا تمامًا، لكن أظن أن الإجابة هي:\n" +
+                question.options[
+                    Math.floor(
+                        Math.random() *
+                        4
+                    )
+                ]
+            );
+        }
+    }
+);
+/* =====================================================
+   نتيجة المليون
+===================================================== */
+const millionOverlay =
+    document.getElementById(
+        "millionOverlay"
+    );
+const millionIcon =
+    document.getElementById(
+        "millionIcon"
+    );
+const millionResultTitle =
+    document.getElementById(
+        "millionResultTitle"
+    );
+const millionResultText =
+    document.getElementById(
+        "millionResultText"
+    );
+function showMillionResult(
+    won
+) {
+    millionOverlay.classList.add(
         "show"
     );
+    if (won) {
+        millionIcon.textContent =
+            "🏆";
+        millionResultTitle.textContent =
+            "مبروك! فزت بالمليون";
+        millionResultText.innerHTML =
+            "أجبت عن جميع الأسئلة بشكل صحيح.<br>" +
+            "<strong style='color:#f2c94c;font-size:25px'>" +
+            "1,000,000 ريال" +
+            "</strong>";
+    } else {
+        millionIcon.textContent =
+            "❌";
+        millionResultTitle.textContent =
+            "انتهت اللعبة";
+        const safeRound =
+            Math.max(
+                0,
+                millionRound - 1
+            );
+        millionResultText.innerHTML =
+            "لقد وصلت إلى السؤال " +
+            (millionRound + 1) +
+            " من 15.<br>" +
+            "الجائزة التي وصلت إليها: " +
+            "<strong style='color:#f2c94c'>" +
+            formatMoney(
+                prizeLevels[safeRound]
+            ) +
+            "</strong>";
+    }
 }
-
-
-/* =========================
-   الزر الرئيسي
-========================= */
-
-mainButton.addEventListener(
+document.getElementById(
+    "millionRestart"
+).addEventListener(
     "click",
     function() {
-
-        if (
-            mainButton.classList.contains(
-                "disabled"
-            )
-        ) {
-
-            return;
-        }
-
-
-        if (running) {
-
-            stopByUser();
-
-        }
-
-        else {
-
-            startTimer();
-
-        }
-
-    }
-);
-
-
-/* =========================
-   الجولة التالية
-========================= */
-
-nextButton.addEventListener(
-    "click",
-    function() {
-
-        lossOverlay.classList.remove(
+        millionOverlay.classList.remove(
             "show"
         );
-
-
-        /*
-        الجولة الثالثة
-        */
-
-        if (
-            round === 2
-        ) {
-
-            endOverlay.classList.add(
-                "show"
-            );
-
-            return;
-        }
-
-
-        /*
-        الانتقال للجولة التالية
-        */
-
-        round++;
-
-        currentTime = 0;
-
-        running = false;
-
-
-        if (animationFrame) {
-
-            cancelAnimationFrame(
-                animationFrame
-            );
-
-            animationFrame = null;
-        }
-
-
-        /*
-        إظهار معلومات الجولة الجديدة
-        */
-
-        roundInstruction.style.display =
-            "block";
-
-        targetBox.style.display =
-            "block";
-
-
-        /*
-        إزالة وضع الإخفاء
-        */
-
-        document.body.classList.remove(
-            "hidden-playing"
-        );
-
-        game.classList.remove(
-            "playing"
-        );
-
-
-        mainButton.classList.remove(
-            "disabled"
-        );
-
-        mainButton.textContent =
-            "ابدأ";
-
-
-        status.textContent =
-            "انتبه للهدف قبل أن تبدأ";
-
-
-        if (
-            selectedMode === "hide"
-        ) {
-
-            info.textContent =
-                "تذكر الهدف ثم اضغط ابدأ";
-
-        }
-
-        else {
-
-            info.textContent =
-                "الوقت سيظهر أثناء اللعب";
-
-        }
-
-
-        resetCircle();
-
-        updateRoundInfo();
-
+        startMillionGame();
     }
 );
-
-
-/* =========================
-   إعادة اللعبة
-========================= */
-
-restartButton.addEventListener(
-    "click",
-    function() {
-
-        endOverlay.classList.remove(
-            "show"
-        );
-
-        round = 0;
-
-        currentTime = 0;
-
-        running = false;
-
-
-        if (animationFrame) {
-
-            cancelAnimationFrame(
-                animationFrame
-            );
-
-            animationFrame = null;
-        }
-
-
-        document.body.classList.remove(
-            "hidden-playing"
-        );
-
-        game.classList.remove(
-            "playing"
-        );
-
-
-        roundInstruction.style.display =
-            "block";
-
-        targetBox.style.display =
-            "block";
-
-
-        mainButton.classList.remove(
-            "disabled"
-        );
-
-        mainButton.textContent =
-            "ابدأ";
-
-
-        status.textContent =
-            "انتبه للهدف قبل أن تبدأ";
-
-
-        if (
-            selectedMode === "hide"
-        ) {
-
-            info.textContent =
-                "تذكر الهدف ثم اضغط ابدأ";
-
-        }
-
-        else {
-
-            info.textContent =
-                "الوقت سيظهر أثناء اللعب";
-
-        }
-
-
-        resetCircle();
-
-        updateRoundInfo();
-
-    }
-);
-
-
-/* =========================
-   التشغيل الأول
-========================= */
-
-updateRoundInfo();
-
-resetCircle();
-
 </script>
-
 </body>
 </html>
