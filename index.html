@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<meta name="viewport"
+      content="width=device-width,
+               initial-scale=1.0,
+               maximum-scale=1.0,
+               user-scalable=no">
 
 <title>تحدي الوقت</title>
 
 <style>
+
 * {
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
@@ -15,882 +22,1105 @@
 body {
     margin: 0;
     min-height: 100vh;
-    font-family: Arial, sans-serif;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
     color: white;
+
     background:
-        radial-gradient(circle at top, #26334d 0%, #101522 40%, #070a10 100%);
+        radial-gradient(
+            circle at top,
+            #26344d 0%,
+            #111827 40%,
+            #06080d 100%
+        );
+
     display: flex;
     justify-content: center;
     align-items: center;
+
     overflow: hidden;
 }
 
 .game {
     width: 100%;
-    max-width: 700px;
+    max-width: 650px;
     min-height: 100vh;
-    padding: 20px;
+
+    padding: 25px 20px;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
+/* العنوان */
+
 .logo {
-    text-align: center;
     font-size: 34px;
     font-weight: 900;
+
+    text-align: center;
+
     margin-bottom: 5px;
 }
 
 .subtitle {
-    text-align: center;
     color: #9ca8bb;
+
     font-size: 14px;
-    margin-bottom: 20px;
-}
 
-.top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 18px;
-}
-
-.player {
-    flex: 1;
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 18px;
-    padding: 14px;
     text-align: center;
-    transition: .25s;
+
+    margin-bottom: 25px;
 }
 
-.player.active {
-    border-color: #ff3030;
-    box-shadow: 0 0 25px rgba(255, 48, 48, .25);
-    transform: translateY(-3px);
-}
 
-.player-name {
-    font-size: 15px;
-    color: #aeb8c9;
-}
-
-.score {
-    font-size: 30px;
-    font-weight: 900;
-    margin-top: 4px;
-}
+/* الجولة */
 
 .round-box {
-    text-align: center;
-    background: rgba(255,255,255,0.06);
+    width: 100%;
+    max-width: 420px;
+
+    padding: 15px;
+
     border-radius: 18px;
-    padding: 13px;
+
+    text-align: center;
+
+    background:
+        rgba(255,255,255,0.06);
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
     margin-bottom: 18px;
 }
 
 .round-title {
     color: #9da8bb;
+
     font-size: 14px;
+
+    margin-bottom: 4px;
 }
 
 .round-number {
-    font-size: 20px;
-    font-weight: 800;
-    margin-top: 3px;
+    font-size: 21px;
+
+    font-weight: 900;
 }
+
+
+/* الهدف */
 
 .target {
     text-align: center;
+
     margin-bottom: 10px;
 }
 
 .target-label {
-    color: #aab4c5;
+    color: #9da8bb;
+
     font-size: 14px;
 }
 
 .target-time {
-    font-size: 25px;
+    font-size: 26px;
+
     font-weight: 900;
+
+    margin-top: 3px;
 }
 
+
+/* العداد */
+
 .timer-container {
+
     display: flex;
+
     justify-content: center;
+
     align-items: center;
-    margin: 5px 0 22px;
+
+    margin: 8px 0 22px;
 }
 
 .timer {
-    width: 270px;
-    height: 270px;
+
+    width: 280px;
+    height: 280px;
+
     border-radius: 50%;
+
     display: flex;
+
     justify-content: center;
+
     align-items: center;
+
     position: relative;
 
     background:
-        radial-gradient(circle, #101722 58%, transparent 59%),
-        conic-gradient(#ff3030 0deg, #ff3030 0deg, #252d3b 0deg);
+        radial-gradient(
+            circle,
+            #101722 58%,
+            transparent 59%
+        ),
+        conic-gradient(
+            #ff3030 0deg,
+            #252d3b 0deg
+        );
 
     box-shadow:
-        0 0 35px rgba(255,48,48,.12),
-        inset 0 0 30px rgba(0,0,0,.5);
+        0 0 45px rgba(255,48,48,.14),
+        inset 0 0 35px rgba(0,0,0,.5);
+
+    transition: .15s;
 }
 
 .timer::before {
+
     content: "";
+
     position: absolute;
+
     inset: 10px;
+
     border-radius: 50%;
-    border: 1px solid rgba(255,255,255,.08);
+
+    border:
+        1px solid rgba(255,255,255,.08);
 }
 
 .time {
-    font-size: 52px;
+
+    font-size: 55px;
+
     font-weight: 900;
+
     letter-spacing: 1px;
+
     z-index: 2;
 }
 
+
+/* الحالة */
+
 .status {
-    text-align: center;
-    min-height: 25px;
+
+    min-height: 24px;
+
     color: #aeb8c9;
+
     font-size: 14px;
-    margin-bottom: 13px;
+
+    text-align: center;
+
+    margin-bottom: 14px;
 }
 
-.button {
-    width: 100%;
-    max-width: 390px;
-    height: 78px;
-    margin: 0 auto;
-    border: none;
-    border-radius: 22px;
 
-    background: linear-gradient(145deg, #ff4545, #d90000);
+/* الزر */
+
+.button {
+
+    width: 100%;
+
+    max-width: 400px;
+
+    height: 80px;
+
+    border: none;
+
+    border-radius: 23px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ff4545,
+            #d60000
+        );
+
     color: white;
 
-    font-size: 24px;
+    font-size: 25px;
+
     font-weight: 900;
 
     box-shadow:
-        0 12px 30px rgba(220,0,0,.28),
-        inset 0 2px 0 rgba(255,255,255,.2);
+        0 12px 30px
+        rgba(220,0,0,.30),
+
+        inset 0 2px 0
+        rgba(255,255,255,.20);
 
     cursor: pointer;
+
     touch-action: manipulation;
+
     transition: .12s;
 }
 
 .button:active {
+
     transform: scale(.96);
+
     box-shadow:
-        0 5px 15px rgba(220,0,0,.25),
-        inset 0 2px 0 rgba(255,255,255,.15);
+        0 5px 15px
+        rgba(220,0,0,.25),
+
+        inset 0 2px 0
+        rgba(255,255,255,.15);
 }
 
-.button.running {
-    background: linear-gradient(145deg, #ff6565, #e00000);
-}
+
+/* زر معطل */
 
 .button.disabled {
-    opacity: .5;
+
+    opacity: .55;
+
     pointer-events: none;
 }
 
+
+/* المعلومات */
+
 .info {
-    text-align: center;
-    color: #6f7c90;
+
+    color: #68758a;
+
     font-size: 12px;
+
+    text-align: center;
+
     margin-top: 13px;
 }
 
-/* النوافذ */
+
+/* نافذة الخسارة */
 
 .overlay {
+
     position: fixed;
+
     inset: 0;
-    background: rgba(4,7,12,.88);
-    backdrop-filter: blur(10px);
+
+    background:
+        rgba(4,7,12,.90);
+
+    backdrop-filter:
+        blur(12px);
 
     display: none;
+
     justify-content: center;
+
     align-items: center;
 
     padding: 20px;
+
     z-index: 100;
 }
 
 .overlay.show {
+
     display: flex;
 }
 
 .modal {
+
     width: 100%;
-    max-width: 450px;
+
+    max-width: 430px;
+
     background: #111824;
-    border: 1px solid rgba(255,255,255,.1);
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
     border-radius: 25px;
-    padding: 28px;
+
+    padding: 30px;
+
     text-align: center;
-    box-shadow: 0 25px 80px rgba(0,0,0,.5);
+
+    box-shadow:
+        0 25px 80px
+        rgba(0,0,0,.55);
 }
 
 .modal-icon {
-    font-size: 55px;
-    margin-bottom: 10px;
+
+    font-size: 60px;
+
+    margin-bottom: 8px;
 }
 
 .modal h2 {
+
     margin: 5px 0 10px;
-    font-size: 27px;
+
+    font-size: 29px;
 }
 
 .modal p {
+
     color: #9da8b9;
+
     line-height: 1.7;
+
+    margin-bottom: 20px;
 }
 
 .modal-button {
+
     width: 100%;
-    height: 55px;
-    margin-top: 15px;
+
+    height: 56px;
 
     border: none;
-    border-radius: 15px;
+
+    border-radius: 16px;
 
     background: #ff3030;
+
     color: white;
 
-    font-size: 17px;
-    font-weight: 800;
+    font-size: 18px;
+
+    font-weight: 900;
+
+    cursor: pointer;
 }
 
-.results {
-    margin: 20px 0;
-}
 
-.result-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 14px 5px;
-    border-bottom: 1px solid rgba(255,255,255,.07);
-}
-
-.result-row:last-child {
-    border-bottom: none;
-}
+/* للجوال */
 
 @media (max-width: 500px) {
+
     .game {
-        padding: 15px;
+
+        padding:
+            18px 15px;
     }
 
     .logo {
-        font-size: 29px;
+
+        font-size: 30px;
     }
 
     .timer {
-        width: 235px;
-        height: 235px;
+
+        width: 245px;
+        height: 245px;
     }
 
     .time {
-        font-size: 45px;
+
+        font-size: 47px;
     }
 
     .button {
-        height: 70px;
-        font-size: 21px;
+
+        height: 72px;
+
+        font-size: 22px;
     }
 }
+
 </style>
 </head>
 
+
 <body>
+
 
 <div class="game">
 
-    <div class="logo">⏱️ تحدي الوقت</div>
-    <div class="subtitle">من يستطيع التوقف قبل الرقم المحدد؟</div>
-
-    <div class="top">
-
-        <div class="player" id="player1Box">
-            <div class="player-name">اللاعب 1</div>
-            <div class="score" id="score1">0</div>
-        </div>
-
-        <div class="player" id="player2Box">
-            <div class="player-name">اللاعب 2</div>
-            <div class="score" id="score2">0</div>
-        </div>
-
+    <div class="logo">
+        ⏱️ تحدي الوقت
     </div>
+
+    <div class="subtitle">
+        توقف قبل انتهاء الوقت
+    </div>
+
+
+    <!-- الجولة -->
 
     <div class="round-box">
-        <div class="round-title">الجولة</div>
-        <div class="round-number" id="roundText">1 من 3</div>
+
+        <div class="round-title">
+            الجولة
+        </div>
+
+        <div
+            class="round-number"
+            id="roundText">
+            1 من 3
+        </div>
+
     </div>
 
+
+    <!-- الهدف -->
+
     <div class="target">
-        <div class="target-label">الهدف</div>
-        <div class="target-time" id="targetText">5.00 ثانية</div>
+
+        <div class="target-label">
+            الهدف
+        </div>
+
+        <div
+            class="target-time"
+            id="targetText">
+            5.00 ثانية
+        </div>
+
     </div>
+
+
+    <!-- العداد -->
 
     <div class="timer-container">
 
-        <div class="timer" id="timerCircle">
+        <div
+            class="timer"
+            id="timerCircle">
 
-            <div class="time" id="timeDisplay">
+            <div
+                class="time"
+                id="timeDisplay">
+
                 0.00
+
             </div>
 
         </div>
 
     </div>
 
-    <div class="status" id="status">
-        دور اللاعب 1
+
+    <!-- الحالة -->
+
+    <div
+        class="status"
+        id="status">
+
+        اضغط للبدء
+
     </div>
 
-    <button class="button" id="mainButton">
+
+    <!-- الزر -->
+
+    <button
+        class="button"
+        id="mainButton">
+
         ابدأ
+
     </button>
 
+
     <div class="info">
-        اضغط مرة للبدء واضغط مرة ثانية للتوقف
-    </div>
 
-</div>
-
-
-<!-- نافذة نتيجة الجولة -->
-
-<div class="overlay" id="roundOverlay">
-
-    <div class="modal">
-
-        <div class="modal-icon" id="roundIcon">🎯</div>
-
-        <h2 id="roundResultTitle">
-            نتيجة الجولة
-        </h2>
-
-        <p id="roundResultText"></p>
-
-        <button class="modal-button" id="nextRoundButton">
-            الجولة التالية
-        </button>
+        اضغط مرة للبدء واضغط مرة ثانية للإيقاف
 
     </div>
 
 </div>
 
 
-<!-- النتيجة النهائية -->
 
-<div class="overlay" id="finalOverlay">
+<!-- نافذة الخسارة / نهاية اللعبة -->
+
+<div
+    class="overlay"
+    id="overlay">
 
     <div class="modal">
 
-        <div class="modal-icon">🏆</div>
+        <div
+            class="modal-icon"
+            id="modalIcon">
 
-        <h2 id="winnerTitle">
-            النتيجة النهائية
-        </h2>
-
-        <div class="results">
-
-            <div class="result-row">
-                <span>اللاعب 1</span>
-                <strong id="finalScore1">0</strong>
-            </div>
-
-            <div class="result-row">
-                <span>اللاعب 2</span>
-                <strong id="finalScore2">0</strong>
-            </div>
+            ❌
 
         </div>
 
-        <p id="winnerText"></p>
 
-        <button class="modal-button" id="restartButton">
-            🔄 العب مرة أخرى
+        <h2
+            id="modalTitle">
+
+            خسارة
+
+        </h2>
+
+
+        <p
+            id="modalText">
+
+        </p>
+
+
+        <button
+            class="modal-button"
+            id="modalButton">
+
+            حاول مرة أخرى
+
         </button>
 
     </div>
 
 </div>
+
 
 
 <script>
 
-const targets = [5, 8, 10];
+
+/*
+========================================
+إعدادات اللعبة
+========================================
+*/
+
+const targets = [
+    5,
+    8,
+    10
+];
+
+
+/*
+========================================
+متغيرات اللعبة
+========================================
+*/
 
 let round = 0;
-let currentPlayer = 1;
-
-let score1 = 0;
-let score2 = 0;
 
 let currentTime = 0;
 
 let running = false;
+
 let startTimestamp = 0;
+
 let animationFrame = null;
 
-const timeDisplay = document.getElementById("timeDisplay");
-const targetText = document.getElementById("targetText");
-const roundText = document.getElementById("roundText");
 
-const mainButton = document.getElementById("mainButton");
-const status = document.getElementById("status");
+/*
+========================================
+العناصر
+========================================
+*/
 
-const timerCircle = document.getElementById("timerCircle");
+const timeDisplay =
+    document.getElementById(
+        "timeDisplay"
+    );
 
-const player1Box = document.getElementById("player1Box");
-const player2Box = document.getElementById("player2Box");
+const targetText =
+    document.getElementById(
+        "targetText"
+    );
 
-const score1Element = document.getElementById("score1");
-const score2Element = document.getElementById("score2");
+const roundText =
+    document.getElementById(
+        "roundText"
+    );
 
-const roundOverlay = document.getElementById("roundOverlay");
-const roundIcon = document.getElementById("roundIcon");
-const roundResultTitle = document.getElementById("roundResultTitle");
-const roundResultText = document.getElementById("roundResultText");
-const nextRoundButton = document.getElementById("nextRoundButton");
+const status =
+    document.getElementById(
+        "status"
+    );
 
-const finalOverlay = document.getElementById("finalOverlay");
-const finalScore1 = document.getElementById("finalScore1");
-const finalScore2 = document.getElementById("finalScore2");
-const winnerText = document.getElementById("winnerText");
-const restartButton = document.getElementById("restartButton");
+const mainButton =
+    document.getElementById(
+        "mainButton"
+    );
 
+const timerCircle =
+    document.getElementById(
+        "timerCircle"
+    );
+
+const overlay =
+    document.getElementById(
+        "overlay"
+    );
+
+const modalIcon =
+    document.getElementById(
+        "modalIcon"
+    );
+
+const modalTitle =
+    document.getElementById(
+        "modalTitle"
+    );
+
+const modalText =
+    document.getElementById(
+        "modalText"
+    );
+
+const modalButton =
+    document.getElementById(
+        "modalButton"
+    );
+
+
+/*
+========================================
+تحديث الواجهة
+========================================
+*/
 
 function updateUI() {
 
+    const target =
+        targets[round];
+
+
     targetText.textContent =
-        targets[round].toFixed(2) + " ثانية";
+        target.toFixed(2)
+        + " ثانية";
+
 
     roundText.textContent =
-        (round + 1) + " من 3";
+        (round + 1)
+        + " من 3";
 
-    score1Element.textContent = score1;
-    score2Element.textContent = score2;
-
-    if (currentPlayer === 1) {
-
-        player1Box.classList.add("active");
-        player2Box.classList.remove("active");
-
-        status.textContent = "دور اللاعب 1";
-
-    } else {
-
-        player1Box.classList.remove("active");
-        player2Box.classList.add("active");
-
-        status.textContent = "دور اللاعب 2";
-    }
-
-}
-
-
-function updateTimer() {
-
-    const now = performance.now();
-
-    currentTime =
-        (now - startTimestamp) / 1000;
 
     timeDisplay.textContent =
         currentTime.toFixed(2);
 
-    const target = targets[round];
+}
+
+
+/*
+========================================
+تحديث العداد
+========================================
+*/
+
+function updateTimer() {
+
+    if (!running) {
+        return;
+    }
+
+
+    const now =
+        performance.now();
+
+
+    /*
+    نحسب الوقت من مكان التوقف السابق
+    */
+
+    currentTime =
+        (now - startTimestamp)
+        / 1000;
+
+
+    timeDisplay.textContent =
+        currentTime.toFixed(2);
+
+
+    /*
+    دائرة التقدم
+    */
+
+    const target =
+        targets[round];
+
 
     const percent =
-        Math.min(currentTime / target, 1);
+        Math.min(
+            currentTime / target,
+            1
+        );
+
 
     const degrees =
         percent * 360;
 
+
     timerCircle.style.background =
-        `radial-gradient(circle, #101722 58%, transparent 59%),
-         conic-gradient(#ff3030 ${degrees}deg, #252d3b ${degrees}deg)`;
+        `radial-gradient(
+            circle,
+            #101722 58%,
+            transparent 59%
+        ),
+        conic-gradient(
+            #ff3030 ${degrees}deg,
+            #252d3b ${degrees}deg
+        )`;
+
 
     /*
-     * إذا تجاوز الوقت الهدف
-     * نخسر اللاعب مباشرة.
-     */
-    if (currentTime >= target) {
+    إذا وصل للهدف أو تجاوزه
+    */
 
-        currentTime = target;
+    if (
+        currentTime >= target
+    ) {
+
+        currentTime =
+            target;
 
         timeDisplay.textContent =
             target.toFixed(2);
 
+
         stopTimer();
 
-        playerLost();
+
+        showLoss();
+
 
         return;
     }
 
+
     animationFrame =
-        requestAnimationFrame(updateTimer);
+        requestAnimationFrame(
+            updateTimer
+        );
+
 }
 
 
+/*
+========================================
+بدء الوقت
+========================================
+*/
+
 function startTimer() {
 
-    if (running) return;
+    if (running) {
+        return;
+    }
+
 
     running = true;
 
-    startTimestamp =
-        performance.now() - (currentTime * 1000);
 
-    mainButton.textContent = "إيقاف";
-    mainButton.classList.add("running");
+    /*
+    مهم جدًا:
+
+    نطرح الوقت السابق حتى يكمل
+    العداد من نفس الرقم.
+    */
+
+    startTimestamp =
+        performance.now()
+        -
+        (
+            currentTime * 1000
+        );
+
+
+    mainButton.textContent =
+        "إيقاف";
+
 
     status.textContent =
         "الوقت يعمل... اضغط للإيقاف";
 
+
     animationFrame =
-        requestAnimationFrame(updateTimer);
+        requestAnimationFrame(
+            updateTimer
+        );
+
 }
 
+
+/*
+========================================
+إيقاف الوقت
+========================================
+*/
 
 function stopTimer() {
 
     running = false;
 
-    if (animationFrame) {
 
-        cancelAnimationFrame(animationFrame);
+    if (
+        animationFrame
+    ) {
+
+        cancelAnimationFrame(
+            animationFrame
+        );
+
         animationFrame = null;
+
     }
 
-    mainButton.classList.remove("running");
 
-    mainButton.textContent = "التالي";
+    mainButton.textContent =
+        "ابدأ";
+
 }
 
 
-function playerStopped() {
+/*
+========================================
+إيقاف اللاعب للعداد
+========================================
+*/
+
+function stopByUser() {
 
     stopTimer();
 
-    const target = targets[round];
+
+    const target =
+        targets[round];
+
 
     /*
-     * اللاعب نجح إذا توقف قبل الهدف.
-     */
+    إذا وقف قبل الهدف
+    */
 
-    if (currentTime < target) {
+    if (
+        currentTime < target
+    ) {
 
         status.textContent =
-            `توقف عند ${currentTime.toFixed(2)} ثانية`;
+            "توقف عند "
+            +
+            currentTime.toFixed(2)
+            +
+            " ثانية";
 
-        currentPlayer++;
 
-        if (currentPlayer <= 2) {
+        /*
+        يبقى نفس الرقم.
 
-            setTimeout(() => {
+        عند الضغط مرة ثانية
+        سيكمل من هنا.
+        */
 
-                updateUI();
+        mainButton.textContent =
+            "استمر";
 
-                mainButton.textContent = "ابدأ";
+    }
 
-            }, 500);
+}
 
-        } else {
 
-            /*
-             * اللاعبان لعبا الجولة.
-             * بما أن الاثنين توقفوا قبل الهدف،
-             * ننتقل للجولة التالية.
-             */
+/*
+========================================
+الخسارة
+========================================
+*/
 
-            roundSuccess();
+function showLoss() {
+
+    mainButton.classList.add(
+        "disabled"
+    );
+
+
+    modalIcon.textContent =
+        "❌";
+
+
+    modalTitle.textContent =
+        "خسارة";
+
+
+    modalText.innerHTML =
+        "تجاوزت الوقت المحدد.<br><br>"
+        +
+        "الحد كان "
+        +
+        "<strong>"
+        +
+        targets[round].toFixed(2)
+        +
+        "</strong>"
+        +
+        " ثانية.";
+
+
+    modalButton.textContent =
+        "حاول مرة أخرى";
+
+
+    overlay.classList.add(
+        "show"
+    );
+
+}
+
+
+/*
+========================================
+زر اللعبة
+========================================
+*/
+
+mainButton.addEventListener(
+    "click",
+    function() {
+
+        if (
+            mainButton.classList.contains(
+                "disabled"
+            )
+        ) {
+            return;
+        }
+
+
+        /*
+        إذا كان العداد متوقف
+        يبدأ من نفس الرقم.
+        */
+
+        if (!running) {
+
+            startTimer();
+
+        }
+
+        /*
+        إذا كان يعمل
+        يتوقف.
+        */
+
+        else {
+
+            stopByUser();
 
         }
 
     }
-
-}
-
-
-function playerLost() {
-
-    mainButton.classList.add("disabled");
-
-    roundIcon.textContent = "💥";
-
-    roundResultTitle.textContent =
-        `اللاعب ${currentPlayer} خسر الجولة`;
-
-    roundResultText.innerHTML =
-        `الوقت وصل إلى <strong>${targets[round].toFixed(2)}</strong> ثانية أو تجاوزها.<br><br>
-         اللاعب الآخر يحصل على نقطة.`;
-
-    if (currentPlayer === 1) {
-
-        score2++;
-
-    } else {
-
-        score1++;
-    }
-
-    updateUI();
-
-    setTimeout(() => {
-
-        roundOverlay.classList.add("show");
-
-    }, 400);
-
-}
-
-
-function roundSuccess() {
-
-    /*
-     * إذا وصل اللاعبان إلى نهاية الجولة
-     * بدون تجاوز الهدف، نقارن من كان أقرب للهدف.
-     */
-
-    const target = targets[round];
-
-    /*
-     * هنا currentTime هي آخر قيمة،
-     * لكن نحتاج حفظ أوقات اللاعبين.
-     */
-
-    showRoundSuccess();
-}
-
-
-let player1Time = null;
-let player2Time = null;
-
-
-function playerStoppedCorrectly() {
-
-    stopTimer();
-
-    if (currentPlayer === 1) {
-
-        player1Time = currentTime;
-
-        currentPlayer = 2;
-
-        updateUI();
-
-        mainButton.textContent = "ابدأ";
-
-        status.textContent =
-            `اللاعب 1 توقف عند ${player1Time.toFixed(2)} — دور اللاعب 2`;
-
-    } else {
-
-        player2Time = currentTime;
-
-        decideRoundWinner();
-    }
-}
-
-
-function decideRoundWinner() {
-
-    const target = targets[round];
-
-    const distance1 =
-        target - player1Time;
-
-    const distance2 =
-        target - player2Time;
-
-    if (distance1 < distance2) {
-
-        score1++;
-
-        roundIcon.textContent = "🥇";
-
-        roundResultTitle.textContent =
-            "اللاعب 1 يفوز بالجولة";
-
-        roundResultText.innerHTML =
-            `اللاعب 1: <strong>${player1Time.toFixed(2)}</strong> ثانية<br>
-             اللاعب 2: <strong>${player2Time.toFixed(2)}</strong> ثانية`;
-
-    } else {
-
-        score2++;
-
-        roundIcon.textContent = "🥇";
-
-        roundResultTitle.textContent =
-            "اللاعب 2 يفوز بالجولة";
-
-        roundResultText.innerHTML =
-            `اللاعب 1: <strong>${player1Time.toFixed(2)}</strong> ثانية<br>
-             اللاعب 2: <strong>${player2Time.toFixed(2)}</strong> ثانية`;
-    }
-
-    updateUI();
-
-    if (round === 2) {
-
-        nextRoundButton.textContent =
-            "النتيجة النهائية";
-
-    } else {
-
-        nextRoundButton.textContent =
-            "الجولة التالية";
-    }
-
-    roundOverlay.classList.add("show");
-}
-
-
-function showRoundSuccess() {
-
-    decideRoundWinner();
-}
-
-
-mainButton.addEventListener("click", () => {
-
-    if (mainButton.classList.contains("disabled")) {
-        return;
-    }
-
-    if (!running) {
-
-        /*
-         * أول ضغطة:
-         * يبدأ العداد من الرقم الحالي.
-         */
-
-        startTimer();
-
-    } else {
-
-        /*
-         * ثاني ضغطة:
-         * يوقف العداد.
-         */
-
-        playerStoppedCorrectly();
-    }
-
-});
-
-
-nextRoundButton.addEventListener("click", () => {
-
-    roundOverlay.classList.remove("show");
-
-    if (round >= 2) {
-
-        showFinalResult();
-
-        return;
-    }
-
-    round++;
-
-    currentPlayer = 1;
-
-    currentTime = 0;
-
-    player1Time = null;
-    player2Time = null;
-
-    mainButton.classList.remove("disabled");
-
-    mainButton.textContent = "ابدأ";
-
-    timeDisplay.textContent = "0.00";
-
-    updateUI();
-
-});
-
-
-function showFinalResult() {
-
-    finalScore1.textContent = score1;
-    finalScore2.textContent = score2;
-
-    if (score1 > score2) {
-
-        winnerText.textContent =
-            "🏆 اللاعب 1 هو الفائز!";
-
-    } else if (score2 > score1) {
-
-        winnerText.textContent =
-            "🏆 اللاعب 2 هو الفائز!";
-
-    } else {
-
-        winnerText.textContent =
-            "🤝 تعادل!";
-
-    }
-
-    finalOverlay.classList.add("show");
-}
-
-
-restartButton.addEventListener("click", () => {
-
-    round = 0;
-
-    currentPlayer = 1;
-
-    score1 = 0;
-    score2 = 0;
-
-    currentTime = 0;
-
-    player1Time = null;
-    player2Time = null;
-
-    running = false;
-
-    finalOverlay.classList.remove("show");
-
-    roundOverlay.classList.remove("show");
-
-    mainButton.classList.remove("disabled");
-    mainButton.classList.remove("running");
-
-    mainButton.textContent = "ابدأ";
-
-    timeDisplay.textContent = "0.00";
-
-    updateUI();
-
-});
+);
 
 
 /*
- * تشغيل أولي
- */
+========================================
+زر النافذة
+========================================
+*/
+
+modalButton.addEventListener(
+    "click",
+    function() {
+
+
+        /*
+        إذا كانت الجولة الأخيرة
+        وانتهت بنجاح لن نصل هنا.
+
+        هنا الخسارة فقط:
+        نعيد نفس الجولة.
+        */
+
+        currentTime = 0;
+
+        running = false;
+
+
+        if (
+            animationFrame
+        ) {
+
+            cancelAnimationFrame(
+                animationFrame
+            );
+
+            animationFrame = null;
+
+        }
+
+
+        mainButton.classList.remove(
+            "disabled"
+        );
+
+
+        mainButton.textContent =
+            "ابدأ";
+
+
+        status.textContent =
+            "اضغط للبدء";
+
+
+        timerCircle.style.background =
+            `radial-gradient(
+                circle,
+                #101722 58%,
+                transparent 59%
+            ),
+            conic-gradient(
+                #ff3030 0deg,
+                #252d3b 0deg
+            )`;
+
+
+        timeDisplay.textContent =
+            "0.00";
+
+
+        overlay.classList.remove(
+            "show"
+        );
+
+    }
+);
+
+
+/*
+========================================
+عند الوصول لنهاية الجولة
+========================================
+
+ملاحظة:
+
+إذا توقف اللاعب قبل الهدف،
+لا ننتقل للجولة مباشرة.
+
+اللعبة تسمح له بالاستمرار
+من نفس الرقم.
+
+لكن عندما يصل الرقم للهدف
+تكون خسارة.
+
+ولذلك الانتقال للجولة التالية
+يحدث فقط من خلال زر إضافي
+في النسخة القادمة إذا أردت.
+
+========================================
+*/
+
+
+/*
+تشغيل الواجهة
+*/
 
 updateUI();
 
