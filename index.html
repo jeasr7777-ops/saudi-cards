@@ -50,13 +50,48 @@ body {
     font-size: 34px;
     font-weight: 900;
     text-align: center;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
 }
 .subtitle {
     color: #9ca8bb;
     font-size: 14px;
     text-align: center;
     margin-bottom: 25px;
+}
+/* اختيار الوضع */
+.mode-selection {
+    width: 100%;
+    max-width: 430px;
+}
+.mode-title {
+    text-align: center;
+    color: #aab4c5;
+    font-size: 15px;
+    margin-bottom: 12px;
+}
+.mode-buttons {
+    display: flex;
+    gap: 12px;
+}
+.mode-button {
+    flex: 1;
+    min-height: 62px;
+    border: 1px solid
+        rgba(255,255,255,.10);
+    border-radius: 17px;
+    background:
+        rgba(255,255,255,.06);
+    color: white;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+}
+.mode-button.active {
+    background: #ff3030;
+    border-color: #ff3030;
+    box-shadow:
+        0 8px 25px
+        rgba(255,48,48,.25);
 }
 /* الجولة */
 .round-box {
@@ -69,7 +104,8 @@ body {
         rgba(255,255,255,0.06);
     border:
         1px solid rgba(255,255,255,0.08);
-    margin-bottom: 18px;
+    margin-top: 18px;
+    margin-bottom: 16px;
 }
 .round-title {
     color: #9da8bb;
@@ -83,14 +119,14 @@ body {
 /* الهدف */
 .target {
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 .target-label {
     color: #9da8bb;
     font-size: 14px;
 }
 .target-time {
-    font-size: 26px;
+    font-size: 25px;
     font-weight: 900;
     margin-top: 3px;
 }
@@ -99,7 +135,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 8px 0 22px;
+    margin: 8px 0 20px;
 }
 .timer {
     width: 280px;
@@ -120,8 +156,10 @@ body {
             #252d3b 0deg
         );
     box-shadow:
-        0 0 45px rgba(255,48,48,.14),
-        inset 0 0 35px rgba(0,0,0,.5);
+        0 0 45px
+        rgba(255,48,48,.14),
+        inset 0 0 35px
+        rgba(0,0,0,.5);
 }
 .timer::before {
     content: "";
@@ -129,13 +167,26 @@ body {
     inset: 10px;
     border-radius: 50%;
     border:
-        1px solid rgba(255,255,255,.08);
+        1px solid
+        rgba(255,255,255,.08);
 }
 .time {
     font-size: 55px;
     font-weight: 900;
     letter-spacing: 1px;
     z-index: 2;
+}
+/*
+وضع إخفاء الوقت
+*/
+body.hidden-mode .timer-container {
+    display: none;
+}
+body.hidden-mode .target {
+    display: none;
+}
+body.hidden-mode .round-box {
+    margin-bottom: 35px;
 }
 /* الحالة */
 .status {
@@ -172,17 +223,12 @@ body {
 }
 .button:active {
     transform: scale(.96);
-    box-shadow:
-        0 5px 15px
-        rgba(220,0,0,.25),
-        inset 0 2px 0
-        rgba(255,255,255,.15);
 }
 .button.disabled {
     opacity: .55;
     pointer-events: none;
 }
-/* المعلومات */
+/* معلومات */
 .info {
     color: #68758a;
     font-size: 12px;
@@ -258,6 +304,10 @@ body {
     font-weight: 900;
     cursor: pointer;
 }
+/* إخفاء اختيار الوضع أثناء اللعب */
+.playing .mode-selection {
+    display: none;
+}
 /* الجوال */
 @media (max-width: 500px) {
     .game {
@@ -281,12 +331,30 @@ body {
 </style>
 </head>
 <body>
-<div class="game">
+<div class="game" id="game">
     <div class="logo">
         ⏱️ تحدي الوقت
     </div>
     <div class="subtitle">
-        توقف قبل انتهاء الوقت
+        حاول الوصول للهدف بأكبر دقة
+    </div>
+    <!-- اختيار الوضع -->
+    <div class="mode-selection">
+        <div class="mode-title">
+            اختر طريقة اللعب
+        </div>
+        <div class="mode-buttons">
+            <button
+                class="mode-button active"
+                id="showMode">
+                🕐 إظهار الوقت
+            </button>
+            <button
+                class="mode-button"
+                id="hideMode">
+                🔴 إخفاء الوقت
+            </button>
+        </div>
     </div>
     <!-- الجولة -->
     <div class="round-box">
@@ -326,7 +394,7 @@ body {
     <div
         class="status"
         id="status">
-        اضغط للبدء
+        اختر الوضع ثم اضغط ابدأ
     </div>
     <!-- الزر -->
     <button
@@ -335,7 +403,7 @@ body {
         ابدأ
     </button>
     <div class="info">
-        اضغط مرة للبدء واضغط مرة ثانية للإيقاف
+        في وضع إخفاء الوقت لن يظهر العداد أثناء اللعب
     </div>
 </div>
 <!-- نافذة الخسارة -->
@@ -379,31 +447,32 @@ body {
     </div>
 </div>
 <script>
-/*
-========================================
-أهداف الجولات
-========================================
-*/
+/* أهداف الجولات */
 const targets = [
     5,
     8,
     10
 ];
-/*
-========================================
-متغيرات اللعبة
-========================================
-*/
+/* المتغيرات */
 let round = 0;
 let currentTime = 0;
 let running = false;
 let startTimestamp = 0;
 let animationFrame = null;
-/*
-========================================
-العناصر
-========================================
-*/
+let selectedMode = "show";
+/* العناصر */
+const game =
+    document.getElementById(
+        "game"
+    );
+const showMode =
+    document.getElementById(
+        "showMode"
+    );
+const hideMode =
+    document.getElementById(
+        "hideMode"
+    );
 const timeDisplay =
     document.getElementById(
         "timeDisplay"
@@ -448,11 +517,45 @@ const restartButton =
     document.getElementById(
         "restartButton"
     );
-/*
-========================================
-تحديث الواجهة
-========================================
-*/
+/* اختيار إظهار الوقت */
+showMode.addEventListener(
+    "click",
+    function() {
+        if (running) return;
+        selectedMode = "show";
+        document.body.classList.remove(
+            "hidden-mode"
+        );
+        showMode.classList.add(
+            "active"
+        );
+        hideMode.classList.remove(
+            "active"
+        );
+        status.textContent =
+            "وضع إظهار الوقت";
+    }
+);
+/* اختيار إخفاء الوقت */
+hideMode.addEventListener(
+    "click",
+    function() {
+        if (running) return;
+        selectedMode = "hide";
+        document.body.classList.add(
+            "hidden-mode"
+        );
+        hideMode.classList.add(
+            "active"
+        );
+        showMode.classList.remove(
+            "active"
+        );
+        status.textContent =
+            "وضع إخفاء الوقت";
+    }
+);
+/* تحديث الواجهة */
 function updateUI() {
     const target =
         targets[round];
@@ -465,11 +568,7 @@ function updateUI() {
     timeDisplay.textContent =
         currentTime.toFixed(2);
 }
-/*
-========================================
-إعادة دائرة العداد
-========================================
-*/
+/* إعادة الدائرة */
 function resetCircle() {
     timerCircle.style.background =
         `radial-gradient(
@@ -482,11 +581,7 @@ function resetCircle() {
             #252d3b 0deg
         )`;
 }
-/*
-========================================
-تحديث الوقت
-========================================
-*/
+/* تحديث الوقت */
 function updateTimer() {
     if (!running) {
         return;
@@ -494,16 +589,22 @@ function updateTimer() {
     const now =
         performance.now();
     /*
-    يكمل من الرقم السابق
+    الوقت الحقيقي
     */
     currentTime =
         (
-            now
-            -
+            now -
             startTimestamp
         ) / 1000;
-    timeDisplay.textContent =
-        currentTime.toFixed(2);
+    /*
+    في وضع إظهار الوقت
+    */
+    if (
+        selectedMode === "show"
+    ) {
+        timeDisplay.textContent =
+            currentTime.toFixed(2);
+    }
     /*
     دائرة التقدم
     */
@@ -527,20 +628,16 @@ function updateTimer() {
             #252d3b ${degrees}deg
         )`;
     /*
-    إذا وصل أو تجاوز الهدف
+    تجاوز الهدف
     */
     if (
         currentTime >= target
     ) {
-        /*
-        نترك القيمة الحقيقية
-        التي وصل إليها اللاعب.
-        مثال:
-        5.13
-        */
+        const actualTime =
+            currentTime;
         stopTimer();
         loseRound(
-            currentTime
+            actualTime
         );
         return;
     }
@@ -549,15 +646,9 @@ function updateTimer() {
             updateTimer
         );
 }
-/*
-========================================
-بدء العداد
-========================================
-*/
+/* بدء الوقت */
 function startTimer() {
-    if (running) {
-        return;
-    }
+    if (running) return;
     running = true;
     /*
     يكمل من الرقم السابق
@@ -568,25 +659,24 @@ function startTimer() {
         (
             currentTime * 1000
         );
+    game.classList.add(
+        "playing"
+    );
     mainButton.textContent =
         "إيقاف";
     status.textContent =
-        "الوقت يعمل... اضغط للإيقاف";
+        selectedMode === "hide"
+        ? "ركز على إحساسك بالوقت..."
+        : "الوقت يعمل... اضغط للإيقاف";
     animationFrame =
         requestAnimationFrame(
             updateTimer
         );
 }
-/*
-========================================
-إيقاف العداد
-========================================
-*/
+/* إيقاف الوقت */
 function stopTimer() {
     running = false;
-    if (
-        animationFrame
-    ) {
+    if (animationFrame) {
         cancelAnimationFrame(
             animationFrame
         );
@@ -595,11 +685,7 @@ function stopTimer() {
     mainButton.textContent =
         "استمر";
 }
-/*
-========================================
-إيقاف يدوي
-========================================
-*/
+/* إيقاف يدوي */
 function stopByUser() {
     stopTimer();
     const target =
@@ -608,18 +694,16 @@ function stopByUser() {
         currentTime < target
     ) {
         status.textContent =
-            "توقف عند "
-            +
-            currentTime.toFixed(2)
-            +
-            " ثانية";
+            selectedMode === "hide"
+            ? "تم إيقاف الوقت"
+            : "توقف عند "
+              +
+              currentTime.toFixed(2)
+              +
+              " ثانية";
     }
 }
-/*
-========================================
-الخسارة
-========================================
-*/
+/* الخسارة */
 function loseRound(
     actualTime
 ) {
@@ -628,14 +712,8 @@ function loseRound(
     );
     const target =
         targets[round];
-    /*
-    نحسب مقدار التجاوز
-    */
     const difference =
         actualTime - target;
-    /*
-    عرض الرقم الحقيقي
-    */
     lossText.innerHTML =
         `توقفت عند
         <span class="loss-time">
@@ -651,9 +729,6 @@ function loseRound(
         <span class="difference">
             ${difference.toFixed(2)} ثانية
         </span>`;
-    /*
-    الجولة الثالثة
-    */
     if (
         round === 2
     ) {
@@ -668,11 +743,7 @@ function loseRound(
         "show"
     );
 }
-/*
-========================================
-زر التشغيل / الإيقاف
-========================================
-*/
+/* الزر الرئيسي */
 mainButton.addEventListener(
     "click",
     function() {
@@ -691,20 +762,13 @@ mainButton.addEventListener(
         }
     }
 );
-/*
-========================================
-الجولة التالية
-========================================
-*/
+/* الجولة التالية */
 nextButton.addEventListener(
     "click",
     function() {
         lossOverlay.classList.remove(
             "show"
         );
-        /*
-        بعد خسارة الجولة الثالثة
-        */
         if (
             round === 2
         ) {
@@ -713,18 +777,10 @@ nextButton.addEventListener(
             );
             return;
         }
-        /*
-        الانتقال للجولة التالية
-        */
         round++;
-        /*
-        كل جولة جديدة تبدأ من صفر
-        */
         currentTime = 0;
         running = false;
-        if (
-            animationFrame
-        ) {
+        if (animationFrame) {
             cancelAnimationFrame(
                 animationFrame
             );
@@ -736,16 +792,14 @@ nextButton.addEventListener(
         mainButton.textContent =
             "ابدأ";
         status.textContent =
-            "اضغط للبدء";
+            selectedMode === "hide"
+            ? "وضع إخفاء الوقت"
+            : "اضغط للبدء";
         resetCircle();
         updateUI();
     }
 );
-/*
-========================================
-إعادة اللعبة
-========================================
-*/
+/* إعادة اللعبة */
 restartButton.addEventListener(
     "click",
     function() {
@@ -755,9 +809,7 @@ restartButton.addEventListener(
         round = 0;
         currentTime = 0;
         running = false;
-        if (
-            animationFrame
-        ) {
+        if (animationFrame) {
             cancelAnimationFrame(
                 animationFrame
             );
@@ -769,16 +821,14 @@ restartButton.addEventListener(
         mainButton.textContent =
             "ابدأ";
         status.textContent =
-            "اضغط للبدء";
+            selectedMode === "hide"
+            ? "وضع إخفاء الوقت"
+            : "اضغط للبدء";
         resetCircle();
         updateUI();
     }
 );
-/*
-========================================
-تشغيل أولي
-========================================
-*/
+/* البداية */
 updateUI();
 resetCircle();
 </script>
