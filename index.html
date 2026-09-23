@@ -9,6 +9,9 @@ maximum-scale=1.0,
 user-scalable=no">
 <title>تحدي الوقت</title>
 <style>
+/* =========================
+   الأساس
+========================= */
 * {
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
@@ -39,107 +42,159 @@ body {
     width: 100%;
     max-width: 650px;
     min-height: 100vh;
-    padding: 25px 20px;
+    padding: 22px 18px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-/* العنوان */
+/* =========================
+   العنوان
+========================= */
 .logo {
     font-size: 34px;
     font-weight: 900;
     text-align: center;
-    margin-bottom: 6px;
+    margin-bottom: 5px;
 }
 .subtitle {
     color: #9ca8bb;
     font-size: 14px;
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 22px;
 }
-/* اختيار الوضع */
+/* =========================
+   اختيار الوضع
+========================= */
 .mode-selection {
     width: 100%;
     max-width: 430px;
+    margin-bottom: 15px;
 }
 .mode-title {
     text-align: center;
     color: #aab4c5;
-    font-size: 15px;
-    margin-bottom: 12px;
+    font-size: 14px;
+    margin-bottom: 10px;
 }
 .mode-buttons {
     display: flex;
-    gap: 12px;
+    gap: 10px;
 }
 .mode-button {
     flex: 1;
-    min-height: 62px;
+    min-height: 58px;
     border: 1px solid
         rgba(255,255,255,.10);
     border-radius: 17px;
     background:
         rgba(255,255,255,.06);
     color: white;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 800;
     cursor: pointer;
+    touch-action: manipulation;
 }
 .mode-button.active {
-    background: #ff3030;
+    background:
+        linear-gradient(
+            145deg,
+            #ff4545,
+            #d60000
+        );
     border-color: #ff3030;
     box-shadow:
         0 8px 25px
-        rgba(255,48,48,.25);
+        rgba(255,48,48,.22);
 }
-/* الجولة */
+/* =========================
+   الجولة
+========================= */
 .round-box {
     width: 100%;
-    max-width: 420px;
-    padding: 15px;
+    max-width: 430px;
+    padding: 14px;
     border-radius: 18px;
     text-align: center;
     background:
-        rgba(255,255,255,0.06);
+        rgba(255,255,255,.06);
     border:
-        1px solid rgba(255,255,255,0.08);
-    margin-top: 18px;
-    margin-bottom: 16px;
+        1px solid
+        rgba(255,255,255,.08);
+    margin-bottom: 13px;
 }
 .round-title {
     color: #9da8bb;
-    font-size: 14px;
-    margin-bottom: 4px;
+    font-size: 13px;
+    margin-bottom: 3px;
 }
 .round-number {
     font-size: 21px;
     font-weight: 900;
 }
-/* الهدف */
+/* =========================
+   رسالة بداية الجولة
+========================= */
+.round-instruction {
+    width: 100%;
+    max-width: 430px;
+    padding: 17px 15px;
+    border-radius: 18px;
+    text-align: center;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,48,48,.16),
+            rgba(255,255,255,.05)
+        );
+    border:
+        1px solid
+        rgba(255,70,70,.22);
+    margin-bottom: 17px;
+}
+.warning {
+    font-size: 20px;
+    font-weight: 900;
+    margin-bottom: 7px;
+}
+.instruction-text {
+    color: #dce2eb;
+    font-size: 16px;
+    line-height: 1.7;
+}
+.instruction-time {
+    color: #ff4b4b;
+    font-size: 25px;
+    font-weight: 900;
+}
+/* =========================
+   الهدف أثناء وضع إظهار الوقت
+========================= */
 .target {
     text-align: center;
     margin-bottom: 8px;
 }
 .target-label {
     color: #9da8bb;
-    font-size: 14px;
+    font-size: 13px;
 }
 .target-time {
     font-size: 25px;
     font-weight: 900;
-    margin-top: 3px;
+    margin-top: 2px;
 }
-/* العداد */
+/* =========================
+   العداد
+========================= */
 .timer-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 8px 0 20px;
+    margin: 5px 0 18px;
 }
 .timer {
-    width: 280px;
-    height: 280px;
+    width: 275px;
+    height: 275px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -171,32 +226,44 @@ body {
         rgba(255,255,255,.08);
 }
 .time {
-    font-size: 55px;
+    font-size: 54px;
     font-weight: 900;
     letter-spacing: 1px;
     z-index: 2;
 }
+/* =========================
+   وضع إخفاء الوقت
+========================= */
 /*
-وضع إخفاء الوقت
+بعد الضغط على ابدأ:
+- يخفي العداد
+- يخفي الهدف
+- يخفي التعليمات
+- يبقى رقم الجولة
+- يبقى الزر الأحمر
 */
-body.hidden-mode .timer-container {
+body.hidden-playing .timer-container {
     display: none;
 }
-body.hidden-mode .target {
+body.hidden-playing .target {
     display: none;
 }
-body.hidden-mode .round-box {
-    margin-bottom: 35px;
+body.hidden-playing .round-instruction {
+    display: none;
 }
-/* الحالة */
+/* =========================
+   الحالة
+========================= */
 .status {
-    min-height: 24px;
+    min-height: 23px;
     color: #aeb8c9;
     font-size: 14px;
     text-align: center;
-    margin-bottom: 14px;
+    margin-bottom: 13px;
 }
-/* الزر الأحمر */
+/* =========================
+   الزر الأحمر
+========================= */
 .button {
     width: 100%;
     max-width: 400px;
@@ -228,19 +295,24 @@ body.hidden-mode .round-box {
     opacity: .55;
     pointer-events: none;
 }
-/* معلومات */
+/* =========================
+   المعلومات
+========================= */
 .info {
     color: #68758a;
     font-size: 12px;
     text-align: center;
-    margin-top: 13px;
+    margin-top: 12px;
+    line-height: 1.6;
 }
-/* النوافذ */
+/* =========================
+   النوافذ
+========================= */
 .overlay {
     position: fixed;
     inset: 0;
     background:
-        rgba(4,7,12,.90);
+        rgba(4,7,12,.91);
     backdrop-filter:
         blur(12px);
     display: none;
@@ -267,8 +339,8 @@ body.hidden-mode .round-box {
         rgba(0,0,0,.55);
 }
 .modal-icon {
-    font-size: 60px;
-    margin-bottom: 8px;
+    font-size: 58px;
+    margin-bottom: 7px;
 }
 .modal h2 {
     margin: 5px 0 15px;
@@ -282,7 +354,7 @@ body.hidden-mode .round-box {
 }
 .loss-time {
     color: #ff4545;
-    font-size: 25px;
+    font-size: 26px;
     font-weight: 900;
 }
 .target-result {
@@ -298,20 +370,30 @@ body.hidden-mode .round-box {
     height: 56px;
     border: none;
     border-radius: 16px;
-    background: #ff3030;
+    background:
+        linear-gradient(
+            145deg,
+            #ff4545,
+            #d60000
+        );
     color: white;
     font-size: 18px;
     font-weight: 900;
     cursor: pointer;
 }
-/* إخفاء اختيار الوضع أثناء اللعب */
+/* =========================
+   إخفاء اختيار الوضع بعد بدء اللعبة
+========================= */
 .playing .mode-selection {
     display: none;
 }
-/* الجوال */
+/* =========================
+   الجوال
+========================= */
 @media (max-width: 500px) {
     .game {
-        padding: 18px 15px;
+        padding:
+            18px 15px;
     }
     .logo {
         font-size: 30px;
@@ -332,6 +414,7 @@ body.hidden-mode .round-box {
 </head>
 <body>
 <div class="game" id="game">
+    <!-- العنوان -->
     <div class="logo">
         ⏱️ تحدي الوقت
     </div>
@@ -339,7 +422,9 @@ body.hidden-mode .round-box {
         حاول الوصول للهدف بأكبر دقة
     </div>
     <!-- اختيار الوضع -->
-    <div class="mode-selection">
+    <div
+        class="mode-selection"
+        id="modeSelection">
         <div class="mode-title">
             اختر طريقة اللعب
         </div>
@@ -367,8 +452,27 @@ body.hidden-mode .round-box {
             1 من 3
         </div>
     </div>
+    <!-- تعليمات الجولة -->
+    <div
+        class="round-instruction"
+        id="roundInstruction">
+        <div class="warning">
+            ⚠️ انتبه!
+        </div>
+        <div class="instruction-text">
+            لازم توقف عند
+            <br>
+            <span
+                class="instruction-time"
+                id="instructionTime">
+                5.00 ثانية
+            </span>
+        </div>
+    </div>
     <!-- الهدف -->
-    <div class="target">
+    <div
+        class="target"
+        id="targetBox">
         <div class="target-label">
             الهدف
         </div>
@@ -379,7 +483,9 @@ body.hidden-mode .round-box {
         </div>
     </div>
     <!-- العداد -->
-    <div class="timer-container">
+    <div
+        class="timer-container"
+        id="timerContainer">
         <div
             class="timer"
             id="timerCircle">
@@ -394,7 +500,7 @@ body.hidden-mode .round-box {
     <div
         class="status"
         id="status">
-        اختر الوضع ثم اضغط ابدأ
+        اضغط ابدأ لبدء الجولة
     </div>
     <!-- الزر -->
     <button
@@ -402,11 +508,15 @@ body.hidden-mode .round-box {
         id="mainButton">
         ابدأ
     </button>
-    <div class="info">
-        في وضع إخفاء الوقت لن يظهر العداد أثناء اللعب
+    <div
+        class="info"
+        id="info">
+        اختر الوضع ثم ابدأ الجولة
     </div>
 </div>
-<!-- نافذة الخسارة -->
+<!-- =========================
+     نافذة الخسارة
+========================= -->
 <div
     class="overlay"
     id="lossOverlay">
@@ -425,7 +535,9 @@ body.hidden-mode .round-box {
         </button>
     </div>
 </div>
-<!-- نهاية اللعبة -->
+<!-- =========================
+     نهاية اللعبة
+========================= -->
 <div
     class="overlay"
     id="endOverlay">
@@ -447,20 +559,26 @@ body.hidden-mode .round-box {
     </div>
 </div>
 <script>
-/* أهداف الجولات */
+/* =========================
+   أهداف الجولات
+========================= */
 const targets = [
     5,
     8,
     10
 ];
-/* المتغيرات */
+/* =========================
+   متغيرات اللعبة
+========================= */
 let round = 0;
 let currentTime = 0;
 let running = false;
 let startTimestamp = 0;
 let animationFrame = null;
 let selectedMode = "show";
-/* العناصر */
+/* =========================
+   العناصر
+========================= */
 const game =
     document.getElementById(
         "game"
@@ -473,17 +591,25 @@ const hideMode =
     document.getElementById(
         "hideMode"
     );
-const timeDisplay =
+const roundText =
     document.getElementById(
-        "timeDisplay"
+        "roundText"
+    );
+const instructionTime =
+    document.getElementById(
+        "instructionTime"
     );
 const targetText =
     document.getElementById(
         "targetText"
     );
-const roundText =
+const timeDisplay =
     document.getElementById(
-        "roundText"
+        "timeDisplay"
+    );
+const timerCircle =
+    document.getElementById(
+        "timerCircle"
     );
 const status =
     document.getElementById(
@@ -493,9 +619,17 @@ const mainButton =
     document.getElementById(
         "mainButton"
     );
-const timerCircle =
+const info =
     document.getElementById(
-        "timerCircle"
+        "info"
+    );
+const roundInstruction =
+    document.getElementById(
+        "roundInstruction"
+    );
+const targetBox =
+    document.getElementById(
+        "targetBox"
     );
 const lossOverlay =
     document.getElementById(
@@ -517,14 +651,36 @@ const restartButton =
     document.getElementById(
         "restartButton"
     );
-/* اختيار إظهار الوقت */
+/* =========================
+   تحديث معلومات الجولة
+========================= */
+function updateRoundInfo() {
+    const target =
+        targets[round];
+    roundText.textContent =
+        (round + 1)
+        + " من 3";
+    instructionTime.textContent =
+        target.toFixed(2)
+        + " ثانية";
+    targetText.textContent =
+        target.toFixed(2)
+        + " ثانية";
+    timeDisplay.textContent =
+        currentTime.toFixed(2);
+}
+/* =========================
+   اختيار إظهار الوقت
+========================= */
 showMode.addEventListener(
     "click",
     function() {
-        if (running) return;
+        if (running) {
+            return;
+        }
         selectedMode = "show";
         document.body.classList.remove(
-            "hidden-mode"
+            "hidden-playing"
         );
         showMode.classList.add(
             "active"
@@ -533,17 +689,23 @@ showMode.addEventListener(
             "active"
         );
         status.textContent =
-            "وضع إظهار الوقت";
+            "اضغط ابدأ لبدء الجولة";
+        info.textContent =
+            "الوقت سيظهر أثناء اللعب";
     }
 );
-/* اختيار إخفاء الوقت */
+/* =========================
+   اختيار إخفاء الوقت
+========================= */
 hideMode.addEventListener(
     "click",
     function() {
-        if (running) return;
+        if (running) {
+            return;
+        }
         selectedMode = "hide";
-        document.body.classList.add(
-            "hidden-mode"
+        document.body.classList.remove(
+            "hidden-playing"
         );
         hideMode.classList.add(
             "active"
@@ -552,23 +714,14 @@ hideMode.addEventListener(
             "active"
         );
         status.textContent =
-            "وضع إخفاء الوقت";
+            "اضغط ابدأ ثم اعتمد على إحساسك بالوقت";
+        info.textContent =
+            "بعد ابدأ سيختفي العداد";
     }
 );
-/* تحديث الواجهة */
-function updateUI() {
-    const target =
-        targets[round];
-    roundText.textContent =
-        (round + 1)
-        + " من 3";
-    targetText.textContent =
-        target.toFixed(2)
-        + " ثانية";
-    timeDisplay.textContent =
-        currentTime.toFixed(2);
-}
-/* إعادة الدائرة */
+/* =========================
+   إعادة شكل دائرة العداد
+========================= */
 function resetCircle() {
     timerCircle.style.background =
         `radial-gradient(
@@ -581,22 +734,75 @@ function resetCircle() {
             #252d3b 0deg
         )`;
 }
-/* تحديث الوقت */
+/* =========================
+   بدء الجولة
+========================= */
+function startTimer() {
+    if (running) {
+        return;
+    }
+    running = true;
+    /*
+    نكمل من الوقت السابق
+    */
+    startTimestamp =
+        performance.now()
+        -
+        (
+            currentTime * 1000
+        );
+    /*
+    نخفي تعليمات الهدف أثناء اللعب
+    */
+    roundInstruction.style.display =
+        "none";
+    /*
+    وضع إخفاء الوقت:
+    نخفي العداد والهدف
+    */
+    if (
+        selectedMode === "hide"
+    ) {
+        document.body.classList.add(
+            "hidden-playing"
+        );
+    }
+    game.classList.add(
+        "playing"
+    );
+    mainButton.textContent =
+        "إيقاف";
+    if (
+        selectedMode === "hide"
+    ) {
+        status.textContent =
+            "اعتمد على إحساسك بالوقت";
+    }
+    else {
+        status.textContent =
+            "الوقت يعمل... اضغط للإيقاف";
+    }
+    animationFrame =
+        requestAnimationFrame(
+            updateTimer
+        );
+}
+/* =========================
+   تحديث الوقت
+========================= */
 function updateTimer() {
     if (!running) {
         return;
     }
     const now =
         performance.now();
-    /*
-    الوقت الحقيقي
-    */
     currentTime =
         (
             now -
             startTimestamp
         ) / 1000;
     /*
+    يظهر الوقت فقط
     في وضع إظهار الوقت
     */
     if (
@@ -628,11 +834,15 @@ function updateTimer() {
             #252d3b ${degrees}deg
         )`;
     /*
-    تجاوز الهدف
+    إذا وصل للهدف أو تجاوزه
     */
     if (
         currentTime >= target
     ) {
+        /*
+        نحتفظ بالوقت الحقيقي
+        مثال: 8.13
+        */
         const actualTime =
             currentTime;
         stopTimer();
@@ -646,34 +856,9 @@ function updateTimer() {
             updateTimer
         );
 }
-/* بدء الوقت */
-function startTimer() {
-    if (running) return;
-    running = true;
-    /*
-    يكمل من الرقم السابق
-    */
-    startTimestamp =
-        performance.now()
-        -
-        (
-            currentTime * 1000
-        );
-    game.classList.add(
-        "playing"
-    );
-    mainButton.textContent =
-        "إيقاف";
-    status.textContent =
-        selectedMode === "hide"
-        ? "ركز على إحساسك بالوقت..."
-        : "الوقت يعمل... اضغط للإيقاف";
-    animationFrame =
-        requestAnimationFrame(
-            updateTimer
-        );
-}
-/* إيقاف الوقت */
+/* =========================
+   إيقاف العداد
+========================= */
 function stopTimer() {
     running = false;
     if (animationFrame) {
@@ -685,25 +870,26 @@ function stopTimer() {
     mainButton.textContent =
         "استمر";
 }
-/* إيقاف يدوي */
+/* =========================
+   إيقاف يدوي
+========================= */
 function stopByUser() {
     stopTimer();
-    const target =
-        targets[round];
     if (
-        currentTime < target
+        currentTime <
+        targets[round]
     ) {
         status.textContent =
-            selectedMode === "hide"
-            ? "تم إيقاف الوقت"
-            : "توقف عند "
-              +
-              currentTime.toFixed(2)
-              +
-              " ثانية";
+            "تم إيقاف الوقت عند "
+            +
+            currentTime.toFixed(2)
+            +
+            " ثانية";
     }
 }
-/* الخسارة */
+/* =========================
+   الخسارة
+========================= */
 function loseRound(
     actualTime
 ) {
@@ -714,6 +900,9 @@ function loseRound(
         targets[round];
     const difference =
         actualTime - target;
+    /*
+    نظهر القيمة الدقيقة
+    */
     lossText.innerHTML =
         `توقفت عند
         <span class="loss-time">
@@ -743,7 +932,9 @@ function loseRound(
         "show"
     );
 }
-/* الزر الرئيسي */
+/* =========================
+   الزر الرئيسي
+========================= */
 mainButton.addEventListener(
     "click",
     function() {
@@ -762,13 +953,18 @@ mainButton.addEventListener(
         }
     }
 );
-/* الجولة التالية */
+/* =========================
+   الجولة التالية
+========================= */
 nextButton.addEventListener(
     "click",
     function() {
         lossOverlay.classList.remove(
             "show"
         );
+        /*
+        الجولة الثالثة
+        */
         if (
             round === 2
         ) {
@@ -777,6 +973,9 @@ nextButton.addEventListener(
             );
             return;
         }
+        /*
+        الانتقال للجولة التالية
+        */
         round++;
         currentTime = 0;
         running = false;
@@ -786,20 +985,48 @@ nextButton.addEventListener(
             );
             animationFrame = null;
         }
+        /*
+        إظهار معلومات الجولة الجديدة
+        */
+        roundInstruction.style.display =
+            "block";
+        targetBox.style.display =
+            "block";
+        /*
+        إزالة وضع الإخفاء
+        مؤقتًا حتى تظهر
+        تعليمات الجولة الجديدة
+        */
+        document.body.classList.remove(
+            "hidden-playing"
+        );
+        game.classList.remove(
+            "playing"
+        );
         mainButton.classList.remove(
             "disabled"
         );
         mainButton.textContent =
             "ابدأ";
         status.textContent =
+            "انتبه للهدف قبل أن تبدأ";
+        if (
             selectedMode === "hide"
-            ? "وضع إخفاء الوقت"
-            : "اضغط للبدء";
+        ) {
+            info.textContent =
+                "تذكر الهدف ثم اضغط ابدأ";
+        }
+        else {
+            info.textContent =
+                "الوقت سيظهر أثناء اللعب";
+        }
         resetCircle();
-        updateUI();
+        updateRoundInfo();
     }
 );
-/* إعادة اللعبة */
+/* =========================
+   إعادة اللعبة
+========================= */
 restartButton.addEventListener(
     "click",
     function() {
@@ -815,21 +1042,41 @@ restartButton.addEventListener(
             );
             animationFrame = null;
         }
+        document.body.classList.remove(
+            "hidden-playing"
+        );
+        game.classList.remove(
+            "playing"
+        );
+        roundInstruction.style.display =
+            "block";
+        targetBox.style.display =
+            "block";
         mainButton.classList.remove(
             "disabled"
         );
         mainButton.textContent =
             "ابدأ";
         status.textContent =
+            "انتبه للهدف قبل أن تبدأ";
+        if (
             selectedMode === "hide"
-            ? "وضع إخفاء الوقت"
-            : "اضغط للبدء";
+        ) {
+            info.textContent =
+                "تذكر الهدف ثم اضغط ابدأ";
+        }
+        else {
+            info.textContent =
+                "الوقت سيظهر أثناء اللعب";
+        }
         resetCircle();
-        updateUI();
+        updateRoundInfo();
     }
 );
-/* البداية */
-updateUI();
+/* =========================
+   التشغيل الأول
+========================= */
+updateRoundInfo();
 resetCircle();
 </script>
 </body>
